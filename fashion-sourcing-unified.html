@@ -1261,199 +1261,235 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 
 <!-- ══════════ MODULE: MAPPING ══════════ -->
 <div class="module" <div class="module" id="mod-mapping">
-
-  <!-- Header -->
-  <div style="padding:24px 32px 0">
+  <div style="padding:24px 32px 16px">
     <div style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#7B6FD0;text-transform:uppercase;margin-bottom:4px">Global Network</div>
-    <div style="font-size:22px;font-weight:800;color:#1a1a2e;letter-spacing:.06em;text-transform:uppercase">MAPPING</div>
+    <div style="font-size:22px;font-weight:800;color:#1a1a2e;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px">MAPPING</div>
+
+    <!-- Filtres -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <div style="padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white;cursor:pointer">MATERIAL TYPE ▾</div>
+      <div style="padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white;cursor:pointer">SECTOR(S) ▾</div>
+      <div style="padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white;cursor:pointer">PRODUCT TYPE ▾</div>
+      <div style="padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white;cursor:pointer">LOCATION ▾</div>
+      <div style="padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white;cursor:pointer">CERTIFICATION ▾</div>
+      <div style="margin-left:auto;padding:7px 18px;background:#7B6FD0;color:white;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer">RESET</div>
+    </div>
   </div>
 
-  <!-- Filtres ligne 1 -->
-  <div style="padding:16px 32px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">MATERIAL TYPE <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">SECTOR(S) <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">PRODUCT FAMILY <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">PRODUCT TYPE <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">QUALITY RANGE <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">LOCATION <span style="font-size:9px">▾</span></div>
-    <div style="margin-left:auto;padding:7px 16px;background:#7B6FD0;color:white;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.06em">RESET</div>
-  </div>
+  <!-- Carte monde SVG avec pictos intégrés -->
+  <div style="margin:0 32px 32px;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.12)">
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
 
-  <!-- Filtres ligne 2 -->
-  <div style="padding:8px 32px 16px;display:flex;gap:8px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">SPECIFICATION 1 <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">SPECIFICATION 2 <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">SPECIFICATION 3 <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">MIN QUANTITY <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">MAX QUANTITY <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">CERTIFICATION <span style="font-size:9px">▾</span></div>
-    <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;border:1.5px solid #ddd;border-radius:6px;font-size:11px;font-weight:600;color:#444;background:white">STOCK SERVICE <span style="font-size:9px">▾</span></div>
-  </div>
+      <!-- Fond océan -->
+      <defs>
+        <linearGradient id="ocean-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1a1a3e"/>
+          <stop offset="100%" stop-color="#0d1b3e"/>
+        </linearGradient>
+      </defs>
+      <rect width="1000" height="500" fill="url(#ocean-grad)"/>
 
-  <!-- Carte SVG monde sombre + pins intégrés -->
-  <div style="margin:0 32px 32px;border-radius:12px;overflow:hidden">
-    <svg viewBox="0 0 1000 500" style="width:100%;display:block;background:#1a1a2e" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lignes de latitude -->
+      <line x1="0" y1="83" x2="1000" y2="83" stroke="#ffffff06" stroke-width="1"/>
+      <line x1="0" y1="167" x2="1000" y2="167" stroke="#ffffff06" stroke-width="1"/>
+      <line x1="0" y1="250" x2="1000" y2="250" stroke="#ffffff10" stroke-width="1"/>
+      <line x1="0" y1="333" x2="1000" y2="333" stroke="#ffffff06" stroke-width="1"/>
+      <line x1="0" y1="417" x2="1000" y2="417" stroke="#ffffff06" stroke-width="1"/>
+      <!-- Lignes de longitude -->
+      <line x1="250" y1="0" x2="250" y2="500" stroke="#ffffff06" stroke-width="1"/>
+      <line x1="500" y1="0" x2="500" y2="500" stroke="#ffffff06" stroke-width="1"/>
+      <line x1="750" y1="0" x2="750" y2="500" stroke="#ffffff06" stroke-width="1"/>
 
-      <!-- Grille -->
-      <line x1="0" y1="166" x2="1000" y2="166" stroke="#ffffff08" stroke-width="0.5"/>
-      <line x1="0" y1="250" x2="1000" y2="250" stroke="#ffffff15" stroke-width="0.5"/>
-      <line x1="0" y1="333" x2="1000" y2="333" stroke="#ffffff08" stroke-width="0.5"/>
-      <line x1="250" y1="0" x2="250" y2="500" stroke="#ffffff08" stroke-width="0.5"/>
-      <line x1="500" y1="0" x2="500" y2="500" stroke="#ffffff08" stroke-width="0.5"/>
-      <line x1="750" y1="0" x2="750" y2="500" stroke="#ffffff08" stroke-width="0.5"/>
-
+      <!-- ═══ CONTINENTS ═══ -->
       <!-- Amérique du Nord -->
-      <path d="M80,60 L145,52 L175,62 L192,80 L200,105 L215,115 L222,135 L215,155 L198,163 L182,158 L168,168 L152,172 L138,162 L122,167 L107,157 L92,142 L78,122 L68,98 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <path d="M52,48 L80,44 L92,55 L80,66 L56,64 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Mexique -->
-      <path d="M152,172 L178,177 L188,193 L180,208 L164,213 L153,202 L146,187 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Amérique du Sud -->
-      <path d="M182,213 L218,208 L242,218 L258,240 L266,268 L260,298 L247,322 L228,337 L208,332 L193,311 L184,282 L176,257 L178,232 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M55,48 L88,42 L115,48 L148,52 L178,62 L195,82 L202,108 L218,118 L224,138 L217,158 L200,165 L183,160 L170,170 L153,174 L138,164 L122,169 L106,158 L90,143 L76,123 L66,100 L58,75Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Alaska -->
+      <path d="M50,42 L78,37 L92,48 L80,60 L55,57Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Groenland -->
-      <path d="M208,28 L252,22 L268,36 L257,54 L228,60 L208,48 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Europe -->
-      <path d="M452,92 L478,85 L502,89 L518,103 L512,118 L497,126 L478,123 L460,113 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M210,25 L255,18 L272,33 L260,52 L230,57 L210,46Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Mexique -->
+      <path d="M153,174 L180,179 L190,196 L181,212 L164,217 L152,205 L145,189Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Amérique centrale -->
+      <path d="M164,217 L182,213 L188,225 L178,235 L162,230Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Amérique du Sud -->
+      <path d="M183,232 L220,225 L246,236 L262,258 L270,285 L264,315 L250,338 L230,350 L208,344 L192,322 L183,293 L175,265 L177,242Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Europe ouest -->
+      <path d="M450,90 L480,83 L505,87 L522,102 L515,120 L499,128 L479,125 L460,114Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Péninsule ibérique -->
+      <path d="M452,118 L475,112 L490,120 L486,138 L466,142 L450,132Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Scandinavie -->
-      <path d="M472,65 L494,58 L512,67 L507,82 L488,88 L470,80 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Islande -->
-      <path d="M388,58 L405,53 L415,62 L405,70 L390,66 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M470,62 L494,55 L514,64 L508,80 L488,87 L469,78Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- UK -->
+      <path d="M444,80 L458,74 L465,84 L456,93 L443,88Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Russie -->
-      <path d="M488,58 L605,50 L682,57 L725,70 L732,85 L702,98 L650,103 L592,98 L533,93 L508,82 L492,68 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M486,56 L608,48 L685,55 L728,68 L735,84 L705,97 L652,102 L594,97 L534,92 L508,80 L490,66Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Turquie -->
-      <path d="M518,115 L562,108 L588,115 L592,130 L572,140 L540,138 L516,130 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Moyen-Orient -->
-      <path d="M560,132 L600,128 L618,142 L612,162 L588,168 L562,158 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Afrique nord -->
-      <path d="M452,133 L548,128 L568,143 L562,172 L532,182 L490,184 L453,177 L440,158 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Afrique sub-saharienne -->
-      <path d="M458,182 L532,180 L558,197 L563,228 L548,263 L522,288 L498,290 L476,270 L460,242 L450,212 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M516,112 L564,106 L590,113 L594,129 L573,140 L540,138 L515,130Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Moyen-Orient/Iran -->
+      <path d="M558,130 L602,125 L622,140 L616,164 L590,172 L562,160Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Arabie Saoudite -->
+      <path d="M560,155 L604,150 L618,168 L610,188 L582,195 L558,180Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Afrique du Nord -->
+      <path d="M448,132 L550,126 L572,142 L565,174 L534,185 L490,187 L451,179 L438,157Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Afrique subsaharienne -->
+      <path d="M455,185 L535,182 L560,200 L565,232 L550,268 L524,292 L498,295 L475,274 L458,245 L448,214Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Madagascar -->
-      <path d="M 558,248 L 567,242 L 572,258 L 562,272 L 553,262 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M556,250 L566,243 L572,260 L562,275 L552,265Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Asie centrale -->
-      <path d="M 562,103 L 652,98 L 682,110 L 687,127 L 662,138 L 620,143 L 587,137 L 563,122 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M560,100 L654,95 L685,108 L690,126 L664,138 L622,143 L587,137 L562,120Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Pakistan/Afghanistan -->
+      <path d="M620,128 L658,122 L675,135 L670,152 L643,158 L620,147Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Inde -->
-      <path d="M 625,140 L 658,136 L 672,153 L 668,178 L 651,200 L 633,197 L 620,177 L 618,155 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Sri Lanka -->
-      <path d="M 652,203 L 658,198 L 662,207 L 655,212 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M622,148 L660,143 L675,160 L670,184 L652,205 L633,202 L619,182 L617,162Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Chine -->
-      <path d="M 682,82 L 762,78 L 803,88 L 815,108 L 802,128 L 772,138 L 730,133 L 696,123 L 680,108 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M684,80 L764,74 L806,84 L818,105 L805,126 L774,136 L732,131 L697,120 L681,105Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Asie du SE -->
-      <path d="M 732,136 L 778,130 L 797,148 L 792,170 L 763,180 L 733,170 L 727,152 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Philippines -->
-      <path d="M 800,155 L 812,148 L 820,158 L 810,168 L 798,162 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Japon -->
-      <path d="M 810,95 L 822,88 L 830,98 L 822,110 L 810,106 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M733,133 L779,127 L800,146 L794,170 L765,180 L734,170 L728,150Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Corée -->
-      <path d="M 792,102 L 806,97 L 812,107 L 802,116 L 788,110 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M790,100 L806,95 L814,106 L803,116 L788,110Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
+      <!-- Japon -->
+      <path d="M810,93 L823,86 L832,96 L823,109 L810,105Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
       <!-- Australie -->
-      <path d="M 782,288 L 847,280 L 872,297 L 870,328 L 847,346 L 812,343 L 784,320 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- Nouvelle-Zélande -->
-      <path d="M 880,332 L 890,325 L 895,338 L 883,346 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
-      <!-- UK/Irlande -->
-      <path d="M 448,82 L 460,77 L 466,87 L 457,95 L 447,90 Z" fill="#2d2d50" stroke="#4a4a7a" stroke-width="0.6"/>
+      <path d="M782,285 L848,277 L874,294 L872,326 L848,344 L812,342 L783,320Z" fill="#2a2d5a" stroke="#3d4278" stroke-width="0.8"/>
 
-      <!-- PINS fournisseurs intégrés directement dans le SVG -->
-      
-  <!-- Yongli Textiles -->
-  <g transform="translate(814.6,185.8)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Yongli Textiles — Guangzhou</title>
+      <!-- ═══ PICTOS FOURNISSEURS ═══ -->
+        <g transform="translate(814,185)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Yongli Textiles · Guangzhou</title>
   </g>
-  <!-- MPM Textiles -->
-  <g transform="translate(580.4,136.1)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>MPM Textiles — Istanbul</title>
+  <g transform="translate(580,138)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>MPM Textiles · Istanbul</title>
   </g>
-  <!-- Atelier Tessile -->
-  <g transform="translate(525.2,122.8)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Atelier Tessile — Como</title>
+  <g transform="translate(525,122)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Atelier Tessile · Como</title>
   </g>
-  <!-- Jin Zhi Xiang -->
-  <g transform="translate(833.8,166.0)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Jin Zhi Xiang — Hangzhou</title>
+  <g transform="translate(833,167)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Jin Zhi Xiang · Hangzhou</title>
   </g>
-  <!-- Malaika Crafts -->
-  <g transform="translate(478.9,156.7)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Malaika Crafts — Casablanca</title>
+  <g transform="translate(478,157)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Malaika Crafts · Casablanca</title>
   </g>
-  <!-- LidZcaps MFG -->
-  <g transform="translate(476.1,135.7)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>LidZcaps MFG — Porto</title>
+  <g transform="translate(476,136)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>LidZcaps MFG · Porto</title>
   </g>
-  <!-- Sunrise Textiles -->
-  <g transform="translate(702.4,197.0)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Sunrise Textiles — Mumbai</title>
+  <g transform="translate(701,196)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Sunrise Textiles · Mumbai</title>
   </g>
-  <!-- LuxeBox Paris -->
-  <g transform="translate(506.5,114.3)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>LuxeBox Paris — Paris</title>
+  <g transform="translate(506,115)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>LuxeBox Paris · Paris</title>
   </g>
-  <!-- Riri Zipper -->
-  <g transform="translate(524.9,122.6)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Riri Zipper — Mendrisio</title>
+  <g transform="translate(524,121)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Riri Zipper · Switzerland</title>
   </g>
-  <!-- EcoThread -->
-  <g transform="translate(513.6,104.5)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>EcoThread — Amsterdam</title>
+  <g transform="translate(512,105)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>EcoThread · Amsterdam</title>
   </g>
-  <!-- Pacific Knit -->
-  <g transform="translate(796.2,219.9)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Pacific Knit — Ho Chi Minh</title>
+  <g transform="translate(796,219)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Pacific Knit · Ho Chi Minh</title>
   </g>
-  <!-- Atlas Leather -->
-  <g transform="translate(477.8,162.1)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Atlas Leather — Marrakech</title>
+  <g transform="translate(479,162)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Atlas Leather · Marrakech</title>
   </g>
-  <!-- Seoul Fashion -->
-  <g transform="translate(852.7,145.6)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Seoul Fashion — Seoul</title>
+  <g transform="translate(853,146)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Seoul Fashion · Seoul</title>
   </g>
-  <!-- Texgroup -->
-  <g transform="translate(294.4,136.9)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Texgroup — New York</title>
+  <g transform="translate(290,137)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Texgroup · New York</title>
   </g>
-  <!-- Textil Barna -->
-  <g transform="translate(506.0,135.1)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Textil Barna — Barcelona</title>
+  <g transform="translate(506,130)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Textil Barna · Barcelona</title>
   </g>
-  <!-- Fabrics East -->
-  <g transform="translate(888.0,150.9)" style="cursor:pointer">
-    <path d="M0,-14 C-5,-14 -9,-10 -9,-5 C-9,2 0,12 0,12 C0,12 9,2 9,-5 C9,-10 5,-14 0,-14 Z" fill="#7B6FD0" stroke="#5a4fc0" stroke-width="0.8"/>
-    <circle cx="0" cy="-5" r="3.5" fill="white"/>
-    <title>Fabrics East — Tokyo</title>
+  <g transform="translate(888,151)" style="cursor:pointer">
+    <path d="M0,-16 C-6,-16 -10,-11 -10,-6 C-10,2 0,14 0,14 C0,14 10,2 10,-6 C10,-11 6,-16 0,-16Z" fill="#7B6FD0" opacity="0.95"/>
+    <circle cx="0" cy="-6" r="4" fill="white"/>
+    <title>Fabrics East · Tokyo</title>
   </g>
+
 
     </svg>
   </div>
 
+  <!-- Légende fournisseurs -->
+  <div style="padding:0 32px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+    <div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Yongli Textiles</div><div style="font-size:9px;color:#888">Guangzhou</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">MPM Textiles</div><div style="font-size:9px;color:#888">Istanbul</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Atelier Tessile</div><div style="font-size:9px;color:#888">Como</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Jin Zhi Xiang</div><div style="font-size:9px;color:#888">Hangzhou</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Malaika Crafts</div><div style="font-size:9px;color:#888">Casablanca</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">LidZcaps MFG</div><div style="font-size:9px;color:#888">Porto</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Sunrise Textiles</div><div style="font-size:9px;color:#888">Mumbai</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">LuxeBox Paris</div><div style="font-size:9px;color:#888">Paris</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Riri Zipper</div><div style="font-size:9px;color:#888">Switzerland</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">EcoThread</div><div style="font-size:9px;color:#888">Amsterdam</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Pacific Knit</div><div style="font-size:9px;color:#888">Ho Chi Minh</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Atlas Leather</div><div style="font-size:9px;color:#888">Marrakech</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Seoul Fashion</div><div style="font-size:9px;color:#888">Seoul</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Texgroup</div><div style="font-size:9px;color:#888">New York</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Textil Barna</div><div style="font-size:9px;color:#888">Barcelona</div></div>
+    </div><div style="display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #eee;border-radius:8px;padding:10px 12px">
+      <svg width="12" height="16" viewBox="0 0 12 16"><path d="M6,0 C3,0 0,2.7 0,6 C0,10.5 6,16 6,16 C6,16 12,10.5 12,6 C12,2.7 9,0 6,0Z" fill="#7B6FD0"/><circle cx="6" cy="6" r="2.5" fill="white"/></svg>
+      <div><div style="font-size:10px;font-weight:700;color:#1a1a2e">Fabrics East</div><div style="font-size:9px;color:#888">Tokyo</div></div>
+    </div>
+  </div>
 </div>
 
   <div class="map-filters-wrap">
