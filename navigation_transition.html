@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation de Transition - Ton Nouveau Départ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #f5576c;
+        }
+        
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .strength-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .strength-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .strength-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .action-items {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .action-items li {
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-items li:hover {
+            background: #e8f5e9;
+            transform: translateX(5px);
+        }
+        
+        .action-items li.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+            border-left-color: #ccc;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin-top: 20px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #667eea;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 20px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .option-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+        
+        .option-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+        }
+        
+        .option-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .pros-cons {
+            margin-top: 15px;
+        }
+        
+        .pros-cons h5 {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .pros {
+            color: #28a745;
+        }
+        
+        .cons {
+            color: #dc3545;
+        }
+        
+        .emergency-box {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            color: #333;
+        }
+        
+        .emergency-box h3 {
+            color: #d63031;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .reflection-questions {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .reflection-questions textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-family: inherit;
+            margin-top: 10px;
+            resize: vertical;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌅 Ton Nouveau Départ</h1>
+            <p>Navigation pour sortir du brouillard et retrouver ton élan</p>
+        </div>
+        
+        <div class="content">
+            <!-- Section 1: Où tu en es -->
+            <div class="section">
+                <h2>📍 Où tu en es - Le Constat</h2>
+                <div class="highlight-box">
+                    <p><strong>Tu n'es pas "juste stressé"</strong> - tu vis une remise en question existentielle après une décennie entrepreneuriale intense. Les échecs successifs (levée de fonds FS, Darel, rupture amicale avec Laure) se sont empilés et ont érodé ta confiance.</p>
+                </div>
+                
+                <h3>Les piliers ébranlés :</h3>
+                <ul style="list-style-position: inside; line-height: 1.8;">
+                    <li>🏠 <strong>Géographique :</strong> Paris ne te convient pas, Israël manque de vie sociale, l'Inde était un tournant non pris</li>
+                    <li>💼 <strong>Professionnel :</strong> Échecs successifs, dégoût du marché français, peur financière paralysante</li>
+                    <li>👥 <strong>Social :</strong> Peu d'amis, manque d'amis masculins, isolement</li>
+                    <li>💰 <strong>Financier :</strong> Dépendance chez ta mère, peur de l'avenir</li>
+                    <li>🧠 <strong>Identitaire :</strong> Incapable de travailler pour quelqu'un, mais les projets perso n'ont pas marché</li>
+                </ul>
+            </div>
+
+            <!-- Section 2: Tes Forces -->
+            <div class="section">
+                <h2>💪 Ce Qui Reste Intact - Tes Forces</h2>
+                <div class="strengths-grid">
+                    <div class="strength-card">
+                        <h4>🎯 Leadership Prouvé</h4>
+                        <p>Tu as embarqué 45 bénévoles sur FS et fini 2ème d'un concours startup. Tu sais fédérer et inspirer.</p>
+                    </div>
+                    
+                    <div class="strength-card">
+                        <h4>🌍 Adaptabilité Culturelle</h4>
+                        <p>Inde, Turquie, Israël - tu t'épanouis dans l'international et le multiculturel.</p>
+                    </div>
+                    
+                    <div class="strength-card">
+                        <h4>🔥 Moteurs Clairs</h4>
+                        <p>Contact humain, immobilier, voyages - tu sais ce qui t'anime vraiment.</p>
+                    </div>
+                    
+                    <div class="strength-card">
+                        <h4>☀️ Besoins Identifiés</h4>
+                        <p>Soleil, vie sociale, aventure - tu connais tes conditions d'épanouissement.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Actions Immédiates -->
+            <div class="section">
+                <h2>🚨 Urgences - Dans les 7 Prochains Jours</h2>
+                <div class="emergency-box">
+                    <h3>Stopper l'hémorragie émotionnelle :</h3>
+                    <p>Avant de penser "nouveau projet", il faut stabiliser ton état mental et physique.</p>
+                </div>
+                
+                <ul class="action-items">
+                    <li onclick="this.classList.toggle('completed')">
+                        ☀️ <strong>Soleil quotidien :</strong> 30 minutes de soleil par jour (même à Paris, même s'il fait froid). Non négociable.
+                    </li>
+                    <li onclick="this.classList.toggle('completed')">
+                        🏃 <strong>Mouvement :</strong> Réinstaller une routine physique (marche rapide, sport, peu importe). Pour les 4-5 kilos et surtout pour le mental.
+                    </li>
+                    <li onclick="this.classList.toggle('completed')">
+                        👔 <strong>Sortir de chez ta mère 2h/jour minimum :</strong> Café, bibliothèque, espace de coworking gratuit. Même sans objectif précis.
+                    </li>
+                    <li onclick="this.classList.toggle('completed')">
+                        🤝 <strong>1 contact social cette semaine :</strong> Appeler un ancien contact masculin (ancien collègue, connaissance). Pas pour demander quelque chose, juste reconnecter.
+                    </li>
+                    <li onclick="this.classList.toggle('completed')">
+                        📝 <strong>Écrire 15 min/jour :</strong> Tes pensées, tes peurs, tes idées. Vider le mental.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Section 4: Pistes Professionnelles -->
+            <div class="section">
+                <h2>💡 Pistes Professionnelles - Qui Combinent Tes 3 Amours</h2>
+                <p style="margin-bottom: 20px;">Contact + Immobilier + Voyages = Plusieurs options possibles</p>
+                
+                <div class="options-grid">
+                    <div class="option-card">
+                        <h4>1. Conciergerie de Luxe (Destination Soleil)</h4>
+                        <p>Services haut de gamme pour expatriés ou voyageurs (Israël, Portugal, Espagne, Grèce)</p>
+                        <div class="pros-cons">
+                            <h5 class="pros">✅ Pour :</h5>
+                            <ul>
+                                <li>Contact humain permanent</li>
+                                <li>Capitalise sur ton réseau international</li>
+                                <li>Faible investissement initial</li>
+                                <li>Mobilité géographique</li>
+                            </ul>
+                            <h5 class="cons">⚠️ Attention :</h5>
+                            <ul>
+                                <li>Besoin de réseau local à construire</li>
+                                <li>Revenus irréguliers au début</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card">
+                        <h4>2. Gestion Locations Saisonnières Premium</h4>
+                        <p>Gérer 5-10 propriétés haut de gamme pour propriétaires absents</p>
+                        <div class="pros-cons">
+                            <h5 class="pros">✅ Pour :</h5>
+                            <ul>
+                                <li>Immobilier + voyages (visiter les biens)</li>
+                                <li>Revenus récurrents possibles</li>
+                                <li>Ton expérience avec Darel est utile</li>
+                            </ul>
+                            <h5 class="cons">⚠️ Attention :</h5>
+                            <ul>
+                                <li>Marché concurrentiel</li>
+                                <li>Demande rigueur opérationnelle</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card">
+                        <h4>3. Accompagnement Expatriés (Niche)</h4>
+                        <p>Aider francophones à s'installer en Israël/Portugal/ailleurs (immobilier + administratif + réseau)</p>
+                        <div class="pros-cons">
+                            <h5 class="pros">✅ Pour :</h5>
+                            <ul>
+                                <li>Tu connais les galères d'expatriation</li>
+                                <li>Très humain</li>
+                                <li>Missions ponctuelles ou abonnement</li>
+                            </ul>
+                            <h5 class="cons">⚠️ Attention :</h5>
+                            <ul>
+                                <li>Besoin de crédibilité/témoignages</li>
+                                <li>Clientèle limitée</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="option-card">
+                        <h4>4. Intermédiation Immobilier International</h4>
+                        <p>Connecter investisseurs français avec opportunités (Israël, Turquie, Portugal)</p>
+                        <div class="pros-cons">
+                            <h5 class="pros">✅ Pour :</h5>
+                            <ul>
+                                <li>Ton réseau dans plusieurs pays</li>
+                                <li>Commissions potentiellement élevées</li>
+                                <li>Contact permanent</li>
+                            </ul>
+                            <h5 class="cons">⚠️ Attention :</h5>
+                            <ul>
+                                <li>Cycles de vente longs</li>
+                                <li>Besoin d'expertise juridique locale</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Géographie -->
+            <div class="section">
+                <h2>🌍 Où Vivre ? - Le Critère Soleil + Réseau</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Principe clé :</strong> Ne choisis pas un endroit juste pour le soleil. Choisis un endroit où tu peux CONSTRUIRE un réseau social et professionnel.</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>📍 Tel Aviv / Israël</h4>
+                        <p><strong>Pour :</strong> Tu t'y sens bien, soleil, dynamisme entrepreneurial</p>
+                        <p><strong>Défi :</strong> Zéro vie sociale actuellement, langue OK mais réseau à construire</p>
+                        <p><strong>Action :</strong> Rejoindre 2-3 communautés (sport, entrepreneurs français/internationaux, coworking) AVANT de décider d'y rester</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>📍 Lisbonne / Portugal</h4>
+                        <p><strong>Pour :</strong> Soleil, scène startup active, communauté française importante, coût de vie raisonnable</p>
+                        <p><strong>Défi :</strong> Pas de réseau existant, tendance à devenir une bulle d'expats</p>
+                        <p><strong>Action :</strong> Tester 1 mois, voir si l'énergie te convient</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>📍 Istanbul (Retour ?)</h4>
+                        <p><strong>Pour :</strong> Tu y étais joyeux, tu connais la ville</p>
+                        <p><strong>Défi :</strong> Retour difficile la dernière fois, instabilité économique/politique</p>
+                        <p><strong>Action :</strong> Clarifier ce qui avait rendu le retour difficile avant d'envisager</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>📍 Barcelone / Valence</h4>
+                        <p><strong>Pour :</strong> Soleil, Méditerranée, scène internationale, proximité Paris</p>
+                        <p><strong>Défi :</strong> Tourisme de masse, coût de vie élevé (Barcelone)</p>
+                        <p><strong>Action :</strong> Valence pourrait être un bon compromis (moins touristique)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Plan 90 Jours -->
+            <div class="section">
+                <h2>🗓️ Plan 90 Jours - Sortir du Brouillard</h2>
+                
+                <h3>Mois 1 : Stabilisation (Mars)</h3>
+                <ul style="list-style-position: inside; line-height: 2;">
+                    <li>✅ Appliquer les 5 actions d'urgence quotidiennement</li>
+                    <li>✅ Recontacter 5 personnes de ton réseau (sans agenda commercial)</li>
+                    <li>✅ Perdre 2-3 kilos (routine physique + soleil)</li>
+                    <li>✅ Identifier 2 pistes professionnelles concrètes parmi les 4 options</li>
+                    <li>✅ Décider où tester pendant 1 mois (Israël, Lisbonne, ou autre)</li>
+                </ul>
+                
+                <h3>Mois 2 : Exploration (Avril)</h3>
+                <ul style="list-style-position: inside; line-height: 2;">
+                    <li>🌍 S'installer 1 mois dans la ville choisie</li>
+                    <li>🤝 Rejoindre 3 communautés locales (sport, entrepreneurs, expatriés)</li>
+                    <li>💼 Faire 10 entretiens exploratoires sur les 2 pistes pro choisies</li>
+                    <li>📝 Documenter : qu'est-ce qui marche ? Qu'est-ce qui manque ?</li>
+                </ul>
+                
+                <h3>Mois 3 : Décision (Mai)</h3>
+                <ul style="list-style-position: inside; line-height: 2;">
+                    <li>📍 Décider du lieu de vie pour les 6 prochains mois</li>
+                    <li>🚀 Lancer micro-projet (version test de l'activité choisie)</li>
+                    <li>💰 Objectif : 1 premier client/revenu, même symbolique</li>
+                    <li>👥 Avoir 3-5 contacts réguliers locaux (dont au moins 2 masculins)</li>
+                </ul>
+            </div>
+
+            <!-- Section 7: Questions de Réflexion -->
+            <div class="section">
+                <h2>🧠 Questions pour Avancer</h2>
+                
+                <div class="reflection-questions">
+                    <h4>1. Si l'argent n'était pas un problème pendant 6 mois, où irais-tu vivre et que ferais-tu ?</h4>
+                    <textarea placeholder="Écris librement..."></textarea>
+                </div>
+                
+                <div class="reflection-questions">
+                    <h4>2. Qu'est-ce qui te manquait le PLUS dans la période Turquie (la plus joyeuse) ?</h4>
+                    <textarea placeholder="Écris librement..."></textarea>
+                </div>
+                
+                <div class="reflection-questions">
+                    <h4>3. Si tu devais choisir UN élément de ta vie professionnelle passée à recréer, ce serait quoi ?</h4>
+                    <textarea placeholder="Écris librement..."></textarea>
+                </div>
+                
+                <div class="reflection-questions">
+                    <h4>4. Quel ami masculin de ton passé aimerais-tu recontacter cette semaine ? (Même si ça fait longtemps)</h4>
+                    <textarea placeholder="Écris librement..."></textarea>
+                </div>
+            </div>
+
+            <!-- Section 8: Message Final -->
+            <div class="section">
+                <h2>💬 Un Dernier Mot</h2>
+                <div class="highlight-box">
+                    <p><strong>Tu n'es pas "perdu pour toujours".</strong> Tu es dans une transition. Les périodes les plus inconfortables précèdent souvent les plus grandes transformations.</p>
+                    <br>
+                    <p><strong>L'Inde était peut-être un tournant non pris</strong> - mais ce n'est pas trop tard. À 50 ans, tu as encore 20-30 ans de vie professionnelle active. Ce n'est pas fini, c'est un nouveau chapitre.</p>
+                    <br>
+                    <p><strong>L'échec de FS et Darel n'efface pas ce que tu as accompli :</strong> embarquer 45 personnes, finir 2ème d'un concours, vivre dans 3 pays, parler plusieurs langues. Tout ça reste.</p>
+                    <br>
+                    <p><strong>La prochaine aventure</strong> ne sera probablement pas "grandiose" au début. Ce sera peut-être juste : un appart au soleil, 3-4 amis proches, un projet modeste mais qui te fait vibrer. Et ce sera déjà énorme.</p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="window.print()">🖨️ Imprimer ce Plan</button>
+                    <button class="btn" onclick="alert('Sauvegarde tes réponses aux questions de réflexion dans un document séparé !')">💾 Sauvegarder mes Réflexions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sauvegarder l'état des action items dans le localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const actionItems = document.querySelectorAll('.action-items li');
+            
+            actionItems.forEach((item, index) => {
+                const savedState = localStorage.getItem(`action_${index}`);
+                if (savedState === 'completed') {
+                    item.classList.add('completed');
+                }
+                
+                item.addEventListener('click', function() {
+                    if (this.classList.contains('completed')) {
+                        localStorage.setItem(`action_${index}`, '');
+                    } else {
+                        localStorage.setItem(`action_${index}`, 'completed');
+                    }
+                });
+            });
+            
+            // Sauvegarder les réponses aux questions
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach((textarea, index) => {
+                const savedText = localStorage.getItem(`reflection_${index}`);
+                if (savedText) {
+                    textarea.value = savedText;
+                }
+                
+                textarea.addEventListener('input', function() {
+                    localStorage.setItem(`reflection_${index}`, this.value);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
