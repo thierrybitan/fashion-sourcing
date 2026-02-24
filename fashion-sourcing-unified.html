@@ -510,22 +510,22 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 
 <!-- SIDEBAR -->
 <aside>
-  <div class="nav-item active" id="nav-dashboard" onclick="window.location='#mod-dashboard'" style="cursor:pointer" ">
+  <div class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard')" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Dashboard
   </div>
 
-  <div class="nav-item" id="nav-search" onclick="window.location='#mod-search'" style="cursor:pointer" ; toggleSub('sub-search')">
+  <div class="nav-item" id="nav-search" onclick="navigate('search')" style="cursor:pointer" ; toggleSub('sub-search')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     Search <span class="nav-arrow" id="arr-search">∨</span>
   </div>
   <div class="nav-sub" id="sub-search">
-    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('material')">Material</span>
-    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('component')">Component</span>
-    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('manufacturer')">Manufacturer</span>
-    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('packaging')">Packaging</span>
-    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('expert')">Expert</span>
-    <span class="nav-sub-item" id="nav-sub-mapping" onclick="window.location='#mod-mapping'" style="cursor:pointer" ">Mapping</span>
+    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('material')">Material</span>
+    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('component')">Component</span>
+    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('manufacturer')">Manufacturer</span>
+    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('packaging')">Packaging</span>
+    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('expert')">Expert</span>
+    <span class="nav-sub-item" id="nav-sub-mapping" onclick="navigate('mapping')" style="cursor:pointer" ">Mapping</span>
   </div>
 
   <div class="nav-item" onclick="showComingSoon('Campaign')">
@@ -538,13 +538,13 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
     Events
   </div>
 
-  <div class="nav-item" id="nav-job" onclick="window.location='#mod-job'" style="cursor:pointer" ; toggleSub('sub-job')">
+  <div class="nav-item" id="nav-job" onclick="navigate('job')" style="cursor:pointer" ; toggleSub('sub-job')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
     Job <span class="nav-arrow" id="arr-job">∨</span>
   </div>
   <div class="nav-sub" id="sub-job">
-    <span class="nav-sub-item" onclick="window.location='#mod-job'" style="cursor:pointer" ; showJobView('jv-grid')">Browse Jobs</span>
-    <span class="nav-sub-item" onclick="window.location='#mod-job'" style="cursor:pointer" ; showJobView('jv-list')">Job List</span>
+    <span class="nav-sub-item" onclick="navigate('job')" style="cursor:pointer" ; showJobView('jv-grid')">Browse Jobs</span>
+    <span class="nav-sub-item" onclick="navigate('job')" style="cursor:pointer" ; showJobView('jv-list')">Job List</span>
   </div>
 
   <div class="nav-item" onclick="showComingSoon('Messaging')">
@@ -567,16 +567,16 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
     RFQ
   </div>
 
-  <div class="nav-item" id="nav-stock" onclick="window.location='#mod-stock'" style="cursor:pointer" ; toggleSub('sub-stock')">
+  <div class="nav-item" id="nav-stock" onclick="navigate('stock')" style="cursor:pointer" ; toggleSub('sub-stock')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
     Stock <span class="nav-arrow" id="arr-stock">∨</span>
   </div>
   <div class="nav-sub" id="sub-stock">
-    <span class="nav-sub-item active" onclick="window.location='#mod-stock'" style="cursor:pointer" ">Material</span>
-    <span class="nav-sub-item" onclick="window.location='#mod-stock'" style="cursor:pointer" ">Product</span>
+    <span class="nav-sub-item active" onclick="navigate('stock')" style="cursor:pointer" ">Material</span>
+    <span class="nav-sub-item" onclick="navigate('stock')" style="cursor:pointer" ">Product</span>
   </div>
 
-  <div class="nav-item" id="nav-trendgallery" onclick="window.location='#mod-trendgallery'" style="cursor:pointer" ">
+  <div class="nav-item" id="nav-trendgallery" onclick="navigate('trendgallery')" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
     Trend Gallery
   </div>
@@ -596,7 +596,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
     Ads Program
   </div>
 
-  <div class="nav-item" id="nav-planet" onclick="window.location='#mod-planet'" style="cursor:pointer" ">
+  <div class="nav-item" id="nav-planet" onclick="navigate('planet')" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
     We Help The Planet
   </div>
