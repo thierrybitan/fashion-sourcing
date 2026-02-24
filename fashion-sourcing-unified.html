@@ -42,6 +42,10 @@ aside { position: fixed; top: var(--header-h); left: 0; bottom: 0; width: var(--
 main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: auto; }
 .module { display: none; }
 .module.active { display: block; }
+/* Navigation CSS pure - Safari compatible */
+#mod-dashboard { display: block; }
+#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:target, #mod-mapping:target, #mod-trendgallery:target { display: block; }
+body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:target, #mod-mapping:target, #mod-trendgallery:target) #mod-dashboard { display: none; }
 
 /* ═══════════════════════════════
    SHARED COMPONENTS
@@ -468,7 +472,7 @@ main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(
 
 <!-- HEADER -->
 <header>
-  <div class="logo" onclick="navigate('dashboard')" style="cursor:pointer;display:flex;align-items:center;gap:12px">
+  <div class="logo" href="#mod-dashboard"" style="cursor:pointer;display:flex;align-items:center;gap:12px">
     <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <clipPath id="c"><circle cx="20" cy="20" r="19"/></clipPath>
@@ -506,22 +510,22 @@ main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(
 
 <!-- SIDEBAR -->
 <aside>
-  <div class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard')">
+  <div class="nav-item active" id="nav-dashboard" onclick="window.location='#mod-dashboard'" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Dashboard
   </div>
 
-  <div class="nav-item" id="nav-search" onclick="navigate('search'); toggleSub('sub-search')">
+  <div class="nav-item" id="nav-search" onclick="window.location='#mod-search'" style="cursor:pointer" ; toggleSub('sub-search')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     Search <span class="nav-arrow" id="arr-search">∨</span>
   </div>
   <div class="nav-sub" id="sub-search">
-    <span class="nav-sub-item" onclick="navigate('search'); switchSearchTab('material')">Material</span>
-    <span class="nav-sub-item" onclick="navigate('search'); switchSearchTab('component')">Component</span>
-    <span class="nav-sub-item" onclick="navigate('search'); switchSearchTab('manufacturer')">Manufacturer</span>
-    <span class="nav-sub-item" onclick="navigate('search'); switchSearchTab('packaging')">Packaging</span>
-    <span class="nav-sub-item" onclick="navigate('search'); switchSearchTab('expert')">Expert</span>
-    <span class="nav-sub-item" id="nav-sub-mapping" onclick="navigate('mapping')">Mapping</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('material')">Material</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('component')">Component</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('manufacturer')">Manufacturer</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('packaging')">Packaging</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-search'" style="cursor:pointer" ; switchSearchTab('expert')">Expert</span>
+    <span class="nav-sub-item" id="nav-sub-mapping" onclick="window.location='#mod-mapping'" style="cursor:pointer" ">Mapping</span>
   </div>
 
   <div class="nav-item" onclick="showComingSoon('Campaign')">
@@ -534,13 +538,13 @@ main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(
     Events
   </div>
 
-  <div class="nav-item" id="nav-job" onclick="navigate('job'); toggleSub('sub-job')">
+  <div class="nav-item" id="nav-job" onclick="window.location='#mod-job'" style="cursor:pointer" ; toggleSub('sub-job')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
     Job <span class="nav-arrow" id="arr-job">∨</span>
   </div>
   <div class="nav-sub" id="sub-job">
-    <span class="nav-sub-item" onclick="navigate('job'); showJobView('jv-grid')">Browse Jobs</span>
-    <span class="nav-sub-item" onclick="navigate('job'); showJobView('jv-list')">Job List</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-job'" style="cursor:pointer" ; showJobView('jv-grid')">Browse Jobs</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-job'" style="cursor:pointer" ; showJobView('jv-list')">Job List</span>
   </div>
 
   <div class="nav-item" onclick="showComingSoon('Messaging')">
@@ -563,16 +567,16 @@ main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(
     RFQ
   </div>
 
-  <div class="nav-item" id="nav-stock" onclick="navigate('stock'); toggleSub('sub-stock')">
+  <div class="nav-item" id="nav-stock" onclick="window.location='#mod-stock'" style="cursor:pointer" ; toggleSub('sub-stock')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
     Stock <span class="nav-arrow" id="arr-stock">∨</span>
   </div>
   <div class="nav-sub" id="sub-stock">
-    <span class="nav-sub-item active" onclick="navigate('stock')">Material</span>
-    <span class="nav-sub-item" onclick="navigate('stock')">Product</span>
+    <span class="nav-sub-item active" onclick="window.location='#mod-stock'" style="cursor:pointer" ">Material</span>
+    <span class="nav-sub-item" onclick="window.location='#mod-stock'" style="cursor:pointer" ">Product</span>
   </div>
 
-  <div class="nav-item" id="nav-trendgallery" onclick="navigate('trendgallery')">
+  <div class="nav-item" id="nav-trendgallery" onclick="window.location='#mod-trendgallery'" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
     Trend Gallery
   </div>
@@ -592,7 +596,7 @@ main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(
     Ads Program
   </div>
 
-  <div class="nav-item" id="nav-planet" onclick="navigate('planet')">
+  <div class="nav-item" id="nav-planet" onclick="window.location='#mod-planet'" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
     We Help The Planet
   </div>
@@ -744,12 +748,12 @@ main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(
 
         <!-- 6 module cards -->
         <div class="dash-grid" style="margin-bottom:0">
-          <div class="dash-card" onclick="navigate('search')"><div class="dash-card-icon">🏭</div><div class="dash-card-title">Manufacturers</div><div class="dash-card-desc">Find verified suppliers worldwide.</div><div class="dash-card-stat">248</div><div class="dash-card-stat-label">Active Suppliers</div></div>
-          <div class="dash-card" onclick="navigate('job')"><div class="dash-card-icon">💼</div><div class="dash-card-title">Job Board</div><div class="dash-card-desc">Browse fashion industry job offers.</div><div class="dash-card-stat">300</div><div class="dash-card-stat-label">Open Positions</div></div>
-          <div class="dash-card" onclick="navigate('stock')"><div class="dash-card-icon">🧶</div><div class="dash-card-title">Stocks</div><div class="dash-card-desc">Buy surplus materials. Reduce waste.</div><div class="dash-card-stat">1,842</div><div class="dash-card-stat-label">Lots Available</div></div>
-          <div class="dash-card" onclick="navigate('search'); switchSearchTab('expert')"><div class="dash-card-icon">🎨</div><div class="dash-card-title">Experts</div><div class="dash-card-desc">Connect with fashion freelancers.</div><div class="dash-card-stat">312</div><div class="dash-card-stat-label">Available</div></div>
-          <div class="dash-card" onclick="navigate('search'); switchSearchTab('brand')"><div class="dash-card-icon">👗</div><div class="dash-card-title">Brand Directory</div><div class="dash-card-desc">4,600+ brands looking for suppliers.</div><div class="dash-card-stat">4,600+</div><div class="dash-card-stat-label">Registered</div></div>
-          <div class="dash-card" onclick="navigate('planet')"><div class="dash-card-icon">🌍</div><div class="dash-card-title">We Help The Planet</div><div class="dash-card-desc">Your subscription makes a difference.</div><div class="dash-card-stat">€124K</div><div class="dash-card-stat-label">Donated</div></div>
+          <div class="dash-card" href="#mod-search""><div class="dash-card-icon">🏭</div><div class="dash-card-title">Manufacturers</div><div class="dash-card-desc">Find verified suppliers worldwide.</div><div class="dash-card-stat">248</div><div class="dash-card-stat-label">Active Suppliers</div></div>
+          <div class="dash-card" href="#mod-job""><div class="dash-card-icon">💼</div><div class="dash-card-title">Job Board</div><div class="dash-card-desc">Browse fashion industry job offers.</div><div class="dash-card-stat">300</div><div class="dash-card-stat-label">Open Positions</div></div>
+          <div class="dash-card" href="#mod-stock""><div class="dash-card-icon">🧶</div><div class="dash-card-title">Stocks</div><div class="dash-card-desc">Buy surplus materials. Reduce waste.</div><div class="dash-card-stat">1,842</div><div class="dash-card-stat-label">Lots Available</div></div>
+          <div class="dash-card" href="#mod-search"; switchSearchTab('expert')"><div class="dash-card-icon">🎨</div><div class="dash-card-title">Experts</div><div class="dash-card-desc">Connect with fashion freelancers.</div><div class="dash-card-stat">312</div><div class="dash-card-stat-label">Available</div></div>
+          <div class="dash-card" href="#mod-search"; switchSearchTab('brand')"><div class="dash-card-icon">👗</div><div class="dash-card-title">Brand Directory</div><div class="dash-card-desc">4,600+ brands looking for suppliers.</div><div class="dash-card-stat">4,600+</div><div class="dash-card-stat-label">Registered</div></div>
+          <div class="dash-card" href="#mod-planet""><div class="dash-card-icon">🌍</div><div class="dash-card-title">We Help The Planet</div><div class="dash-card-desc">Your subscription makes a difference.</div><div class="dash-card-stat">€124K</div><div class="dash-card-stat-label">Donated</div></div>
         </div>
 
         <!-- Recent Activity — sous les cards -->
