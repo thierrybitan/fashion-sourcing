@@ -40,12 +40,7 @@ aside { position: fixed; top: var(--header-h); left: 0; bottom: 0; width: var(--
 
 /* ── MAIN ── */
 main { margin-left: var(--sidebar-w); margin-top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: auto; }
-.module { display: none; }
-.module.active { display: block; }
-/* Navigation CSS pure - Safari compatible */
-#mod-dashboard { display: block; }
-#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:target, #mod-mapping:target, #mod-trendgallery:target { display: block; }
-body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:target, #mod-mapping:target, #mod-trendgallery:target) #mod-dashboard { display: none; }
+.module { display: block; }
 
 /* ═══════════════════════════════
    SHARED COMPONENTS
@@ -510,22 +505,22 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 
 <!-- SIDEBAR -->
 <aside>
-  <div class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard')" style="cursor:pointer" ">
+  <div class="nav-item active" id="nav-dashboard" onclick="document.getElementById('mod-dashboard').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Dashboard
   </div>
 
-  <div class="nav-item" id="nav-search" onclick="navigate('search')" style="cursor:pointer" ; toggleSub('sub-search')">
+  <div class="nav-item" id="nav-search" onclick="document.getElementById('mod-search').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; toggleSub('sub-search')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     Search <span class="nav-arrow" id="arr-search">∨</span>
   </div>
   <div class="nav-sub" id="sub-search">
-    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('material')">Material</span>
-    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('component')">Component</span>
-    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('manufacturer')">Manufacturer</span>
-    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('packaging')">Packaging</span>
-    <span class="nav-sub-item" onclick="navigate('search')" style="cursor:pointer" ; switchSearchTab('expert')">Expert</span>
-    <span class="nav-sub-item" id="nav-sub-mapping" onclick="navigate('mapping')" style="cursor:pointer" ">Mapping</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-search').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; switchSearchTab('material')">Material</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-search').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; switchSearchTab('component')">Component</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-search').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; switchSearchTab('manufacturer')">Manufacturer</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-search').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; switchSearchTab('packaging')">Packaging</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-search').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; switchSearchTab('expert')">Expert</span>
+    <span class="nav-sub-item" id="nav-sub-mapping" onclick="document.getElementById('mod-mapping').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ">Mapping</span>
   </div>
 
   <div class="nav-item" onclick="showComingSoon('Campaign')">
@@ -538,13 +533,13 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
     Events
   </div>
 
-  <div class="nav-item" id="nav-job" onclick="navigate('job')" style="cursor:pointer" ; toggleSub('sub-job')">
+  <div class="nav-item" id="nav-job" onclick="document.getElementById('mod-job').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; toggleSub('sub-job')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
     Job <span class="nav-arrow" id="arr-job">∨</span>
   </div>
   <div class="nav-sub" id="sub-job">
-    <span class="nav-sub-item" onclick="navigate('job')" style="cursor:pointer" ; showJobView('jv-grid')">Browse Jobs</span>
-    <span class="nav-sub-item" onclick="navigate('job')" style="cursor:pointer" ; showJobView('jv-list')">Job List</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-job').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; showJobView('jv-grid')">Browse Jobs</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-job').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; showJobView('jv-list')">Job List</span>
   </div>
 
   <div class="nav-item" onclick="showComingSoon('Messaging')">
@@ -567,16 +562,16 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
     RFQ
   </div>
 
-  <div class="nav-item" id="nav-stock" onclick="navigate('stock')" style="cursor:pointer" ; toggleSub('sub-stock')">
+  <div class="nav-item" id="nav-stock" onclick="document.getElementById('mod-stock').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ; toggleSub('sub-stock')">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
     Stock <span class="nav-arrow" id="arr-stock">∨</span>
   </div>
   <div class="nav-sub" id="sub-stock">
-    <span class="nav-sub-item active" onclick="navigate('stock')" style="cursor:pointer" ">Material</span>
-    <span class="nav-sub-item" onclick="navigate('stock')" style="cursor:pointer" ">Product</span>
+    <span class="nav-sub-item active" onclick="document.getElementById('mod-stock').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ">Material</span>
+    <span class="nav-sub-item" onclick="document.getElementById('mod-stock').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ">Product</span>
   </div>
 
-  <div class="nav-item" id="nav-trendgallery" onclick="navigate('trendgallery')" style="cursor:pointer" ">
+  <div class="nav-item" id="nav-trendgallery" onclick="document.getElementById('mod-trendgallery').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
     Trend Gallery
   </div>
@@ -596,7 +591,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
     Ads Program
   </div>
 
-  <div class="nav-item" id="nav-planet" onclick="navigate('planet')" style="cursor:pointer" ">
+  <div class="nav-item" id="nav-planet" onclick="document.getElementById('mod-planet').scrollIntoView({behavior:'smooth'})" style="cursor:pointer" ">
     <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
     We Help The Planet
   </div>
@@ -612,10 +607,10 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
   </div>
 </aside>
 
-<main id="main-content">
+<main id="main-content" style="overflow-y:auto;height:calc(100vh - 56px);scroll-behavior:smooth">
 
 <!-- ══════════ DASHBOARD ══════════ -->
-<div class="module active" id="mod-dashboard">
+<div class="module active" style="min-height:100vh" id="mod-dashboard">
   <div style="padding:28px 32px;overflow-y:auto;height:100%">
 
     <div class="dash-welcome">Welcome back, Ellie 👋</div>
@@ -774,7 +769,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 </div>
 
 <!-- ══════════ MODULE 1: SEARCH ══════════ -->
-<div class="module" id="mod-search">
+<div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" id="mod-search">
   <!-- Search Results View -->
   <div class="search-view active" id="sv-results">
     <div class="page-header" id="s-page-title">MANUFACTURER SEARCH</div>
@@ -971,7 +966,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 </div>
 
 <!-- ══════════ MODULE 2: JOB ══════════ -->
-<div class="module" id="mod-job">
+<div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" id="mod-job">
   <!-- Grid View -->
   <div class="job-view active" id="jv-grid">
     <div class="page-header">JOB</div>
@@ -1122,7 +1117,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
   </div>
 
 <!-- ══════════ MODULE 4: STOCK ══════════ -->
-<div class="module" id="mod-stock">
+<div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" id="mod-stock">
   <div class="stock-view active" id="stv-grid">
     <div style="padding:24px 24px 0;font-size:20px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-align:center;color:var(--gray-800)">STOCK</div>
     <div style="height:16px"></div>
@@ -1206,7 +1201,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 </div>
 
 <!-- ══════════ WE HELP THE PLANET ══════════ -->
-<div class="module" id="mod-planet">
+<div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" id="mod-planet">
   <div class="planet-hero"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&h=500&fit=crop&q=85" alt="Children"></div>
   <div class="planet-content">
     <h1 class="planet-title">We Help The Planet</h1>
@@ -1260,7 +1255,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 
 
 <!-- ══════════ MODULE: MAPPING ══════════ -->
-<div class="module" <div class="module" id="mod-mapping">
+<div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" <div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" id="mod-mapping">
   <div style="padding:24px 32px 16px">
     <div style="font-size:11px;font-weight:700;letter-spacing:.14em;color:#7B6FD0;text-transform:uppercase;margin-bottom:4px">Global Network</div>
     <div style="font-size:22px;font-weight:800;color:#1a1a2e;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px">MAPPING</div>
@@ -1525,7 +1520,7 @@ body:has(#mod-search:target, #mod-job:target, #mod-stock:target, #mod-planet:tar
 </div>
 
 <!-- ══════════ MODULE: TREND GALLERY ══════════ -->
-<div class="module" <div class="module" id="mod-trendgallery">
+<div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" <div class="module" style="min-height:100vh;border-top:1px solid #f0f0f0" id="mod-trendgallery">
   <div class="page-header">TREND GALLERY</div>
   <div style="padding:0 32px 32px">
     <div class="tab-nav" style="margin-top:20px">
