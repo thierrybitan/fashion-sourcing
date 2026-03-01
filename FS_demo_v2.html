@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Sourcing — Search & Suppliers</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --violet: #7030A0;
+  --violet-dk: #5A2080;
+  --violet-lt: #F3EDF8;
+  --violet-mid: #E8D8F5;
+  --white: #FFFFFF;
+  --grey-bg: #F5F5F7;
+  --grey-lt: #F0F0F2;
+  --grey-border: #E0E0E6;
+  --grey-mid: #9090A0;
+  --grey-dk: #555560;
+  --ink: #1A1A2E;
+  --green: #00B37A;
+  --green-lt: #E6F9F3;
+  --blue: #2E7DF7;
+  --blue-lt: #EBF2FF;
+  --orange: #F59300;
+  --orange-lt: #FFF3E0;
+  --red: #E53935;
+  --sidebar-w: 220px;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--grey-bg); color: var(--ink); display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+
+/* ── TOP HEADER ── */
+.top-header {
+  height: 56px;
+  background: var(--violet);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 16px;
+  flex-shrink: 0;
+  z-index: 200;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: var(--sidebar-w);
+  padding-right: 20px;
+}
+.logo-icon {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items:center; justify-content:center;
+  font-size: 16px;
+}
+.logo-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.search-bar-wrap {
+  flex: 1;
+  max-width: 640px;
+}
+.search-bar {
+  width: 100%;
+  height: 36px;
+  background: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 14px 0 36px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239090A0' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.search-bar::placeholder { color: var(--grey-mid); }
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-tag {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+.user-name {
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ── BODY LAYOUT ── */
+.body-wrap {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: white;
+  border-right: 1px solid var(--grey-border);
+  overflow-y: auto;
+  flex-shrink: 0;
+  padding: 8px 0;
+}
+.sidebar-section {
+  padding: 16px 16px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--grey-dk);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+.sidebar-item:hover { background: var(--grey-lt); color: var(--ink); }
+.sidebar-item.active {
+  background: var(--violet-lt);
+  color: var(--violet);
+  font-weight: 600;
+  border-left-color: var(--violet);
+}
+.sidebar-item .icon { font-size: 15px; width: 18px; text-align:center; }
+.sidebar-sub {
+  padding: 4px 16px 4px 44px;
+  font-size: 12px;
+  color: var(--grey-mid);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.sidebar-sub:hover { color: var(--violet); }
+.sidebar-sub.active { color: var(--violet); font-weight: 600; }
+.sidebar-chevron { margin-left:auto; font-size: 10px; color: var(--grey-mid); }
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── ENTITY TABS ── */
+.entity-tabs {
+  background: white;
+  border-bottom: 1px solid var(--grey-border);
+  display: flex;
+  padding: 0 24px;
+  gap: 0;
+  flex-shrink: 0;
+}
+.entity-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--grey-mid);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.entity-tab:hover { color: var(--violet); }
+.entity-tab.active {
+  color: var(--violet);
+  font-weight: 600;
+  border-bottom-color: var(--violet);
+}
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: white;
+  border-bottom: 1px solid var(--grey-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.filter-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--grey-border);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey-dk);
+  cursor: pointer;
+  background: white;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-pill:hover { border-color: var(--violet); color: var(--violet); }
+.filter-pill.active { border-color: var(--violet); background: var(--violet-lt); color: var(--violet); }
+.filter-pill .arrow { font-size: 9px; }
+.filter-search-inline {
+  flex: 1;
+  min-width: 180px;
+  max-width: 300px;
+  height: 34px;
+  border: 1.5px solid var(--grey-border);
+  border-radius: 20px;
+  padding: 0 14px 0 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--ink);
+  outline: none;
+  background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%239090A0' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.868-3.833zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 10px center;
+  transition: border-color 0.15s;
+  margin-left: auto;
+}
+.filter-search-inline:focus { border-color: var(--violet); }
+.filter-search-inline::placeholder { color: var(--grey-mid); }
+.btn-reset {
+  padding: 6px 16px;
+  border: 1.5px solid var(--grey-border);
+  border-radius: 20px;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-reset:hover { border-color: var(--red); color: var(--red); }
+
+/* ── FILTER DROPDOWN PANEL ── */
+.filter-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 300;
+  background: white;
+  border: 1px solid var(--grey-border);
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 16px;
+  min-width: 280px;
+  display: none;
+}
+.filter-dropdown.open { display: block; }
+.filter-bar-item { position: relative; }
+
+.dropdown-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-mid);
+  margin-bottom: 10px;
+}
+.chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.dchip {
+  padding: 5px 12px;
+  border: 1.5px solid var(--grey-border);
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey-dk);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dchip:hover { border-color: var(--violet); color: var(--violet); }
+.dchip.active { background: var(--violet); border-color: var(--violet); color: white; }
+.dchip.gold { border-color: #B8860B; color: #B8860B; background: #FFFAED; }
+.dchip.gold.active { background: #B8860B; border-color: #B8860B; color: white; }
+
+.dropdown-divider { border: none; border-top: 1px solid var(--grey-border); margin: 10px 0; }
+.range-block { padding: 4px 0; }
+.range-top { display: flex; justify-content: space-between; align-items:center; margin-bottom: 8px; }
+.range-label { font-size: 11px; color: var(--grey-mid); }
+.range-value { font-size: 12px; font-weight: 600; color: var(--violet); }
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%; height: 3px;
+  border-radius: 3px;
+  outline: none; cursor: pointer;
+  background: var(--grey-border);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--violet);
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--violet);
+  cursor: pointer;
+}
+
+.cert-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+.cert-chip {
+  padding: 4px 10px;
+  border: 1.5px solid var(--grey-border);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--grey-dk);
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.15s;
+}
+.cert-chip:hover { border-color: var(--green); color: var(--green); }
+.cert-chip.active { background: var(--green); border-color: var(--green); color: white; }
+
+.origin-toggle { display: flex; border: 1.5px solid var(--grey-border); border-radius: 6px; overflow:hidden; margin-bottom: 10px; }
+.otbtn {
+  flex: 1; padding: 5px; text-align:center; font-size: 11px; font-weight: 600;
+  color: var(--grey-mid); cursor: pointer; background: white; border: none;
+  transition: all 0.15s;
+}
+.otbtn.active { background: var(--violet); color: white; }
+
+.prestige-row { display: flex; gap: 6px; margin-bottom: 8px; }
+.prestige-chip {
+  flex: 1; padding: 6px 8px; text-align: center;
+  border: 1.5px solid #B8860B; border-radius: 6px;
+  background: #FFFAED; color: #B8860B;
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s;
+}
+.prestige-chip.active { background: #B8860B; color: white; }
+
+.dropdown-apply {
+  width: 100%; padding: 8px;
+  background: var(--violet); color: white;
+  border: none; border-radius: 6px;
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  cursor: pointer; margin-top: 10px;
+  transition: background 0.15s;
+}
+.dropdown-apply:hover { background: var(--violet-dk); }
+
+/* MOQ adaptive */
+.moq-adaptive { font-size: 11px; color: var(--orange); background: var(--orange-lt); padding: 4px 8px; border-radius: 4px; margin-bottom: 8px; }
+
+/* ── RESULTS AREA ── */
+.results-area { flex: 1; padding: 20px 24px; }
+
+.results-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.results-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--violet);
+}
+.results-count span { color: var(--grey-mid); font-weight: 400; font-size: 13px; }
+.sort-wrap { display: flex; align-items:center; gap: 8px; font-size: 12px; color: var(--grey-mid); }
+.sort-select {
+  padding: 5px 10px;
+  border: 1px solid var(--grey-border);
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; background: white; color: var(--ink); outline: none;
+}
+
+/* Smart preset */
+.smart-preset {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #FFFAED;
+  border: 1px solid #B8860B;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.smart-preset.show { display: flex; }
+.sp-text { font-size: 12px; color: #7A5A00; flex:1; }
+.sp-text strong { color: var(--ink); }
+.sp-btn {
+  padding: 6px 16px; background: #B8860B; color: white; border: none;
+  border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 11px;
+  font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+
+/* Active filter tags */
+.active-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+}
+.atag {
+  display: flex; align-items: center; gap: 5px;
+  padding: 3px 10px; background: var(--violet-lt);
+  border: 1px solid var(--violet-mid); border-radius: 12px;
+  font-size: 11px; font-weight: 500; color: var(--violet);
+}
+.atag-x { background: none; border: none; color: var(--violet); cursor: pointer; font-size: 14px; padding: 0; line-height:1; }
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--grey-border);
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  animation: cardIn 0.25s ease both;
+}
+.card:hover { box-shadow: 0 6px 24px rgba(112,48,160,0.12); transform: translateY(-2px); }
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(6px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.card-img {
+  height: 140px;
+  background: var(--grey-lt);
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+.card-img-bg {
+  position: absolute; inset:0;
+  background-size: cover; background-position: center;
+  opacity: 0.85;
+}
+.card-badges-top {
+  position: absolute; top: 8px; left: 8px;
+  display: flex; gap: 4px;
+}
+.badge {
+  padding: 3px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.badge-sustainable { background: var(--green); color: white; }
+.badge-verified { background: var(--violet); color: white; }
+.badge-premium { background: white; color: var(--violet); border: 1px solid var(--violet); }
+.badge-luxury { background: #B8860B; color: white; }
+.badge-midmarket { background: var(--grey-dk); color: white; }
+
+.country-flag {
+  position: absolute; bottom: 8px; right: 8px;
+  background: rgba(0,0,0,0.55); color: white;
+  padding: 3px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 500;
+}
+
+.card-body { padding: 14px 16px 10px; }
+.card-name {
+  font-size: 15px; font-weight: 700; color: var(--ink);
+  margin-bottom: 2px;
+}
+.card-location {
+  font-size: 11px; color: var(--grey-mid);
+  display: flex; align-items: center; gap: 3px; margin-bottom: 8px;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+.card-tag {
+  padding: 2px 8px; border-radius: 4px;
+  background: var(--violet-lt); color: var(--violet);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+}
+.card-tag.green { background: var(--green-lt); color: var(--green); }
+.card-tag.grey { background: var(--grey-lt); color: var(--grey-dk); }
+
+.card-stats {
+  display: flex; gap: 0;
+  border-top: 1px solid var(--grey-border);
+  padding-top: 10px;
+}
+.card-stat { flex: 1; text-align: center; }
+.card-stat + .card-stat { border-left: 1px solid var(--grey-border); }
+.cs-val {
+  font-size: 16px; font-weight: 700; color: var(--violet);
+  line-height: 1; margin-bottom: 2px;
+}
+.cs-val.green { color: var(--green); }
+.cs-lbl { font-size: 9px; color: var(--grey-mid); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.card-footer {
+  padding: 8px 16px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.esg-wrap { display: flex; align-items: center; gap: 6px; }
+.esg-bar-track { width: 60px; height: 4px; background: var(--grey-border); border-radius: 2px; overflow:hidden; }
+.esg-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--green), #00D4A0); }
+.esg-num { font-size: 11px; font-weight: 700; color: var(--green); }
+.esg-lbl { font-size: 9px; color: var(--grey-mid); text-transform: uppercase; letter-spacing: 0.08em; }
+.card-btn {
+  padding: 6px 14px; background: var(--violet); color: white;
+  border: none; border-radius: 6px;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: background 0.15s;
+}
+.card-btn:hover { background: var(--violet-dk); }
+
+/* No results */
+.no-res { text-align: center; padding: 60px 20px; }
+.no-res-icon { font-size: 48px; margin-bottom: 12px; }
+.no-res-title { font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.no-res-text { font-size: 13px; color: var(--grey-mid); }
+
+/* ── OVERLAY backdrop ── */
+.backdrop { position: fixed; inset:0; z-index: 200; display:none; }
+.backdrop.show { display:block; }
+</style>
+</head>
+<body>
+
+<!-- ── TOP HEADER ── -->
+<header class="top-header">
+  <div class="logo-wrap">
+    <div class="logo-icon">🌐</div>
+    <div class="logo-text">Fashion<br>Sourcing</div>
+  </div>
+  <div class="search-bar-wrap">
+    <input class="search-bar" placeholder="Search manufacturers, materials, experts…" oninput="applyFilters()">
+  </div>
+  <div class="header-right">
+    <span class="brand-tag">Dior</span>
+    <span class="user-name">Ellie Demaury</span>
+  </div>
+</header>
+
+<div class="backdrop" id="backdrop" onclick="closeAll()"></div>
+
+<div class="body-wrap">
+
+  <!-- ── SIDEBAR ── -->
+  <nav class="sidebar">
+    <div class="sidebar-item active"><span class="icon">🏠</span> Dashboard</div>
+
+    <div class="sidebar-section">Search</div>
+    <div class="sidebar-item" onclick="setTab('material')"><span class="icon">🧵</span> Material <span class="sidebar-chevron">▾</span></div>
+    <div class="sidebar-sub active">Manufacturer</div>
+    <div class="sidebar-sub">Component</div>
+    <div class="sidebar-sub">Packaging</div>
+    <div class="sidebar-sub">Expert</div>
+    <div class="sidebar-sub">Mapping</div>
+
+    <div class="sidebar-section">Activity</div>
+    <div class="sidebar-item"><span class="icon">📣</span> Campaign</div>
+    <div class="sidebar-item"><span class="icon">📅</span> Events</div>
+    <div class="sidebar-item"><span class="icon">💼</span> Job <span class="sidebar-chevron">▾</span></div>
+    <div class="sidebar-sub">Browse Jobs</div>
+    <div class="sidebar-sub">Job List</div>
+
+    <div class="sidebar-section">My Space</div>
+    <div class="sidebar-item"><span class="icon">💬</span> Messaging</div>
+    <div class="sidebar-item"><span class="icon">♡</span> My Wishlist</div>
+    <div class="sidebar-item"><span class="icon">📁</span> My Project</div>
+    <div class="sidebar-item"><span class="icon">📋</span> RFQ</div>
+
+    <div class="sidebar-section">Stock</div>
+    <div class="sidebar-item"><span class="icon">📦</span> Stock <span class="sidebar-chevron">▾</span></div>
+    <div class="sidebar-sub active">Material</div>
+    <div class="sidebar-sub">Product</div>
+
+    <div class="sidebar-section">More</div>
+    <div class="sidebar-item"><span class="icon">🎨</span> Trend Gallery</div>
+    <div class="sidebar-item"><span class="icon">🕐</span> Search History</div>
+    <div class="sidebar-item"><span class="icon">🤝</span> Partners</div>
+    <div class="sidebar-item"><span class="icon">📢</span> Ads Program</div>
+    <div class="sidebar-item"><span class="icon">🌱</span> We Help The Planet</div>
+    <div class="sidebar-item"><span class="icon">✉</span> Contact Us</div>
+    <div class="sidebar-item"><span class="icon">⚙</span> Settings</div>
+  </nav>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="main-content">
+
+    <!-- ENTITY TABS -->
+    <div class="entity-tabs">
+      <div class="entity-tab" onclick="setTab('materials')">Materials</div>
+      <div class="entity-tab" onclick="setTab('components')">Components</div>
+      <div class="entity-tab active" onclick="setTab('manufacturers')">Manufacturers</div>
+      <div class="entity-tab" onclick="setTab('packaging')">Packaging</div>
+      <div class="entity-tab" onclick="setTab('experts')">Experts / Freelancers</div>
+      <div class="entity-tab" onclick="setTab('brands')">Brands</div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+
+      <!-- Segment filter -->
+      <div class="filter-bar-item" id="fbi-segment">
+        <button class="filter-pill" id="fpill-segment" onclick="toggleDropdown('segment')">
+          Market Segment <span class="arrow">▾</span>
+        </button>
+        <div class="filter-dropdown" id="fd-segment">
+          <div class="dropdown-title">Market Segment</div>
+          <div class="chips-wrap">
+            <div class="dchip gold" onclick="toggleSeg(this,'Luxury')">Luxury</div>
+            <div class="dchip" onclick="toggleSeg(this,'Premium')">Premium</div>
+            <div class="dchip" onclick="toggleSeg(this,'Mid-Market')">Mid-Market</div>
+            <div class="dchip" onclick="toggleSeg(this,'Mass Market')">Mass Market</div>
+            <div class="dchip" onclick="toggleSeg(this,'Workwear')">Workwear</div>
+          </div>
+          <button class="dropdown-apply" onclick="closeAll(); applyFilters()">Apply</button>
+        </div>
+      </div>
+
+      <!-- Category filter -->
+      <div class="filter-bar-item" id="fbi-category">
+        <button class="filter-pill" id="fpill-category" onclick="toggleDropdown('category')">
+          Category <span class="arrow">▾</span>
+        </button>
+        <div class="filter-dropdown" id="fd-category">
+          <div class="dropdown-title">Product Category</div>
+          <div class="chips-wrap">
+            <div class="dchip" onclick="toggleCat(this,'Textiles')">🧵 Textiles</div>
+            <div class="dchip" onclick="toggleCat(this,'Leather')">🐄 Leather</div>
+            <div class="dchip" onclick="toggleCat(this,'Vegan Leather')">🌿 Vegan Leather</div>
+            <div class="dchip" onclick="toggleCat(this,'Technical')">⚡ Technical</div>
+            <div class="dchip" onclick="toggleCat(this,'Footwear')">👟 Footwear</div>
+            <div class="dchip" onclick="toggleCat(this,'Bags')">👜 Bags & SLG</div>
+          </div>
+          <button class="dropdown-apply" onclick="closeAll(); applyFilters()">Apply</button>
+        </div>
+      </div>
+
+      <!-- MOQ adaptive -->
+      <div class="filter-bar-item" id="fbi-moq">
+        <button class="filter-pill" id="fpill-moq" onclick="toggleDropdown('moq')">
+          MOQ / Capacity <span class="arrow">▾</span>
+        </button>
+        <div class="filter-dropdown" id="fd-moq" style="min-width:300px">
+          <div class="moq-adaptive" id="moq-adaptive-msg">⚡ Adaptive — select a Market Segment to refine</div>
+          <div id="moq-slider-wrap">
+            <div class="range-block">
+              <div class="range-top">
+                <span class="range-label">MOQ maximum</span>
+                <span class="range-value" id="moq-val">5 000 m</span>
+              </div>
+              <input type="range" min="100" max="50000" step="100" value="5000"
+                oninput="updateMOQ(this.value)">
+            </div>
+          </div>
+          <div id="cap-slider-wrap">
+            <hr class="dropdown-divider">
+            <div class="range-block">
+              <div class="range-top">
+                <span class="range-label">Monthly Capacity minimum</span>
+                <span class="range-value" id="cap-val">50 000 m/mo</span>
+              </div>
+              <input type="range" min="1000" max="500000" step="1000" value="50000"
+                oninput="updateCap(this.value)">
+            </div>
+          </div>
+          <button class="dropdown-apply" onclick="closeAll(); applyFilters()">Apply</button>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="filter-bar-item" id="fbi-certs">
+        <button class="filter-pill" id="fpill-certs" onclick="toggleDropdown('certs')">
+          Certification <span class="arrow">▾</span>
+        </button>
+        <div class="filter-dropdown" id="fd-certs">
+          <div class="dropdown-title">Certifications (AND logic)</div>
+          <div class="cert-grid">
+            <div class="cert-chip" onclick="toggleCert(this,'GOTS')">GOTS</div>
+            <div class="cert-chip" onclick="toggleCert(this,'GRS')">GRS</div>
+            <div class="cert-chip" onclick="toggleCert(this,'OEKO-TEX')">OEKO-TEX</div>
+            <div class="cert-chip" onclick="toggleCert(this,'LWG')">LWG</div>
+            <div class="cert-chip" onclick="toggleCert(this,'Bluesign')">Bluesign</div>
+            <div class="cert-chip" onclick="toggleCert(this,'BCI')">BCI</div>
+            <div class="cert-chip" onclick="toggleCert(this,'Fair Trade')">Fair Trade</div>
+            <div class="cert-chip" onclick="toggleCert(this,'SA8000')">SA8000</div>
+            <div class="cert-chip" onclick="toggleCert(this,'REACH')">REACH</div>
+            <div class="cert-chip" onclick="toggleCert(this,'B Corp')">B Corp</div>
+            <div class="cert-chip" onclick="toggleCert(this,'FSC')">FSC</div>
+            <div class="cert-chip" onclick="toggleCert(this,'ISO9001')">ISO 9001</div>
+          </div>
+          <button class="dropdown-apply" onclick="closeAll(); applyFilters()">Apply</button>
+        </div>
+      </div>
+
+      <!-- Origin -->
+      <div class="filter-bar-item" id="fbi-origin">
+        <button class="filter-pill" id="fpill-origin" onclick="toggleDropdown('origin')">
+          Country <span class="arrow">▾</span>
+        </button>
+        <div class="filter-dropdown" id="fd-origin" style="min-width:320px">
+          <div class="dropdown-title">Origin</div>
+          <div class="prestige-row">
+            <div class="prestige-chip" onclick="togglePrestige(this,'IT')">🇮🇹 Made in Italy</div>
+            <div class="prestige-chip" onclick="togglePrestige(this,'FR')">🇫🇷 France</div>
+            <div class="prestige-chip" onclick="togglePrestige(this,'US')">🇺🇸 USA</div>
+          </div>
+          <div class="origin-toggle">
+            <button class="otbtn active" id="otbtn-region" onclick="setOriginMode('region')">Region</button>
+            <button class="otbtn" id="otbtn-country" onclick="setOriginMode('country')">Country</button>
+          </div>
+          <div class="chips-wrap" id="region-chips">
+            <div class="dchip" onclick="toggleOrigin(this,'Europe')">Europe</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Asia')">Asia</div>
+            <div class="dchip" onclick="toggleOrigin(this,'N. America')">N. America</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Africa')">Africa</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Middle East')">Middle East</div>
+            <div class="dchip" onclick="toggleOrigin(this,'S. America')">S. America</div>
+          </div>
+          <div class="chips-wrap" id="country-chips" style="display:none">
+            <div class="dchip" onclick="toggleOrigin(this,'Italy')">🇮🇹 Italy</div>
+            <div class="dchip" onclick="toggleOrigin(this,'France')">🇫🇷 France</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Portugal')">🇵🇹 Portugal</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Turkey')">🇹🇷 Turkey</div>
+            <div class="dchip" onclick="toggleOrigin(this,'India')">🇮🇳 India</div>
+            <div class="dchip" onclick="toggleOrigin(this,'China')">🇨🇳 China</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Bangladesh')">🇧🇩 Bangladesh</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Vietnam')">🇻🇳 Vietnam</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Morocco')">🇲🇦 Morocco</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Spain')">🇪🇸 Spain</div>
+            <div class="dchip" onclick="toggleOrigin(this,'Japan')">🇯🇵 Japan</div>
+            <div class="dchip" onclick="toggleOrigin(this,'UK')">🇬🇧 UK</div>
+          </div>
+          <button class="dropdown-apply" onclick="closeAll(); applyFilters()">Apply</button>
+        </div>
+      </div>
+
+      <button class="btn-reset" onclick="resetAll()">Reset</button>
+      <input class="filter-search-inline" placeholder="Search by name…" oninput="applyFilters()">
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-area">
+
+      <div class="smart-preset" id="smart-preset">
+        <span>✦</span>
+        <div class="sp-text"><strong>Luxury Smart Preset</strong> — Apply: Made in Italy + France · ESG ≥ 70 · MOQ ≤ 500m · Traceability Level 3+</div>
+        <button class="sp-btn" onclick="applyLuxuryPreset()">Apply</button>
+      </div>
+
+      <div class="results-meta">
+        <div class="results-count" id="result-count">
+          <span>248 </span>manufacturers found
+        </div>
+        <div class="sort-wrap">
+          Sort by
+          <select class="sort-select">
+            <option>Best match</option>
+            <option>ESG Score ↓</option>
+            <option>MOQ ↑</option>
+            <option>Proximity</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="active-tags" id="active-tags"></div>
+
+      <div class="cards-grid" id="cards-grid"></div>
+      <div class="no-res" id="no-res" style="display:none">
+        <div class="no-res-icon">🔍</div>
+        <div class="no-res-title">No manufacturers match your filters</div>
+        <div class="no-res-text">Try relaxing your criteria or resetting filters.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SUPPLIER DATA ─────────────────────────────────────────
+const SUPPLIERS = [
+  { id:1, name:"Yongli Textiles", location:"Guangzhou, China", country:"China", region:"Asia", flag:"🇨🇳",
+    segments:["Mid-Market","Mass Market"], cats:["Textiles"], moq:200, capacity:800000, esg:62, trace:2,
+    certs:["GOTS"], tags:["Woven Fabrics","Knitwear"], sustainable:true, verified:true,
+    years:18, rating:4.8, emoji:"🧵", color:"#4A90D9" },
+  { id:2, name:"MPM Textiles", location:"Istanbul, Turkey", country:"Turkey", region:"Europe", flag:"🇹🇷",
+    segments:["Mid-Market","Premium"], cats:["Textiles"], moq:500, capacity:350000, esg:58, trace:2,
+    certs:["ISO9001"], tags:["Denim","Outerwear"], sustainable:false, verified:true,
+    years:12, rating:4.5, emoji:"👖", color:"#5C6BC0" },
+  { id:3, name:"Atelier Tessile", location:"Como, Italy", country:"Italy", region:"Europe", flag:"🇮🇹",
+    segments:["Luxury","Premium"], cats:["Textiles"], moq:50, capacity:80000, esg:89, trace:4,
+    certs:["OEKO-TEX","Bluesign"], tags:["Silk","Luxury Fabrics","B Corp"], sustainable:true, verified:true,
+    years:35, rating:4.9, emoji:"🌿", color:"#66BB6A" },
+  { id:4, name:"Jin Zhi Xiang", location:"Hangzhou, China", country:"China", region:"Asia", flag:"🇨🇳",
+    segments:["Mid-Market","Mass Market"], cats:["Leather","Bags"], moq:100, capacity:500000, esg:44, trace:1,
+    certs:["SA8000"], tags:["Accessories","Leather"], sustainable:false, verified:true,
+    years:22, rating:4.6, emoji:"👜", color:"#8D6E63" },
+  { id:5, name:"Malaika Crafts", location:"Casablanca, Morocco", country:"Morocco", region:"Africa", flag:"🇲🇦",
+    segments:["Premium","Mid-Market"], cats:["Textiles"], moq:30, capacity:50000, esg:76, trace:3,
+    certs:["Fair Trade"], tags:["Embroidery","Handcraft"], sustainable:true, verified:false,
+    years:8, rating:4.7, emoji:"🎨", color:"#FF7043" },
+  { id:6, name:"Lidzcaps MFG", location:"Porto, Portugal", country:"Portugal", region:"Europe", flag:"🇵🇹",
+    segments:["Mid-Market","Premium"], cats:["Textiles","Footwear"], moq:150, capacity:60000, esg:71, trace:3,
+    certs:["OEKO-TEX"], tags:["Headwear","Caps"], sustainable:false, verified:true,
+    years:15, rating:4.4, emoji:"🧢", color:"#AB47BC" },
+  { id:7, name:"Conceria Walpier", location:"Santa Croce, Italy", country:"Italy", region:"Europe", flag:"🇮🇹",
+    segments:["Luxury"], cats:["Leather"], moq:200, capacity:30000, esg:92, trace:4,
+    certs:["LWG","REACH"], tags:["Full Grain","Vegetable Tanned"], sustainable:true, verified:true,
+    years:42, rating:4.95, emoji:"🏆", color:"#B8860B" },
+  { id:8, name:"Albini Group", location:"Albino, Italy", country:"Italy", region:"Europe", flag:"🇮🇹",
+    segments:["Luxury","Premium"], cats:["Textiles"], moq:400, capacity:100000, esg:90, trace:4,
+    certs:["GOTS","OEKO-TEX","Bluesign","Fair Trade"], tags:["Egyptian Cotton","Poplin"], sustainable:true, verified:true,
+    years:145, rating:4.9, emoji:"✨", color:"#FDD835" },
+  { id:9, name:"Bossa Denim", location:"Adana, Turkey", country:"Turkey", region:"Europe", flag:"🇹🇷",
+    segments:["Mid-Market","Premium"], cats:["Textiles"], moq:2000, capacity:350000, esg:62, trace:2,
+    certs:["GOTS","BCI"], tags:["Denim","Cotton Stretch"], sustainable:true, verified:true,
+    years:28, rating:4.6, emoji:"👕", color:"#1565C0" },
+  { id:10, name:"Pittards Leather", location:"Yeovil, UK", country:"UK", region:"Europe", flag:"🇬🇧",
+    segments:["Luxury","Premium"], cats:["Leather"], moq:500, capacity:60000, esg:81, trace:4,
+    certs:["LWG","REACH"], tags:["Nappa","Suede","Chrome-Free"], sustainable:true, verified:true,
+    years:200, rating:4.8, emoji:"🎩", color:"#37474F" },
+  { id:11, name:"Campolide Cork", location:"Lisbon, Portugal", country:"Portugal", region:"Europe", flag:"🇵🇹",
+    segments:["Premium","Mid-Market"], cats:["Vegan Leather"], moq:600, capacity:50000, esg:78, trace:3,
+    certs:["FSC","OEKO-TEX","GRS"], tags:["Cork","Bio-Based"], sustainable:true, verified:true,
+    years:12, rating:4.7, emoji:"🌿", color:"#795548" },
+  { id:12, name:"Moroccan Leather House", location:"Fez, Morocco", country:"Morocco", region:"Africa", flag:"🇲🇦",
+    segments:["Luxury","Premium"], cats:["Leather"], moq:300, capacity:25000, esg:68, trace:3,
+    certs:["LWG","SA8000"], tags:["Goat","Vegetable Tanned"], sustainable:true, verified:true,
+    years:30, rating:4.75, emoji:"🐐", color:"#E65100" },
+  { id:13, name:"Noritake Textile", location:"Osaka, Japan", country:"Japan", region:"Asia", flag:"🇯🇵",
+    segments:["Luxury","Premium"], cats:["Technical"], moq:800, capacity:90000, esg:83, trace:4,
+    certs:["OEKO-TEX","Bluesign"], tags:["Smart Fabric","Water Resistant"], sustainable:true, verified:true,
+    years:55, rating:4.85, emoji:"⚡", color:"#E53935" },
+  { id:14, name:"Lenfert Tanneries", location:"Annonay, France", country:"France", region:"Europe", flag:"🇫🇷",
+    segments:["Luxury"], cats:["Leather"], moq:100, capacity:15000, esg:87, trace:4,
+    certs:["LWG","REACH","Fair Trade"], tags:["Full Grain","Calf","Aniline"], sustainable:true, verified:true,
+    years:180, rating:4.9, emoji:"🇫🇷", color:"#1565C0" },
+];
+
+// ── STATE ─────────────────────────────────────────────────
+const S = {
+  segments:[], cats:[], certs:[], origins:[], prestige:[],
+  moq:50000, cap:1000, esg:0, trace:0
+};
+
+const fmt = n => parseInt(n).toLocaleString('fr-FR');
+
+// ── DROPDOWN LOGIC ────────────────────────────────────────
+let openDD = null;
+function toggleDropdown(id) {
+  const dd = document.getElementById('fd-'+id);
+  if (openDD && openDD !== id) {
+    document.getElementById('fd-'+openDD).classList.remove('open');
+  }
+  dd.classList.toggle('open');
+  openDD = dd.classList.contains('open') ? id : null;
+  document.getElementById('backdrop').classList.toggle('show', openDD !== null);
+}
+function closeAll() {
+  document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('open'));
+  document.getElementById('backdrop').classList.remove('show');
+  openDD = null;
+}
+
+// ── FILTER TOGGLES ────────────────────────────────────────
+function toggleSeg(el, val) {
+  el.classList.toggle('active');
+  toggle(S.segments, val);
+  // Adaptive MOQ
+  updateMOQAdaptive();
+  // Luxury smart preset hint
+  document.getElementById('smart-preset').classList.toggle('show', S.segments.includes('Luxury'));
+  updatePillActive('segment', S.segments.length);
+}
+function toggleCat(el, val) { el.classList.toggle('active'); toggle(S.cats, val); updatePillActive('category', S.cats.length); }
+function toggleCert(el, val) { el.classList.toggle('active'); toggle(S.certs, val); updatePillActive('certs', S.certs.length); }
+function toggleOrigin(el, val) { el.classList.toggle('active'); toggle(S.origins, val); updatePillActive('origin', S.origins.length); }
+function togglePrestige(el, code) {
+  el.classList.toggle('active');
+  toggle(S.prestige, code);
+  updatePillActive('origin', S.prestige.length + S.origins.length);
+}
+function toggle(arr, val) {
+  const i = arr.indexOf(val);
+  if (i > -1) arr.splice(i,1); else arr.push(val);
+}
+function updatePillActive(id, count) {
+  const pill = document.getElementById('fpill-'+id);
+  pill.classList.toggle('active', count > 0);
+}
+
+// ── MOQ ADAPTIVE ─────────────────────────────────────────
+function updateMOQ(val) {
+  S.moq = parseInt(val);
+  document.getElementById('moq-val').textContent = fmt(val) + ' m';
+}
+function updateCap(val) {
+  S.cap = parseInt(val);
+  document.getElementById('cap-val').textContent = fmt(val) + ' m/mo';
+}
+function updateMOQAdaptive() {
+  const segs = S.segments;
+  const massMode = segs.includes('Mass Market') || segs.includes('Workwear');
+  const luxMode  = segs.includes('Luxury') || segs.includes('Premium');
+  const msg = document.getElementById('moq-adaptive-msg');
+  const moqWrap = document.getElementById('moq-slider-wrap');
+  const capWrap = document.getElementById('cap-slider-wrap');
+  if (massMode && !luxMode) {
+    msg.textContent = '⚡ Mass Market mode — showing Monthly Capacity only';
+    msg.style.background = '#FFF3E0'; msg.style.color = '#E65100';
+    moqWrap.style.display = 'none';
+    capWrap.style.display = 'block';
+  } else if (luxMode && !massMode) {
+    msg.textContent = '✦ Luxury mode — showing MOQ maximum only';
+    msg.style.background = '#FFFAED'; msg.style.color = '#7A5A00';
+    moqWrap.style.display = 'block';
+    capWrap.style.display = 'none';
+  } else {
+    msg.textContent = '⚡ Adaptive — select a Market Segment to refine';
+    msg.style.background = '#FFF3E0'; msg.style.color = '#E65100';
+    moqWrap.style.display = 'block';
+    capWrap.style.display = 'block';
+  }
+}
+
+function setOriginMode(mode) {
+  document.getElementById('otbtn-region').classList.toggle('active', mode==='region');
+  document.getElementById('otbtn-country').classList.toggle('active', mode==='country');
+  document.getElementById('region-chips').style.display = mode==='region' ? 'flex' : 'none';
+  document.getElementById('country-chips').style.display = mode==='country' ? 'flex' : 'none';
+}
+
+// ── LUXURY PRESET ─────────────────────────────────────────
+function applyLuxuryPreset() {
+  resetAll(true);
+  // Set Luxury
+  S.segments = ['Luxury'];
+  document.querySelectorAll('#fd-segment .dchip').forEach(c => {
+    c.classList.toggle('active', c.textContent.trim() === 'Luxury');
+  });
+  // IT + FR prestige
+  S.prestige = ['IT','FR'];
+  document.querySelectorAll('.prestige-chip').forEach(c => {
+    const code = c.textContent.includes('Italy') ? 'IT' : c.textContent.includes('France') ? 'FR' : 'US';
+    c.classList.toggle('active', ['IT','FR'].includes(code));
+  });
+  S.moq = 500;
+  document.querySelector('#moq-slider-wrap input[type=range]').value = 500;
+  document.getElementById('moq-val').textContent = '500 m';
+  S.esg = 70; S.trace = 3;
+  updateMOQAdaptive();
+  updatePillActive('segment',1);
+  updatePillActive('origin', 2);
+  closeAll();
+  applyFilters();
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAll(silent) {
+  S.segments=[]; S.cats=[]; S.certs=[]; S.origins=[]; S.prestige=[]; S.moq=50000; S.cap=1000; S.esg=0; S.trace=0;
+  document.querySelectorAll('.dchip, .cert-chip, .prestige-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById('smart-preset').classList.remove('show');
+  updateMOQAdaptive();
+  if (!silent) applyFilters();
+}
+
+// ── FILTER & RENDER ───────────────────────────────────────
+function applyFilters() {
+  const searchVal = (document.querySelector('.filter-search-inline').value || '').toLowerCase();
+  const topSearch = (document.querySelector('.search-bar').value || '').toLowerCase();
+
+  const presMap = { IT:'Italy', FR:'France', US:'United States' };
+
+  let filtered = SUPPLIERS.filter(s => {
+    if (S.segments.length && !s.segments.some(sg => S.segments.includes(sg))) return false;
+    if (S.cats.length && !s.cats.some(c => S.cats.includes(c))) return false;
+    if (S.prestige.length && !S.prestige.some(p => s.country === presMap[p])) return false;
+    if (S.origins.length && !S.origins.includes(s.region) && !S.origins.includes(s.country)) return false;
+    if (s.moq > S.moq) return false;
+    if (s.capacity < S.cap) return false;
+    if (s.esg < S.esg) return false;
+    if (s.trace < S.trace) return false;
+    if (S.certs.length && !S.certs.every(c => s.certs.includes(c))) return false;
+    const q = searchVal || topSearch;
+    if (q && !s.name.toLowerCase().includes(q) && !s.tags.join(' ').toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  renderCount(filtered.length);
+  renderTags();
+  renderCards(filtered);
+}
+
+function renderCount(n) {
+  const el = document.getElementById('result-count');
+  el.innerHTML = `<span>${n} </span>manufacturers found`;
+}
+
+function renderTags() {
+  const tags = [];
+  S.segments.forEach(s => tags.push(s));
+  S.cats.forEach(c => tags.push(c));
+  S.prestige.forEach(p => tags.push({IT:'🇮🇹 Italy',FR:'🇫🇷 France',US:'🇺🇸 USA'}[p]));
+  S.origins.forEach(o => tags.push(o));
+  S.certs.forEach(c => tags.push(c));
+
+  const el = document.getElementById('active-tags');
+  el.innerHTML = tags.map(t =>
+    `<div class="atag">${t} <button class="atag-x" onclick="resetAll()">×</button></div>`
+  ).join('');
+}
+
+function renderCards(suppliers) {
+  const grid = document.getElementById('cards-grid');
+  const noRes = document.getElementById('no-res');
+
+  if (!suppliers.length) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  grid.innerHTML = suppliers.map((s, i) => {
+    const segBadge = s.segments[0] === 'Luxury' ? 'badge-luxury' :
+                     s.segments[0] === 'Premium' ? 'badge-premium' : 'badge-midmarket';
+    const segLabel = s.segments[0];
+    return `
+    <div class="card" style="animation-delay:${i*0.05}s">
+      <div class="card-img" style="background:${s.color}22">
+        <div class="card-img-bg" style="background:${s.color}33"></div>
+        <span style="position:relative;font-size:52px">${s.emoji}</span>
+        <div class="card-badges-top">
+          ${s.sustainable ? '<span class="badge badge-sustainable">Sustainable</span>' : ''}
+          ${s.verified ? '<span class="badge badge-verified">Verified</span>' : ''}
+        </div>
+        <div class="country-flag">${s.flag} ${s.country}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${s.name}</div>
+        <div class="card-location">📍 ${s.location}</div>
+        <div class="card-tags">
+          <span class="badge ${segBadge}" style="font-size:10px;padding:2px 7px;">${segLabel}</span>
+          ${s.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+          ${s.certs.map(c => `<span class="card-tag green">${c}</span>`).join('')}
+        </div>
+        <div class="card-stats">
+          <div class="card-stat">
+            <div class="cs-val">${s.moq.toLocaleString()}</div>
+            <div class="cs-lbl">MOQ</div>
+          </div>
+          <div class="card-stat">
+            <div class="cs-val">${s.years}</div>
+            <div class="cs-lbl">Years</div>
+          </div>
+          <div class="card-stat">
+            <div class="cs-val green">${s.rating}★</div>
+            <div class="cs-lbl">Rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="esg-wrap">
+          <span class="esg-lbl">ESG</span>
+          <div class="esg-bar-track"><div class="esg-bar-fill" style="width:${s.esg}%"></div></div>
+          <span class="esg-num">${s.esg}</span>
+        </div>
+        <button class="card-btn">View profile →</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── INIT ──────────────────────────────────────────────────
+applyFilters();
+</script>
+</body>
+</html>
