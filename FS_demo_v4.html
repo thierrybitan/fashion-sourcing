@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Sourcing — Platform Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --v:#7030A0;--vdk:#5A2080;--vlt:#F3EDF8;--vmid:#E0C8F0;
+  --w:#fff;--bg:#F5F5F7;--brd:#E0E0E6;
+  --gm:#9090A0;--gd:#555560;--ink:#1A1A2E;
+  --grn:#00B37A;--glt:#E6F9F3;
+  --org:#F59300;--olt:#FFF3E0;
+  --red:#E53935;--gold:#B8860B;--gld:#FFFAED;
+  --sw:220px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+
+/* HEADER */
+.hdr{height:56px;background:var(--v);display:flex;align-items:center;padding:0 20px;gap:16px;flex-shrink:0;z-index:60;}
+.logo-w{display:flex;align-items:center;gap:10px;min-width:var(--sw);padding-right:16px;}
+.logo-ic{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.logo-tx{font-size:13px;font-weight:700;color:#fff;letter-spacing:.05em;text-transform:uppercase;line-height:1.2;}
+.srch{flex:1;max-width:640px;}
+.srch input{width:100%;height:36px;background:#fff;border:none;border-radius:6px;padding:0 14px 0 36px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239090A0' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.867-3.833zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;}
+.srch input::placeholder{color:var(--gm);}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.brand-tag{background:rgba(255,255,255,.15);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;}
+.uname{color:#fff;font-size:13px;font-weight:500;}
+
+/* BODY */
+.body-w{display:flex;flex:1;overflow:hidden;}
+
+/* SIDEBAR */
+.sb{width:var(--sw);background:#fff;border-right:1px solid var(--brd);overflow-y:auto;flex-shrink:0;padding:8px 0;}
+.sb-sec{padding:14px 16px 4px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gm);}
+.sb-i{display:flex;align-items:center;gap:10px;padding:7px 16px;font-size:13px;color:var(--gd);cursor:pointer;border-left:3px solid transparent;transition:all .15s;}
+.sb-i:hover{background:var(--bg);color:var(--ink);}
+.sb-i.active{background:var(--vlt);color:var(--v);font-weight:600;border-left-color:var(--v);}
+.sb-i .ic{font-size:14px;width:18px;text-align:center;}
+.sb-sub{padding:3px 16px 3px 44px;font-size:12px;color:var(--gm);cursor:pointer;}
+.sb-sub:hover,.sb-sub.active{color:var(--v);font-weight:500;}
+.sb-ch{margin-left:auto;font-size:10px;color:var(--gm);}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+
+/* ENTITY TABS */
+.etabs{background:#fff;border-bottom:1px solid var(--brd);display:flex;padding:0 24px;flex-shrink:0;}
+.etab{padding:13px 18px;font-size:13px;font-weight:500;color:var(--gm);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.etab:hover{color:var(--v);}
+.etab.active{color:var(--v);font-weight:600;border-bottom-color:var(--v);}
+
+/* FILTER BAR */
+.fbar{background:#fff;border-bottom:1px solid var(--brd);padding:10px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0;position:relative;z-index:50;}
+.fpill{display:flex;align-items:center;gap:5px;padding:6px 13px;border:1.5px solid var(--brd);border-radius:20px;font-size:12px;font-weight:500;color:var(--gd);cursor:pointer;background:#fff;transition:all .15s;white-space:nowrap;}
+.fpill:hover{border-color:var(--v);color:var(--v);}
+.fpill.active{border-color:var(--v);background:var(--vlt);color:var(--v);}
+.finput{flex:1;min-width:150px;max-width:260px;height:33px;border:1.5px solid var(--brd);border-radius:20px;padding:0 12px 0 30px;font-family:'Inter',sans-serif;font-size:12px;outline:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' fill='%239090A0' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.867-3.833zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E") no-repeat 9px center;transition:border-color .15s;margin-left:auto;}
+.finput:focus{border-color:var(--v);}
+.finput::placeholder{color:var(--gm);}
+.breset{padding:5px 14px;border:1.5px solid var(--brd);border-radius:20px;background:#fff;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--gm);cursor:pointer;transition:all .15s;}
+.breset:hover{border-color:var(--red);color:var(--red);}
+
+/* DROPDOWN */
+.fbar-item{position:relative;}
+.fdrop{position:absolute;top:calc(100% + 8px);left:0;z-index:200;background:#fff;border:1px solid var(--brd);border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.12);padding:16px;min-width:280px;display:none;}
+.fdrop.open{display:block;}
+.dtitle{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gm);margin-bottom:10px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.dchip{padding:5px 12px;border:1.5px solid var(--brd);border-radius:16px;font-size:12px;font-weight:500;color:var(--gd);cursor:pointer;transition:all .15s;}
+.dchip:hover{border-color:var(--v);color:var(--v);}
+.dchip.active{background:var(--v);border-color:var(--v);color:#fff;}
+.dchip.gd{border-color:var(--gold);color:var(--gold);background:var(--gld);}
+.dchip.gd.active{background:var(--gold);border-color:var(--gold);color:#fff;}
+.ddiv{border:none;border-top:1px solid var(--brd);margin:10px 0;}
+.rblock{padding:2px 0 6px;}
+.rtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.rlabel{font-size:11px;color:var(--gm);}
+.rval{font-size:12px;font-weight:600;color:var(--v);}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:3px;outline:none;cursor:pointer;background:var(--brd);}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--v);border:2px solid #fff;box-shadow:0 0 0 2px var(--v);cursor:pointer;}
+.certs-g{display:flex;flex-wrap:wrap;gap:5px;}
+.ctag{padding:4px 9px;border:1.5px solid var(--brd);border-radius:4px;font-size:11px;font-weight:600;color:var(--gd);cursor:pointer;transition:all .15s;}
+.ctag:hover{border-color:var(--grn);color:var(--grn);}
+.ctag.active{background:var(--grn);border-color:var(--grn);color:#fff;}
+.otoggle{display:flex;border:1.5px solid var(--brd);border-radius:6px;overflow:hidden;margin-bottom:10px;}
+.otbtn{flex:1;padding:5px;text-align:center;font-size:11px;font-weight:600;color:var(--gm);cursor:pointer;background:#fff;border:none;transition:all .15s;}
+.otbtn.active{background:var(--v);color:#fff;}
+.prestige-row{display:flex;gap:6px;margin-bottom:8px;}
+.pchip{flex:1;padding:6px 6px;text-align:center;border:1.5px solid var(--gold);border-radius:6px;background:var(--gld);color:var(--gold);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
+.pchip.active{background:var(--gold);color:#fff;}
+.dapply{width:100%;padding:8px;background:var(--v);color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;cursor:pointer;margin-top:8px;}
+.dapply:hover{background:var(--vdk);}
+.moq-msg{font-size:11px;padding:4px 8px;border-radius:4px;margin-bottom:8px;background:var(--olt);color:#E65100;}
+
+/* RESULTS */
+.res-area{flex:1;padding:20px 24px;}
+.res-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.res-count{font-size:14px;font-weight:600;color:var(--v);}
+.res-count span{color:var(--gm);font-weight:400;font-size:13px;}
+.sort-w{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gm);}
+.sort-s{padding:5px 10px;border:1px solid var(--brd);border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;background:#fff;color:var(--ink);outline:none;}
+.smart-pre{display:none;align-items:center;gap:12px;padding:10px 16px;background:var(--gld);border:1px solid var(--gold);border-radius:8px;margin-bottom:14px;}
+.smart-pre.show{display:flex;}
+.sp-txt{font-size:12px;color:#7A5A00;flex:1;}
+.sp-txt strong{color:var(--ink);}
+.sp-btn{padding:6px 16px;background:var(--gold);color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;}
+.atags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.atag{display:flex;align-items:center;gap:4px;padding:3px 10px;background:var(--vlt);border:1px solid var(--vmid);border-radius:12px;font-size:11px;font-weight:500;color:var(--v);}
+.atag-x{background:none;border:none;color:var(--v);cursor:pointer;font-size:14px;padding:0;line-height:1;}
+
+/* CARDS */
+.cards-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.card{background:#fff;border-radius:10px;overflow:hidden;border:1px solid var(--brd);transition:box-shadow .2s,transform .2s;cursor:pointer;animation:cin .25s ease both;}
+.card:hover{box-shadow:0 6px 24px rgba(112,48,160,.14);transform:translateY(-2px);}
+@keyframes cin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card-img{height:130px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:52px;}
+.cbadges{position:absolute;top:8px;left:8px;display:flex;gap:4px;}
+.bdg{padding:3px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.bdg-sus{background:var(--grn);color:#fff;}
+.bdg-ver{background:var(--v);color:#fff;}
+.bdg-lux{background:var(--gold);color:#fff;}
+.bdg-pre{background:#fff;color:var(--v);border:1px solid var(--v);}
+.bdg-mid{background:var(--gd);color:#fff;}
+.cflag{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+.card-body{padding:13px 15px 8px;}
+.cname{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.cloc{font-size:11px;color:var(--gm);margin-bottom:8px;}
+.ctags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.ctg{padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;}
+.ctg-v{background:var(--vlt);color:var(--v);}
+.ctg-g{background:var(--glt);color:var(--grn);}
+.ctg-grey{background:var(--bg);color:var(--gd);}
+.cstats{display:flex;border-top:1px solid var(--brd);padding-top:10px;}
+.cstat{flex:1;text-align:center;}
+.cstat+.cstat{border-left:1px solid var(--brd);}
+.csv{font-size:15px;font-weight:700;color:var(--v);line-height:1;margin-bottom:2px;}
+.csv.g{color:var(--grn);}
+.csl{font-size:9px;color:var(--gm);text-transform:uppercase;letter-spacing:.08em;}
+.card-ft{padding:8px 15px 12px;display:flex;align-items:center;justify-content:space-between;}
+.esg-w{display:flex;align-items:center;gap:5px;}
+.esg-tr{width:55px;height:4px;background:var(--brd);border-radius:2px;overflow:hidden;}
+.esg-fi{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--grn),#00D4A0);}
+.esg-n{font-size:11px;font-weight:700;color:var(--grn);}
+.esg-l{font-size:9px;color:var(--gm);text-transform:uppercase;letter-spacing:.08em;}
+.card-btn{padding:6px 13px;background:var(--v);color:#fff;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:background .15s;}
+.card-btn:hover{background:var(--vdk);}
+.nores{text-align:center;padding:60px 20px;display:none;}
+.nores.show{display:block;}
+.nores-ic{font-size:48px;margin-bottom:12px;}
+.nores-t{font-size:18px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.nores-s{font-size:13px;color:var(--gm);}
+
+
+/* ── FILES SECTION ── */
+.files-section{margin-top:18px;}
+.files-lbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gm);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.files-grid{display:flex;flex-direction:column;gap:8px;}
+.file-card{display:flex;align-items:center;gap:14px;padding:11px 15px;background:var(--bg);border:1px solid var(--brd);border-radius:8px;transition:all .15s;cursor:pointer;text-decoration:none;}
+.file-card:hover{border-color:var(--v);background:var(--vlt);box-shadow:0 2px 8px rgba(112,48,160,.1);}
+.file-ic{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.fic-grn{background:#E0F5F3;} .fic-blu{background:#E8F0FF;} .fic-brn{background:#FFF3E0;} .fic-grn2{background:#E8F5E9;} .fic-pur{background:var(--vlt);}
+.file-info{flex:1;min-width:0;}
+.file-name{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.file-meta{font-size:10px;color:var(--gm);}
+.file-tags{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap;}
+.ftag{padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;}
+.ftag-ok{background:#E6F9F3;color:var(--grn);}
+.ftag-inf{background:var(--vlt);color:var(--v);}
+.file-btns{display:flex;gap:6px;flex-shrink:0;}
+.fbtn-view{padding:5px 11px;background:var(--v);color:#fff;border:none;border-radius:5px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.fbtn-view:hover{background:var(--vdk);}
+.fbtn-dl{padding:5px 8px;background:var(--bg);border:1.5px solid var(--brd);border-radius:5px;font-size:12px;cursor:pointer;color:var(--gm);transition:all .15s;}
+.fbtn-dl:hover{border-color:var(--v);color:var(--v);}
+
+/* ══════════════════════════════════════════
+   SUPPLIER PROFILE MODAL
+══════════════════════════════════════════ */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400;display:none;align-items:flex-start;justify-content:flex-end;}
+.overlay.open{display:flex;}
+.modal{width:780px;max-width:95vw;height:100vh;background:#fff;overflow-y:auto;display:flex;flex-direction:column;animation:slideIn .25s ease;}
+@keyframes slideIn{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Modal header */
+.m-hdr{background:var(--v);padding:20px 28px;display:flex;align-items:flex-start;gap:16px;flex-shrink:0;}
+.m-avatar{width:56px;height:56px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.m-title{flex:1;}
+.m-name{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;}
+.m-sub{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:8px;}
+.m-bdgs{display:flex;gap:6px;flex-wrap:wrap;}
+.m-bdg{padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.m-bdg-ver{background:rgba(255,255,255,.9);color:var(--v);}
+.m-bdg-sus{background:var(--grn);color:#fff;}
+.m-bdg-lux{background:var(--gold);color:#fff;}
+.m-close{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;cursor:pointer;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.m-close:hover{background:rgba(255,255,255,.3);}
+
+/* Modal score bar */
+.m-scores{display:flex;background:var(--vdk);padding:14px 28px;gap:0;flex-shrink:0;}
+.mscore{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,.15);}
+.mscore:last-child{border-right:none;}
+.mscore-v{font-size:20px;font-weight:700;color:#fff;line-height:1;}
+.mscore-v.gold{color:#FFD700;}
+.mscore-v.grn{color:#7FFFD4;}
+.mscore-l{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+
+/* Modal tabs */
+.m-tabs{display:flex;background:#fff;border-bottom:1px solid var(--brd);padding:0 28px;flex-shrink:0;}
+.m-tab{padding:12px 16px;font-size:13px;font-weight:500;color:var(--gm);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;}
+.m-tab:hover{color:var(--v);}
+.m-tab.active{color:var(--v);font-weight:600;border-bottom-color:var(--v);}
+
+/* Modal body */
+.m-body{padding:24px 28px;flex:1;}
+.m-panel{display:none;}
+.m-panel.active{display:block;}
+
+/* Sections */
+.msec{margin-bottom:24px;}
+.msec-t{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--v);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--vlt);}
+.mrows{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mrow{background:var(--bg);border-radius:6px;padding:10px 14px;}
+.mrow.full{grid-column:1/-1;}
+.mrow-l{font-size:10px;color:var(--gm);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.mrow-v{font-size:13px;font-weight:500;color:var(--ink);}
+.mrow-v.v{color:var(--v);}
+.mrow-v.g{color:var(--grn);}
+.mrow-v.gold{color:var(--gold);}
+
+/* Cert tags in modal */
+.m-certs{display:flex;flex-wrap:wrap;gap:6px;}
+.m-cert{padding:4px 10px;border-radius:4px;background:var(--glt);color:var(--grn);font-size:11px;font-weight:600;border:1px solid var(--grn);}
+
+/* ESG bar in modal */
+.mesg-bar{height:8px;background:var(--brd);border-radius:4px;overflow:hidden;margin-top:6px;}
+.mesg-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--grn),#00D4A0);}
+
+/* Traceability stars */
+.trace-stars{font-size:16px;letter-spacing:2px;}
+
+/* Products table */
+.prod-table{width:100%;border-collapse:collapse;margin-top:8px;}
+.prod-table th{text-align:left;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gm);padding:8px 12px;background:var(--bg);border-bottom:2px solid var(--brd);}
+.prod-table td{padding:10px 12px;border-bottom:1px solid var(--brd);font-size:12px;color:var(--ink);vertical-align:middle;}
+.prod-table tr:hover td{background:var(--vlt);cursor:pointer;}
+.prod-link{color:var(--v);font-weight:600;text-decoration:none;}
+.prod-link:hover{text-decoration:underline;}
+.pill-sm{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;}
+.pill-pub{background:var(--glt);color:var(--grn);}
+.pill-buy{background:var(--vlt);color:var(--v);}
+.view-prod-btn{padding:4px 12px;background:var(--v);color:#fff;border:none;border-radius:5px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;cursor:pointer;}
+.view-prod-btn:hover{background:var(--vdk);}
+
+/* Contact CTA */
+.m-cta{display:flex;gap:10px;margin-top:8px;}
+.btn-contact{flex:1;padding:12px;background:var(--v);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;}
+.btn-contact:hover{background:var(--vdk);}
+.btn-wish{padding:12px 20px;background:var(--bg);color:var(--gd);border:1.5px solid var(--brd);border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
+.btn-wish:hover{border-color:var(--v);color:var(--v);}
+
+/* ══════════════════════════════════════════
+   PRODUCT MODAL
+══════════════════════════════════════════ */
+.prod-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:center;justify-content:center;}
+.prod-overlay.open{display:flex;}
+.prod-modal{width:680px;max-width:95vw;max-height:90vh;background:#fff;border-radius:12px;overflow-y:auto;animation:popIn .2s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.pm-hdr{background:var(--v);padding:20px 24px;display:flex;align-items:flex-start;gap:14px;position:sticky;top:0;z-index:10;}
+.pm-emoji{width:48px;height:48px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.pm-title{flex:1;}
+.pm-name{font-size:17px;font-weight:700;color:#fff;margin-bottom:3px;}
+.pm-sku{font-size:12px;color:rgba(255,255,255,.65);}
+.pm-close{background:rgba(255,255,255,.15);border:none;color:#fff;font-size:18px;cursor:pointer;width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;}
+.pm-close:hover{background:rgba(255,255,255,.3);}
+.pm-body{padding:20px 24px;}
+.pm-sec{margin-bottom:20px;}
+.pm-sec-t{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--v);margin-bottom:10px;padding-bottom:5px;border-bottom:2px solid var(--vlt);}
+.pm-rows{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.pm-row{background:var(--bg);border-radius:6px;padding:9px 13px;}
+.pm-row.full{grid-column:1/-1;}
+.pm-l{font-size:10px;color:var(--gm);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
+.pm-v{font-size:13px;font-weight:500;color:var(--ink);}
+.pm-v.v{color:var(--v);}
+.pm-v.g{color:var(--grn);}
+.pm-v.gold{color:var(--gold);}
+
+/* Materials breakdown table */
+.mat-table{width:100%;border-collapse:collapse;}
+.mat-table th{text-align:left;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gm);padding:6px 10px;background:var(--bg);border-bottom:2px solid var(--brd);}
+.mat-table td{padding:8px 10px;border-bottom:1px solid var(--brd);font-size:12px;}
+.cert-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
+.cert-y{background:var(--grn);}
+.cert-n{background:var(--brd);}
+
+/* Compliance chips */
+.comp-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.comp-chip{padding:4px 10px;border-radius:4px;background:var(--glt);color:var(--grn);font-size:11px;font-weight:600;border:1px solid var(--grn);}
+
+/* Traceability visual */
+.trace-visual{display:flex;gap:4px;margin-top:6px;}
+.trace-step{flex:1;height:8px;border-radius:4px;}
+.trace-on{background:var(--v);}
+.trace-off{background:var(--brd);}
+.trace-labels{display:flex;justify-content:space-between;margin-top:4px;}
+.trace-lbl{font-size:9px;color:var(--gm);}
+
+/* Carbon badge */
+.carbon-bdg{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:#E8F5E9;border-radius:6px;font-size:12px;font-weight:600;color:#2E7D32;}
+
+/* back btn */
+.back-btn{display:flex;align-items:center;gap:6px;padding:0 0 16px;background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;color:var(--v);cursor:pointer;font-weight:500;}
+.back-btn:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo-w">
+    <div class="logo-ic">🌐</div>
+    <div class="logo-tx">Fashion<br>Sourcing</div>
+  </div>
+  <div class="srch"><input placeholder="Search manufacturers, materials, experts…" oninput="applyFilters()"></div>
+  <div class="hdr-r">
+    <span class="brand-tag">Dior</span>
+    <span class="uname">Ellie Demaury</span>
+  </div>
+</header>
+
+<div class="body-w">
+
+<!-- SIDEBAR -->
+<nav class="sb">
+  <div class="sb-i active"><span class="ic">🏠</span> Dashboard</div>
+  <div class="sb-sec">Search</div>
+  <div class="sb-i"><span class="ic">🧵</span> Material <span class="sb-ch">▾</span></div>
+  <div class="sb-sub active">Manufacturer</div>
+  <div class="sb-sub">Component</div>
+  <div class="sb-sub">Packaging</div>
+  <div class="sb-sub">Expert</div>
+  <div class="sb-sub">Mapping</div>
+  <div class="sb-sec">Activity</div>
+  <div class="sb-i"><span class="ic">📣</span> Campaign</div>
+  <div class="sb-i"><span class="ic">📅</span> Events</div>
+  <div class="sb-i"><span class="ic">💼</span> Job <span class="sb-ch">▾</span></div>
+  <div class="sb-sub">Browse Jobs</div>
+  <div class="sb-sub">Job List</div>
+  <div class="sb-sec">My Space</div>
+  <div class="sb-i"><span class="ic">💬</span> Messaging</div>
+  <div class="sb-i"><span class="ic">♡</span> My Wishlist</div>
+  <div class="sb-i"><span class="ic">📁</span> My Project</div>
+  <div class="sb-i"><span class="ic">📋</span> RFQ</div>
+  <div class="sb-sec">Stock</div>
+  <div class="sb-i"><span class="ic">📦</span> Stock <span class="sb-ch">▾</span></div>
+  <div class="sb-sub active">Material</div>
+  <div class="sb-sub">Product</div>
+  <div class="sb-sec">More</div>
+  <div class="sb-i"><span class="ic">🎨</span> Trend Gallery</div>
+  <div class="sb-i"><span class="ic">🕐</span> Search History</div>
+  <div class="sb-i"><span class="ic">🤝</span> Partners</div>
+  <div class="sb-i"><span class="ic">🌱</span> We Help The Planet</div>
+  <div class="sb-i"><span class="ic">✉</span> Contact Us</div>
+  <div class="sb-i"><span class="ic">⚙</span> Settings</div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="etabs">
+    <div class="etab">Materials</div>
+    <div class="etab">Components</div>
+    <div class="etab active">Manufacturers</div>
+    <div class="etab">Packaging</div>
+    <div class="etab">Experts / Freelancers</div>
+    <div class="etab">Brands</div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="fbar">
+    <!-- Segment -->
+    <div class="fbar-item">
+      <button class="fpill" id="fp-seg" onclick="toggleDD('seg')">Market Segment ▾</button>
+      <div class="fdrop" id="fd-seg">
+        <div class="dtitle">Market Segment</div>
+        <div class="chips">
+          <div class="dchip gd" onclick="toggleSeg(this,'Luxury')">Luxury</div>
+          <div class="dchip" onclick="toggleSeg(this,'Premium')">Premium</div>
+          <div class="dchip" onclick="toggleSeg(this,'Mid-Market')">Mid-Market</div>
+          <div class="dchip" onclick="toggleSeg(this,'Mass Market')">Mass Market</div>
+          <div class="dchip" onclick="toggleSeg(this,'Workwear')">Workwear</div>
+        </div>
+        <button class="dapply" onclick="closeDD();applyFilters()">Apply</button>
+      </div>
+    </div>
+    <!-- Category -->
+    <div class="fbar-item">
+      <button class="fpill" id="fp-cat" onclick="toggleDD('cat')">Category ▾</button>
+      <div class="fdrop" id="fd-cat">
+        <div class="dtitle">Category</div>
+        <div class="chips">
+          <div class="dchip" onclick="toggleCat(this,'Textiles')">🧵 Textiles</div>
+          <div class="dchip" onclick="toggleCat(this,'Leather')">🐄 Leather</div>
+          <div class="dchip" onclick="toggleCat(this,'Vegan Leather')">🌿 Vegan Leather</div>
+          <div class="dchip" onclick="toggleCat(this,'Technical')">⚡ Technical</div>
+          <div class="dchip" onclick="toggleCat(this,'Footwear')">👟 Footwear</div>
+          <div class="dchip" onclick="toggleCat(this,'Bags')">👜 Bags & SLG</div>
+        </div>
+        <button class="dapply" onclick="closeDD();applyFilters()">Apply</button>
+      </div>
+    </div>
+    <!-- MOQ -->
+    <div class="fbar-item">
+      <button class="fpill" id="fp-moq" onclick="toggleDD('moq')">MOQ / Capacity ▾</button>
+      <div class="fdrop" id="fd-moq" style="min-width:300px">
+        <div class="moq-msg" id="moq-msg">⚡ Adaptive — select Market Segment first</div>
+        <div id="moq-wrap" class="rblock">
+          <div class="rtop"><span class="rlabel">MOQ maximum</span><span class="rval" id="moq-val">5 000 m</span></div>
+          <input type="range" min="100" max="50000" step="100" value="5000" oninput="S.moq=+this.value;document.getElementById('moq-val').textContent=fmt(this.value)+' m'">
+        </div>
+        <div id="cap-wrap" class="rblock">
+          <hr class="ddiv">
+          <div class="rtop"><span class="rlabel">Monthly Capacity min</span><span class="rval" id="cap-val">50 000 m/mo</span></div>
+          <input type="range" min="1000" max="500000" step="1000" value="50000" oninput="S.cap=+this.value;document.getElementById('cap-val').textContent=fmt(this.value)+' m/mo'">
+        </div>
+        <button class="dapply" onclick="closeDD();applyFilters()">Apply</button>
+      </div>
+    </div>
+    <!-- Certs -->
+    <div class="fbar-item">
+      <button class="fpill" id="fp-cert" onclick="toggleDD('cert')">Certification ▾</button>
+      <div class="fdrop" id="fd-cert">
+        <div class="dtitle">Certifications (AND logic)</div>
+        <div class="certs-g">
+          <div class="ctag" onclick="toggleCert(this,'GOTS')">GOTS</div>
+          <div class="ctag" onclick="toggleCert(this,'GRS')">GRS</div>
+          <div class="ctag" onclick="toggleCert(this,'OEKO-TEX')">OEKO-TEX</div>
+          <div class="ctag" onclick="toggleCert(this,'LWG')">LWG</div>
+          <div class="ctag" onclick="toggleCert(this,'Bluesign')">Bluesign</div>
+          <div class="ctag" onclick="toggleCert(this,'BCI')">BCI</div>
+          <div class="ctag" onclick="toggleCert(this,'Fair Trade')">Fair Trade</div>
+          <div class="ctag" onclick="toggleCert(this,'SA8000')">SA8000</div>
+          <div class="ctag" onclick="toggleCert(this,'REACH')">REACH</div>
+          <div class="ctag" onclick="toggleCert(this,'B Corp')">B Corp</div>
+          <div class="ctag" onclick="toggleCert(this,'FSC')">FSC</div>
+          <div class="ctag" onclick="toggleCert(this,'ISO9001')">ISO 9001</div>
+        </div>
+        <button class="dapply" onclick="closeDD();applyFilters()">Apply</button>
+      </div>
+    </div>
+    <!-- Origin -->
+    <div class="fbar-item">
+      <button class="fpill" id="fp-origin" onclick="toggleDD('origin')">Country ▾</button>
+      <div class="fdrop" id="fd-origin" style="min-width:320px">
+        <div class="dtitle">Origin</div>
+        <div class="prestige-row">
+          <div class="pchip" onclick="togglePrestige(this,'IT')">🇮🇹 Made in Italy</div>
+          <div class="pchip" onclick="togglePrestige(this,'FR')">🇫🇷 France</div>
+          <div class="pchip" onclick="togglePrestige(this,'US')">🇺🇸 USA</div>
+        </div>
+        <div class="otoggle">
+          <button class="otbtn active" id="ot-reg" onclick="setOriginMode('region')">Region</button>
+          <button class="otbtn" id="ot-cty" onclick="setOriginMode('country')">Country</button>
+        </div>
+        <div class="chips" id="region-chips">
+          <div class="dchip" onclick="toggleOrigin(this,'Europe')">Europe</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Asia')">Asia</div>
+          <div class="dchip" onclick="toggleOrigin(this,'N. America')">N. America</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Africa')">Africa</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Middle East')">Middle East</div>
+        </div>
+        <div class="chips" id="country-chips" style="display:none">
+          <div class="dchip" onclick="toggleOrigin(this,'Italy')">🇮🇹 Italy</div>
+          <div class="dchip" onclick="toggleOrigin(this,'France')">🇫🇷 France</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Portugal')">🇵🇹 Portugal</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Turkey')">🇹🇷 Turkey</div>
+          <div class="dchip" onclick="toggleOrigin(this,'India')">🇮🇳 India</div>
+          <div class="dchip" onclick="toggleOrigin(this,'China')">🇨🇳 China</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Bangladesh')">🇧🇩 Bangladesh</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Morocco')">🇲🇦 Morocco</div>
+          <div class="dchip" onclick="toggleOrigin(this,'Japan')">🇯🇵 Japan</div>
+          <div class="dchip" onclick="toggleOrigin(this,'UK')">🇬🇧 UK</div>
+        </div>
+        <button class="dapply" onclick="closeDD();applyFilters()">Apply</button>
+      </div>
+    </div>
+    <button class="breset" onclick="resetAll()">Reset</button>
+    <input class="finput" placeholder="Search by name…" oninput="applyFilters()">
+  </div>
+
+  <!-- RESULTS -->
+  <div class="res-area">
+    <div class="smart-pre" id="smart-pre">
+      <span>✦</span>
+      <div class="sp-txt"><strong>Luxury Smart Preset</strong> — Apply: Made in Italy + France · ESG ≥ 70 · MOQ ≤ 500m</div>
+      <button class="sp-btn" onclick="applyLuxuryPreset()">Apply</button>
+    </div>
+    <div class="res-top">
+      <div class="res-count" id="res-count"><span>14 </span>manufacturers found</div>
+      <div class="sort-w">Sort by <select class="sort-s"><option>Best match</option><option>ESG Score ↓</option><option>MOQ ↑</option><option>Proximity</option></select></div>
+    </div>
+    <div class="atags" id="atags"></div>
+    <div class="cards-g" id="cards-g"></div>
+    <div class="nores" id="nores">
+      <div class="nores-ic">🔍</div>
+      <div class="nores-t">No manufacturers match your filters</div>
+      <div class="nores-s">Try relaxing your criteria or resetting filters.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══ SUPPLIER PROFILE MODAL ══ -->
+<div class="overlay" id="sup-overlay" onclick="closeSupplier(event)">
+  <div class="modal" id="sup-modal">
+    <div class="m-hdr">
+      <div class="m-avatar" id="m-avatar">🏭</div>
+      <div class="m-title">
+        <div class="m-name" id="m-name">Supplier Name</div>
+        <div class="m-sub" id="m-sub">Location · Category</div>
+        <div class="m-bdgs" id="m-bdgs"></div>
+      </div>
+      <button class="m-close" onclick="closeSupplierBtn()">✕</button>
+    </div>
+    <div class="m-scores">
+      <div class="mscore"><div class="mscore-v gold" id="ms-esg">—</div><div class="mscore-l">ESG Score</div></div>
+      <div class="mscore"><div class="mscore-v grn" id="ms-rating">—</div><div class="mscore-l">Platform Rating</div></div>
+      <div class="mscore"><div class="mscore-v" id="ms-years">—</div><div class="mscore-l">Years Active</div></div>
+      <div class="mscore"><div class="mscore-v" id="ms-clients">—</div><div class="mscore-l">Active Clients</div></div>
+      <div class="mscore"><div class="mscore-v" id="ms-moq">—</div><div class="mscore-l">MOQ</div></div>
+    </div>
+    <div class="m-tabs">
+      <div class="m-tab active" onclick="showMTab(this,'overview')">Overview</div>
+      <div class="m-tab" onclick="showMTab(this,'production')">Production</div>
+      <div class="m-tab" onclick="showMTab(this,'compliance')">Compliance & ESG</div>
+      <div class="m-tab" onclick="showMTab(this,'commercial')">Commercial</div>
+      <div class="m-tab" onclick="showMTab(this,'products')">Products</div>
+    </div>
+    <div class="m-body">
+
+      <!-- OVERVIEW -->
+      <div class="m-panel active" id="mp-overview">
+        <div class="msec">
+          <div class="msec-t">Legal & Identity</div>
+          <div class="mrows" id="m-identity"></div>
+        </div>
+        <div class="msec">
+          <div class="msec-t">Business Profile</div>
+          <div class="mrows" id="m-business"></div>
+        </div>
+        <div class="m-cta">
+          <button class="btn-contact">✉ Send Contact Request</button>
+          <button class="btn-wish">♡ Add to Wishlist</button>
+        </div>
+      </div>
+
+      <!-- PRODUCTION -->
+      <div class="m-panel" id="mp-production">
+        <div class="msec">
+          <div class="msec-t">Infrastructure</div>
+          <div class="mrows" id="m-infra"></div>
+        </div>
+        <div class="msec">
+          <div class="msec-t">In-House Capabilities</div>
+          <div class="ctags" id="m-capabilities" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+        </div>
+      </div>
+
+      <!-- COMPLIANCE -->
+      <div class="m-panel" id="mp-compliance">
+        <div class="msec">
+          <div class="msec-t">Certifications</div>
+          <div class="m-certs" id="m-certs-list"></div>
+          <div id="m-cert-files" style="margin-top:4px;"></div>
+        </div>
+        <div class="msec">
+          <div class="msec-t">ESG Score — <span id="m-esg-score">—</span>/100</div>
+          <div class="mesg-bar"><div class="mesg-fill" id="m-esg-bar"></div></div>
+          <div class="mrows" style="margin-top:12px;" id="m-esg-rows"></div>
+        </div>
+        <div class="msec">
+          <div class="msec-t">Traceability</div>
+          <div class="mrows" id="m-trace"></div>
+        </div>
+      </div>
+
+      <!-- COMMERCIAL -->
+      <div class="m-panel" id="mp-commercial">
+        <div class="msec">
+          <div class="msec-t">Commercial Terms</div>
+          <div class="mrows" id="m-commercial"></div>
+        </div>
+        <div class="msec">
+          <div class="msec-t">Clients & References</div>
+          <div class="mrows" id="m-clients"></div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="m-panel" id="mp-products">
+        <div class="msec">
+          <div class="msec-t">Product Catalogue</div>
+          <table class="prod-table">
+            <thead><tr>
+              <th>Product Name</th><th>SKU</th><th>Category</th><th>MOQ</th><th>Price</th><th></th>
+            </tr></thead>
+            <tbody id="m-prod-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ PRODUCT MODAL ══ -->
+<div class="prod-overlay" id="prod-overlay" onclick="closeProd(event)">
+  <div class="prod-modal" id="prod-modal">
+    <div class="pm-hdr">
+      <div class="pm-emoji" id="pm-emoji">📦</div>
+      <div class="pm-title">
+        <div class="pm-name" id="pm-name">Product Name</div>
+        <div class="pm-sku" id="pm-sku">SKU · Supplier</div>
+      </div>
+      <button class="pm-close" onclick="closeProdBtn()">✕</button>
+    </div>
+    <div class="pm-body">
+      <button class="back-btn" onclick="closeProdBtn()">← Back to supplier profile</button>
+
+      <div class="pm-sec">
+        <div class="pm-sec-t">Identity</div>
+        <div class="pm-rows" id="pm-identity"></div>
+      </div>
+      <div class="pm-sec">
+        <div class="pm-sec-t">Technical Specifications</div>
+        <div class="pm-rows" id="pm-technical"></div>
+      </div>
+      <div class="pm-sec">
+        <div class="pm-sec-t">Materials Breakdown</div>
+        <table class="mat-table">
+          <thead><tr><th>Component</th><th>Material</th><th>% Composition</th><th>Certified</th></tr></thead>
+          <tbody id="pm-materials"></tbody>
+        </table>
+      </div>
+      <div class="pm-sec">
+        <div class="pm-sec-t">Compliance & Sustainability</div>
+        <div class="pm-rows" id="pm-compliance"></div>
+      </div>
+      <div class="pm-sec">
+        <div class="pm-sec-t">Traceability</div>
+        <div id="pm-trace-visual"></div>
+      </div>
+      <div class="pm-sec">
+        <div class="pm-sec-t">Commercial</div>
+        <div class="pm-rows" id="pm-commercial"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CERT_B64 = {
+  'gots_yongli': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTY2Cj4+CnN0cmVhbQpHYXRtO2dOTToxJ1JmLXBjPT5Sblc3RzdDXCEydXQ5SCxiJ2wuZSQpTlkxM0tZdUJEUTl0dS47Q2JSMmVQJzMrcEBNJHNPKEVNbkw3M1RIMj41c1pIISxrNUxGJVYhPSNVX2tAJkoyWy82LmondXIlIllYWEleb0QsWVVpNzdTbVFRMixIOSJdXj5xZzwxbzYvNWJxcGtGSSguYSo/JTIjWV9GITBYVCY6RUM4LzNyP2wwMENMbGI2KEdtNXVvYGViOiRpXUlFQzhLb1RATG5XRF4uNVFHNGxEbUZJb2xnMlpqIWslPyxkST84SDJVYUxKPW0+WlMyMWRrLm1dcVc+VVsuK1hXPDdGOVE8RCRVN0dHN0J0UWxMN3A4aiRYcldeajhBUSJJOC4qNzYoaVg4LjIlXUxjVDJuPSUhJVdfXkJPVycsXTFfZlQxO0oiajJEUm5TRVo5ImcvcEVoIjhncWFYLjgoVjlFIjMsal8vSTRtJkgycG5sZkokXzgoUWQwW1w3QFlSN0dZRk49bGEjXU9hdWBKLVpWTEAlVFZhXjEnRSNEOFxXSStWZGs/PWUmcSdATUghOTJaQ2sqQnBxPE5eL1JcaDknR0khJkRnRHNaS19AMCZDVVpqYmN1SXEoaVlVcyhNLVNsOyRwQiVuU29ZNG1KcmUwVTI5W0tRN2lgQXJdIUM5NWdmWD5xZDxBLlZFW19aQl9xaVMxdVgjOlJwInQ8PV1PTjNnZ2ohSjYvTkRXMS5nSyhfSmVORyolY3NRUiwxTlQ9XkcrN1cjMCU+Oy0+cVZGTjgtM0UxP2drRFksN10pI1YmcVAnRkVOUjNkVWBBX2gjaVQ5SlFALygsZ2JJb2lWalJbay4uZnI4SjxAVDpNQUtWVl8zSldybHRnO0xLUWVaSi0lW1kvTEsnKjZKXV8/ayZjVStOXS8kcUc6JmojS2QoNCJRXywwb2BJYURDXUYjQDgqJzZESEkrM3BbcVoiOURwWnBpXEgyaEtZZmwsZTA3SVZMODVkQGM8KEZLXWZBQ1BXLG9pKmVzcERDTzk3M0NgWCk8JG8kUlZuQlsobXBJJihfUlhfa1VQMGFiQ0EiQj1bPzlOJmE3THBHMF9UcGUiMiJFVXMyIzhpMDhRUkJpKi1PPlVzVmQkZ2diRDc9LDEkIUpRNSI1dC9EZiNNUj5zZkZNRkIxXG1fWkM0dSVxJHVNaCZLM0dxMlkjVDptN2Q0YGdRNGZBXUEyWGdicmEhKydvREpRNStmVDZbOFFdVnBFQk5Fc29RaGlLKm9RQU1BdS9uOlsoYmo4Rz5rZVJvWzVPQ1hHK01fRSgrTiRSPjIvbVM7a1ZmJy8mSF5IUigsUFFLW2tmViRfRTBuLlA+ZiVhPitNLD1LJEM7QWJOVCkzWFdeakdlaS8vL2lxXXNASkNqSEJOYGU0O3FjXioncj5OODUvOTU3TlU4WD5UM0hXKCFkQmFYVCcqXW1vKiZlMytTZG1sWmBRcEgvWTUrcGAmVjZSSV0sLDJLPyQuZFlOYyo9OUg5Wmo4JTtSajlcV3EsPVMiUkNfYkZaaGp0bCVkVzhHPD9mQm9aRWh0ISYjdF9wJksubD9Hb2pzakQnVy5gWUdAKFgubSpmJio6aFddNyZjSTk+UFY2XE0pPEhjK0M/Rz1VSGMuLSxDdSVKdUtkPio2RDJPaTVmP04wWDNlUio5RSVIbCJgZC0qTVdfOzQwdGs0Xz9ATihlO2dXc2lPWDJrLydKQE5ZWFVyL1RFLHM7Z0tUWnFdJTNwKjxwUCRob0lSX1knJEFkQUxJRClnbWw8PVskKk5SQVtNIkY4W3Q8PjlERScrWl8lISxIWDBHIkQ+bWRVZDVCKXNmPHEsYGFNc1pnWSkrRlE+LkwqOmtyUkRSaHFWMFViWE08b1JCcm07XEMwUk1CYilndGBdWXN1TV1IbTYjcnEkIkUyTkcnPnBFc1o8OkBVTTZFQUlcKl9NWTQ7W3InIXNjR0hAVSZJaFFQbEtxOUxKdFBSRS02Im1sSipGVl9fJENfUEkkXSNLbytrO0s8KC9kYWstZi8zWTNSJWI6Q2c8a04rJWlXSikwLTclZ11ZV0JwXWw1ZXUrcy5uZm8zTWRVSkZ1U1QvYW1GWiRmQTAudFQvQUQiWUI1SV8tMmQqXCc1R1NxTyhiZEE+bm1DYk9BKWRpb2AyWVBZPyFHW1kjX0NFNEVNW0ZvWXEyVkhzWiQjJ2MxYio2OyFWc1tfLDUvRlRtcHEmRFwvNVpQW0tKP0ZnN2BebFZXRWwraFUiPFcvKjxdJmkhLmBSbTZSLHNncUoqTlUlLCRkZjRxUz4hI1VpYy9RQFlMa1g5M2RmNC8sPUInV3M2U2dxdFRWUzRkLXMmamJBbWdGXk9kRlsxTlc7Nmo+VU5lXFhaQDBFVGc1VWVoMiJkbSxVaSdSY25hLkBNMGAhOixUWms1aiRaLFAkZ2EtOkhsb0IpbGR0OVZVb0JATGY7KUYmUCVUUiQvcjBYRXBEZnNlQUxmIWxwbkZYOGREYz08YU0xQEszbzVtaiY2N2orPFA9L1I/OnMmT01DXlRrL2ktS0B0NTxqaEtMXChLZz5SZG1ASiZiQ2pHN0ozOyFiSVMhQihuI0VXblxEQitFKE5ZQWVLT0dHUFMoTz1UZjFeXElKNyFgayUoIz0oQ11ibCc0S0ZGJyRWLFBfYzglZDptXGQ2RDlPY1NaY3NlWyghIU9wYD5SalhbM1tsMT1kQVdSRFMrI0gmLjBpYCI/UU48LUhLJltXK0VzKm8oU0YqJEpfdGI1TEUtb21nJk5tR148WShxSldMXyNWZ0RHTlpeO1w4NmFQRkVwTWtyIi9fZjgpKDVeZC8rcFtMbCdVfj5lbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCAxMAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDExMiAwMDAwMCBuIAowMDAwMDAwMjE5IDAwMDAwIG4gCjAwMDAwMDAzMzEgMDAwMDAgbiAKMDAwMDAwMDQxNCAwMDAwMCBuIAowMDAwMDAwNjE3IDAwMDAwIG4gCjAwMDAwMDA2ODUgMDAwMDAgbiAKMDAwMDAwMDk0NiAwMDAwMCBuIAowMDAwMDAxMDA1IDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDM2MWQ0ZTk1ZjU5Y2IwNzZhNzY3M2MzNWMwYjMzNjQ2PjwzNjFkNGU5NWY1OWNiMDc2YTc2NzNjMzVjMGIzMzY0Nj5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gNyAwIFIKL1Jvb3QgNiAwIFIKL1NpemUgMTAKPj4Kc3RhcnR4cmVmCjMyNjIKJSVFT0YK',
+  'oekotex_atelier': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTUxCj4+CnN0cmVhbQpHYXRtOz4/QlE9JjpWcy9RcSxqNFdbNnVCRGAiOSpESGc0UFxwSlZSI05JNU5YWTgxSUJeKV9YT2RuQys4L2c0MixSNFFDUmVxTChNKmNgMmxNaTFrXyE7ODRdcUlcLzZyVGJLRS88QWYtbFYiVl44bmszaU85Lj0jWkYnQWsqME9yMWZQNmYwKl9MaCkoPGBzK0A3ZCJIVWkrU0xCYGo2PUE6WCZgZElsIidUbyo7VEdfXSQjbz9MNUgzT1pdKCkibFtealFXRSdMWWN0OzIvPlRWYkZeXmJDPylUZmpMXXVLMjthcFszM0tmUDVCX0QkT0gjTyY7SCxIYXA6Z1c/SEFzRlJGXEpjIiIkQiVOTU82bmlCaGY7V0VcVWRpT05pIzphLmxfY3EwRGFWRjYyJEZqI0pMZCtQZDJuZFsyc1hFZyFoXCU9M2UxYnVqY0AyXiIwRWZpZ3JWaS1LaTcwc0RYSWFaU0Q3JFBVKmBUV0FAKEQpIkpraUg5Z1FRcGw8a1xYMzMmXjNnREBPMzw9ckkpUzpsajRqbW5CUG84UWFVP2dNLSIvWGw0QitMX1tMRTshUlZOVTM/Py8iYnUuYjNBRXU7JC88IS5oMTl0ZnA7W0wjX2lCbk8kYCtFLVxBKSJxKEFidXQ8aFZuJk5gYjVxIVlmdDo9a0BGVHQnNSpCXCV0bDhULCVQSEVjWSwvVEU1TS8wK2NPMTNGYz9sXEQ0Sk4tR2BybmVFKmhKL1I1XTwkPDNBNC5KV25nXnJOcEMwPV40XGRWTWFdbkp0dEonKWlcUVNWdStkKitDT11iXUxuQ0BZJSozImspVCtfOCxKY29bYFtUPW5qQjVzNDtwZkJUaSJUITdCYE4pIltUQm4iIVA9U1RyamMqUk83UTo8LiRQcj9kND4wRDtsNzw+JWU+NitYaT1uPyNkNSJDKUJJXW1uXHRJOiZyYyNHPSthcFxOMWE9Lj1YWTk+RC5xO1FeQGtMJT4oNlwjY2BJP1heczNDKVpySjUqczNrIWBrWSwzSCU4QD83UkRrRGNZPSIqZVVDUF03WFRCUWZiVHIkPl9JaXFKLXRDXFVjJHEtRVJFREYxYyNNJGlyaHI/T0wtUklmKnE/ZEAwa1NDQ1EpckY8ailPPmBKXm5JXTMsNTEkJDMxS1t0Jy9vWiRCVCYsIVNtcyRwNWAmRDFMOjMvKDRdLiU4Qyc1X2kpXmNBZSEtXjBkUUJFZlIxLFJUNSUxYyU9YVdSW0snIkstXl9vX2ZNaEdkSSNPOThGKTRXa21TRTE6TTwiOUZBZTI9MUtfbTdsIVZcZkFnO3RFLkA4YTpOQWIzK3NsNEtJIzY+RG1SKCFMLiolUzRgZjFJaiNsbEAhNzhGSWtqSUlpaGBNLEItZU5QQmpIQFB1JnUyRTxBdTpwKDE4dEdtR0d1I29tVEdvOnUjWlZlTTpFMVBFL2FXZlNeMzw4SDYlV1I2RnQ1J21EOFI5PFVKMFEnXmdNa25nKytfNSY0UyxKcjpcRi47ZW9AazFbLFxVWVFmJDFEJTJxbWxibyc1NXFINU9LZm1JPkghYk5nZUVcVE4/MjJbQihAWlBZZUhbN09RVFVxbzszOXE6dXJYJDxIImJtViRpYT5dLTtfTEA0PDw4VS1Ob1JhK3VKYmw9Qk5iYGNRLlJdZmghXl9RMVZBV2I2PkRVTFhdQzlxbi9IbyUnOzgkNzcmWyRiai1gTDxRbEdJXSE9c3UqVDw1RDA+IVkjVDhuT2hcWiJqXzxsRmg5XVg0JVc2R2dXSTZoYSY4RS46TklWNFJQNWRUaF9JWURYUjdFQl04OUNAakk6b0NWPTkhUGNIUyE0ZUs3TVEtKXI1LDUhO14xWWFuWHU6RmJJXFhyZig4LVItTHBRTk8+KHA9I01ZWGQqcDJWL3NjamZjO2xnWSpHJGw0JDNLQG8qVSVWQGZRPG8xYmtlTidxcWVPZDBbXXAsMSRjQnBEVFkta15xcShIWFItXz5LRUorJy4tbUUqSDpYVy9LXT4uVlZSNmcjbyxVWCckWUI9WSw3cSExQ2lvYExIJXBTMEo9ITlwWGdBZyJLPmxtT1JbWj8xIl0jMklgPWRPRDJiY0RuckJuLDAvJ0smb0NvLyVFXFk0VTJnUVFfIU1rXiY0OmRPPmw4ak5NcUhnaUFmN1kvdD9KMjM5IjQpPiElZSVUQEpfcVRdSD5aTD5jUjpsWzhKWUMhWzZRYHBhRzsmczpSYWlrXW5jNEwibkpCUSJAbWY8TWs8a1s3XSVBNmpnREdRKVg1U201dV8xSl1RY3AnXDsiKFZNdFgiVyw2RGR1YUAtXWpNLEk8VGVmNUpYPGg2Vk9iNFhiY15VQTk3XTA5bSoiW09aZCgjP0wzcSQrJV9BPHQ5VCVcRDtuVWg5IiUmYDouYmQjIkInQWJIIlxYPT0qMjAlLlZSKzdqI1RaZVhRIVtzTy49Vz8qP3M8byx1S05vRCY4Piw4IkZkbHJuMkRIL1YpI2FiPGFZa2QnL1xnYltGKD05S0lob21VSF5mQVImO0ZhRyhvbkQnN2xIUi9xa11oPywoV0h0dV9hQ3JIXEFTdU5gIStxIkE6L0hvPWciNFxWdCgrTStALjBTRCIyNllKKTVCclZKSyo0L1YpTTNyJ0pLOU5HSWlrbiVLI2BZJ0cqQ2JmV006MkVMdHRgWm5RJGRiTUcxW1lUOU9uJkNGWFhSP2xCOCFHX3RYN1slNFtvWGlOIT5AdFMzK0RpO1xOXC0/MHFFOXNyVFtyIlZrTF9LK1hKaGpYUEZcVHBKcWVSM2RAK05UJksjcVtEZ1dyYjwlV2olcTBeK1svRGBoS0R0dDxOZmtzfj5lbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCAxMAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDExMiAwMDAwMCBuIAowMDAwMDAwMjE5IDAwMDAwIG4gCjAwMDAwMDAzMzEgMDAwMDAgbiAKMDAwMDAwMDQxNCAwMDAwMCBuIAowMDAwMDAwNjE3IDAwMDAwIG4gCjAwMDAwMDA2ODUgMDAwMDAgbiAKMDAwMDAwMDk0NiAwMDAwMCBuIAowMDAwMDAxMDA1IDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPGZkZmU1MTFiNWVkZjhkODljMzczNjE1M2EwNTIwNGQ1PjxmZGZlNTExYjVlZGY4ZDg5YzM3MzYxNTNhMDUyMDRkNT5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gNyAwIFIKL1Jvb3QgNiAwIFIKL1NpemUgMTAKPj4Kc3RhcnR4cmVmCjMyNDcKJSVFT0YK',
+  'lwg_walpier': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTY2Cj4+CnN0cmVhbQpHYXRtOz8kRyM0KDRHQElTQD11MiJrQWJlZnQpKU5UZXBzUzlkVmplPnIwIyVOWTEyUkBxVWBsZ1xMTktBVjJdP0w6NC51X0VqPVhxOVtNUT5GW2dnSDJYOWJMZ0VVRGw0IypuLiUxZUNSODszbClGY2p1aUVhYFRHcywuRmBDLUBVS2cnLVhCTDQxIzlqZFRWQGJNMlY/UDY6MChyKkNmaVR0TkUxO0pWcWpJcFJDTz4kXmExJ2Y8Q2pTUERBOGRAJSctbTlsXiRbbl4mOlFYIl4uRig6Z2tjSytfNjhyb1VlIlAqNzgsX1hDbT8la24xW1tKY3FJXnA1InJpO20nWy1yRFUmYVVRP2BVO0VtNz5ZPT11J3RQbickcjFqIjQuamRbSiVhRyJjblFJJWROLmRLaWJyaTc/W3ErUi05dEQyLjxVMkApQ2wsVkpHLFFnL0UlS1FMV0EiX1cucE4+VWpFKj5cYGg+VSJbT24tMSg/ZCtTKl1RZzVHJXJMXWdObGhORHVXbGxQSktHI3NiKihsbTQuKy5QIXBIbipTJkVAKDttL0QoZC5oXiE+LE5jTkdWM3M2WUAjRkpWVzNPTHUoX2g3KWI7PylXRVY+ZFJQL2NqTj8qSVZ0VDBuOFBMXyFUTjhyTWZyPzdNIT9FQi4vSjhXI0snSkhSIVRYMW0jUjBKbmddLl0sTDcsYU9hcy9HbiRmUjI7Y09GO0xtNVpgZi0jcG1AdFUnIl0kK0JCKmBlXmNyVXJWX2skblclOnUxN2ZXVV9LcThRbml1XSI5MitRMD5XZjM5Ozk6P3IqRCptVGs+TVRgTm9LNUZTWUtBXGkrJ1c+Wi4sOytHUixjTSxvcDc4OjMxa1MiSUFpVHRadExuZkB1MkVbbURxUzU8MiQzaDteJlROZFY1L2dQcyVzbFxoN143X3VWal4xSmBZUXI0ayJaWGpkNWc3LyY9KEs2YUBsT1xQJUsyK2FpZD08VFBvZ0pKTFNyPkFrTTo4Kl9DYExfYjxKL09VUGRzQGxJUUk1Sjw6LV1cPjo0dGZ1UDxhXkgxa0g5ajhPamlaRyV1UVhJKCQhWkNWKmdsYjEpLzZVZDwvNSQ+TGdNUCVIIyNLOk5QZDc/MT1DQ0ooNz5GUmZBJGlxPSJYa1clcj5WKyNqQ0xdbEAnSkJHXU9KcVtVZmcmZC8wTCtecy5dVjtGISghPiw7VFRVW0cmWFQtQkc4LUM6Uk8/PydSVl48TSNScytjVkNDTkBwISVIalc7Jk9iUFAnay1UOGhbaSg0cVIjMmtVX0tgQUZLSmlbTiwoQVBMaks7XEVgbG1CN20hWlc2cGIrbmRuQU9uLj1cRmpRM1tbdF4maz1ZK0I9PiQ/JTsxZidIWkAnJWJCMWJEPkI8YVNuaD0uMGxDQTlnb1xuSTQ8dTdAW3FlYmMib2JBcllIOTMkLzAsPDFlIzRkZCQ/N1ZBTWJJSWkrKCErYkNCLkkiRE1dRyxPW2wyUklYRmIrXkFLLCw1W2E2cmZxYUdjV29xLS0/WToyLDw7NUlCbycvP1FsLVduJzE3bWprViZSXzdQV3FwbnExI21tTVBHN0pDR1VBViZ1RC9JQ2MpVmIoKEdVblhZTTkxbkxAWWxuIl1eTXMrSWtsUFN1NkpfJ1c5SjIkN2JwQVRgR11LXk1nK2kpVG5VKmI8TiRebU1EYmwxQjZMZUBYZzYia0kiSixvXFpaczpgZCQjS0dHJT4obmxlNChtT1ZKcWEoKCZMKzRXKiYwZ1BmTkdsVyQkSW90M18+KD5oQ21BU1VvQEQqUXApLjc1RzBXVSFfSCQ6SyxENmxkKCcmZ0glcitdKlFJKTtkQm42cl5YYkAkYywyQyZfPyVtP1dfOExPVj5qPmkyVzBedWJzNnJxXjE6cCIrUlBENzh0NCswJ0ZUJFpOQExcMlxLXldILjFiKzI/WFtUVT1DM3I/U3AkM05hJjlTKjsoJWojPVphRCZfbUg5J0JWTkk9WVxrSF8wPFgwTDlOKkdqJHJXKUo8QC1sK0ViTChobkg1PTMiKmAkYFo2WyxGWUNoRDQ/ckFtTkgjVTtrMFxFZVovNklGMTBgTEEoJkdxUkdyLHEuYEUnWXJKNyltQCJPPDZDUUBrJERRW29RWDdtak1dSDVsLDNkYCJpVFZmRG5xKTMhQVF0dDRdbShJXWlHSk1MN0QvQStMKStBXk9UY3RTOlpEKWh1bipdSF9aJDl1SC8xdF9rNixoPWMsb1lTYFhoTjZRNF5GJk4rYCc6Jm9vSj1xTkc4JjFWS15OZEFCVnM/SCNPI2VFZG5pPkdQPGMpaT5CLHMrNFAmMmRoMmReXDo/az5LJl11Rm42ZT8/ZTc/OVY9UEtnKFxBI11HOUtkZk1eU01scT9BJUdrbig1KUdNZEUxTTAkcldTWnVeLC4oP1kvMkZtW0FgViVyKVZuJlVPOnMyO0lzOXUhY21cXWttSj51cFs7bmY/MUhXLytwVidtZ1dKU0U/STFZQkdjTGMvJllBRid1YCUvImxrKE9cWDJNWm89JzNbSDh1VE5LYi04YSIzNERlMSVMLVpST0UkWmVPSFhpOWBPYTVKLyMsZSc3T3AzZE1FKytAPFVSOmVUbExmbVlGSVEyU1EibyNnKnVWWF46Vm1faUEzTWtIYiFdPkoxO1hiVi44Q1tDKEpeMmJUR0BCNnBQR0VBbkYpVT9CYipwTFBRcVIuTl08PzkqUmFLQyJCMWBvXCw5R20sbllkb2dkO285WlJeTjViIUQ8czZMJVFsanVHbGhqWj5lOClsJ1M9YDBtSFpCUilWYWczNz1fL1BfY3E1Rk9qMGUjUypPOmNPUVNIRmdIVSdLVlZeMjtfaS1ofj5lbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCAxMAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDExMiAwMDAwMCBuIAowMDAwMDAwMjE5IDAwMDAwIG4gCjAwMDAwMDAzMzEgMDAwMDAgbiAKMDAwMDAwMDQxNCAwMDAwMCBuIAowMDAwMDAwNjE3IDAwMDAwIG4gCjAwMDAwMDA2ODUgMDAwMDAgbiAKMDAwMDAwMDk0NiAwMDAwMCBuIAowMDAwMDAxMDA1IDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDliYjc3MzM0NTUwYjQ4MGUwNzI3YzQxZmU4ODVlMGVlPjw5YmI3NzMzNDU1MGI0ODBlMDcyN2M0MWZlODg1ZTBlZT5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gNyAwIFIKL1Jvb3QgNiAwIFIKL1NpemUgMTAKPj4Kc3RhcnR4cmVmCjMyNjIKJSVFT0YK',
+  'lwg_lenfert': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTc3Cj4+CnN0cmVhbQpHYXRtOz5CZWRcJjpXZURiW10/Pzwoa2ViaGJsZShERDAqOUI9aygySTtrL0dEZ2dtKFZKWjFxRzloZXEiQTdFSWk1QG9QRi5bQTc7JGNZY3JTSmsqR1RPXS0kT1crYTFddGwsTFpmSjNVQioiK106JzY7Xkp1KzpRa0MjZ1ZhUDxxVHM/QSEzWEM4VzVcVjhAJlY6blc0LURaZzFrNiJSQzguW2NtTjVoKyZLKiYtUks7VDdFJDVzckI5N1hPK2psZWRnckRaTjVtNCMmQV1UaldiLV1wNXJwJDo0InBhTjRLSkVQLCJZb0czZ2pgPFQrSzMxQyhidV5QLD0lckorZFpZSj4uOVknUWphOVlQNGonUS8qMz10RFBeOWNrSU5OOk07ViZvLVY6JiUmZnBEaVhWWy1kQkBEMUs0MFkkVGpcPWFpbV10cCZhOGosM0JrM0lMPD5va0pYdG45OixyRVI4OE9IXG87JT11KmotU0BuK1NsbktWbFRjJk5wdS8ncElTNE0wSUs7R05LZSxTZjAnZVEtXSQtYjQxa0FwZ1BRIlg/QVdzLzZWJkMxMVV0Qyw2cV1aKEZpNl5XWDQ1X2lhcWNkOzIpJDFkQTQhYCxJazN0XUFERUtvYGtwNGwoO2o7c243KikxOlZ0KCk6YyZJOVg9MjQ4SVEyTE1wNWA2b09rQlVbMyxYdFNALCE8S1o+bTRUJ3RjLSElciFiUmJHbmZyNDxRbi9VJyU6JHJPamJPQWVBK25cdUZdI1tOT2djZG1kaCZoPERZVzNYP1M4Pj81SUQzLTxAVWMub1M8VDlJVDhvQDZsRT5ZS1hHK0dAY1hhWjlqcUJxamdWRkQpZEZRPGJWZGYvMT5vODd1V0wyZy50Kzk0LFNrWVdfIUUtNmJcaGoycXB0W0wyY2A5PVQzNm0jPSpeQTkhZUtiOGVmbmUkU0FPVlAzdEQ/NE8zPDU5ZzAyX1Q0STpRa3JJK19QKD9DWUNZcj9BTT8rXyhXNlYlKEZKbXIiVmwkWmQxT0Foa1JjYzk+NlRfZ1QyIzRxWCdOTzdLa2gsPFUjQDhpNj90LnMlPEYpYmBfSFEwIlYrK1kuajBANkZTPWtwbS5NRShZOVtEQmReJU00OElSPjMrYjFmVzBxbzdtXWB0UFwwPWpkPU1bI1VfUTw7JUIhUiNiJ289NFdeSVw9T3BHXVllPl5wMzMtVkBDKlRSXlNBTGYvTWFHYitjTFc4RWFFYnFlWXBoZXRAPS0vc11aJlU2bF5YYDdZUilbZG0xJWsnaSxFMWVTMmEvZTU7NmUpPlVdUTU0MkpZZ1hpZF9rYy5mPilCQ2o8YFk7Nl5GWkRqUilTXyJFcnE3NCw/b0xYTXFDPStKaj9sSi86Zj1RVUYpUVNKPz1lWFRmLz8nZnN0dFpwRE4qIiRkZ2lZYS9WZmEhYDJWTFNaUExUKDAtZFc7dSNYbDlbYyRnT0lHNSduc0M9QCRsYXNvJGxPSDRrLSR0aCVnNi83RyEwImZFTzJiJEckXFNQZlhjVm49ZXRiVDFbTEpJKjhbNlRiIjgtJ3FFZ3I/PSlNb1pjZ089OE4qYCZMLUdSNE9KdD1uUz9HUUxHVklSMjJSTWxhOihFITFwLTRRaWJCXT90Pj1jS0EoczI1KDpcajl1RDVfJC1faWBeWHNmVStwUDwpWjtzXGh0M0hDaV1WIyFaJzdERF0xMnFIR2ElYFxzOFFkV1BHSWgvdWZLSEshNlclPj9VOjBGNToiSjBlLS89N002bVIlOGNSYWhnLElQRl1OWHMzbTBUVk84UmEqXzJKVXJLYEIqJyVtcyYuJiNKXzEsN21XXTFVK2RgLXEiOWI2XUZ1ZzVSY2k8Ji1NNW8tLVIhJSZwQm49WEVVPl9FJTNXQlBhZkw8UUU2XyJvcStHaEAvW0wqaFQwVDpQa3VyJDtoZ0Qla1Y0dXRGSGtZOHE9YnU/MElqIW9UM29NTzZdMVVNbEE/UlAwWUhLTmg9UFw/S1NBQyhtPnRhV0xIdUpiWmJRPWZKdUlnYk06UGNmXVIkYnA0TWBeOWNJTGxrbXQ/UT5DUGBmZDNCJmJBNS4yI0FfbCNJZVZtJV9AMWNvL2MobSoqdG03YlAiIixVR1ZbZFoociwraUEwW0RSMy9HQjdoUiluZ0s7JDBUcDhdQFooJWQybHVUYWlzS0Zkb3AldFAjMSZCTWY7PkE4YSlILGw4WEA5NiRbJCtROlBlP3FwRmNRVEAlbiRQOldrIUhcJDUiSi5iQGNTaS4qNUlLTTVNZjhiUUFAIUkzK1k+cExROzgjRHUsJFgwOlpldT0tZC8/TzhoVkNFbE5dKHFWWTw0PyYlM0olQmhWTz9aLC90Om1XN249NTxhJztYQ1U5O2xlX1BeamxnYUVBU25UI0VYW0g2OVlOK2FxNE5EMCwsQ01PLFdpPVo0PU4jOiQycFZAbS8kIVQkQTR1MVVhSzpQLF1qKWxsUylsUTFPXUVIOV1ZPFpOO0osJWchSFN0PG1mIm9yNG1gOm9nWUFmSDMiUl80Vi1zJUNAJDRIS2oiNnBFNzMqbi44UC4pJkEhWF4sLSlBNy9nSHJTPFxLLjwlWSJpRXJrTEpjMURRW25zVSpqcF1tdV1mIjk0V0BPUmRHbE5mW3FoW0tmbF1cWldbNGBaMjZAaFghMjVOYlxlUkFpbiIiOltVL1tkcWBzMSYzNEkvLFNDVkFbLEddIiNONzkpc1hmSEBjQyJecUhuS1lGLD5EOicvQzVnUFQ0LCEiV3AoVV4mT0dHKURGa19OaClxLCxGSFM4ZTVTIiw2JCZyJGgyOENQaCtrPERYVm9kTjw3MEQicD4zKDVJdVEjKGpuQkFrOnVZKGxoV2crYDpEaUY4QU1+PmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDEwCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA2MSAwMDAwMCBuIAowMDAwMDAwMTEyIDAwMDAwIG4gCjAwMDAwMDAyMTkgMDAwMDAgbiAKMDAwMDAwMDMzMSAwMDAwMCBuIAowMDAwMDAwNDE0IDAwMDAwIG4gCjAwMDAwMDA2MTcgMDAwMDAgbiAKMDAwMDAwMDY4NSAwMDAwMCBuIAowMDAwMDAwOTQ2IDAwMDAwIG4gCjAwMDAwMDEwMDUgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8ZWUxYjg3OTc1MmRkNDJkNzllNTc4MTczZjdlMGJiYjY+PGVlMWI4Nzk3NTJkZDQyZDc5ZTU3ODE3M2Y3ZTBiYmI2Pl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyA3IDAgUgovUm9vdCA2IDAgUgovU2l6ZSAxMAo+PgpzdGFydHhyZWYKMzI3MwolJUVPRgo=',
+  'fairtrade_malaika': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTQ0Cj4+CnN0cmVhbQpHYXRtO0QwT1xsJ2BRQ11cPV40Oi1XKUh1WVBVY3E4XDI8KCg3XnFkTkk9V14jW1hkLCQnVmdwb3QuTkdRaU5vS1dQYVErK2wybmlnZGAmJnIxV2ZQMV5BOHJeb0loTVBYLiYuYXBFamEvSVtnYTAmX2tAa1M8YmtAMEMiMjhDM2s+WGMzUFJAL0AvRiFLaU1tNDljdTQxVkBjUyVzaG1sRXRrWzNWVjZcZkovTGRkWD5GU3BTNGdfUTwyY0JTJEEtNWJGIWJpSiIhSWdbUFxRRisyc01qQEBINzRBK0ZWZyZCTGFfQSZQK0wwJC9haDpeUFlHX0ZWb3BFN051Q0gtbzxVPjtKXSRCPTQvLlIwcWgoYmNFO0RnXVRxIUxbJldWI10tXHA8UzRSQj84VFtuKl9sXk5DNko/M2w9dGVEOVg8aFwuUDZTTU4vQ2VIRkpEbkAlMS5wVVdOT1ZfYikvImc+KUlyXUBUb0ZqUkxRaCZfMEBxaiJxJj5LYFg4VEZHOzN1cGwtVWVXYEplVExoO05nIy1AallfViY+O3RnbS45dSo8WF5DVVEnYmh0NjUiIiJfKD91WD4ybE5Tai4yYXFtIjoiQ1wnbydtVV0wWjhEOFVSWWxjc0xoaUhGSG5pYURhcWhjSkxKKDpIN041XW0yPG0pJVcqRDM4IjAmTys3XGItKC0uMEBSO2BJdFZWKCFqMHRcXSwqQnNPRWNaZmhpN0k7OitCIlxgNzI1blFYczFBWEloJG5EXGljZE9yY1QiMWhKRzNtXmZCbUxxdDArVDtBa11gc2c/SCo6JW8xcU50Ol8zZmlnIUhyVW87KUwqTkNKWiM5IlUvcyo4Sj1wIltPVXQ1LioraixYVjcoRGskPFBmNENDJlo+MCVMa1BUZVVBPFRYOjdMWTleYSVSKUtjWl84aktCV2o5MGYrLyZaL0JZQm1aU15ZcjVERC0/PWI5JT5qPGU5PkktIl1WRksuJixiVTIiNCJDTkM9NU49PFprKj5wM3U3S3RAaCZkVE1KMGJPX2EzOFBmLFZ0ay5cTzZAUlhbNGJRcllfV2A5JkpfPEhPPWZELGdTL14lVytITUBHKz5bPCslQWolckhcRzoqLzNCX0JsZk4oYFZxVyVMZitYKSljO1MsTlE+Oj1fIitIbnFzN2BsNXVrYzckVEtcOitbYGc1KzM3TkooUDxWOmJzIisnKWpQLGlZL1s9ZmoyKEU1bjlKMGFrQC10ZTVPZVUsa2hYZF4zWj4vUU1fO2Q9QU4iTmw3J1w4SGBAOVMob1BqcUA2WixoQG81VF5YcUlnNnFhKT5lcz4iO3RVOFxOTS82VyVQRyMrMVx0KmtmYidBUjxRUDAwXyZlQjxZKi0nPCZQJFVPQCo+cVdpaitcbXBWTmcqbGYicUA/YSEhLDVTMFpCNFldND82ZEMmcU4/OmtLPidNNHNUaGRcVSIiPF0palFmVSlvZSlmb21aJDwkPXRMPE9HTy4uKTosXGBsWVl0N2h0bE8rU2JvWUttIT0tXFwxMkEpXkkrXmdFMkVoSGVIYytnTWJyYXB1S2hoUEBdV1JORjRpIzhgajteS3BZcFlhM1pARjlaJFFuNVY8QkFVMlpgdDQtQytvLGVZQyo5Ri01ZylNaDsnVklEciIvZypWc0EiKXBeXTNvSWcqbD9PMzIjS2QyN1dpbE9LcUtDKCpELFlAPXMnPk9mNCdTNlRhRV1AJjE7LkVNRHRDXy5zUzUpV25sMy9oRmNNbERfSDVnMiYlNmBuKWNnUl84MUBJbF5CYTY7PVE+XTNtOz5KQUJtPGcuInQxMEUsSC4/VnNbWycvNVtfUHE3QSEsL01vOEBwLjZNQEVdIjlWRHJnLGM/aFVgJ1JTUlNdMkhJdEtRLUxnRz9rME9aZ0ouciYqcGlncmYzPChQTT5RVSNFUC5bdTRiQCx1LEJVZmxCIWYkJyxXbG1iaTlYYkxOKyNjNVUuP2BJKyFvS2lXOS9iaWBuMnRzM19xTE5AQDI3W0ZoJDExVHFYbjpPcjtRW2MiKG4tKCc4QXVaTF1WVCc7RWhjS0IlZCstPmsvR045KSJxYzMzcVk0LT5bXGIqaW8nXSI+TWBeLm1Jc15QKTRFXzsyYF5xZF4zbzRqMic5Ni45IkM5NjNxZVgsRDNxZkxdPHVIYGxCM09hMGY0NzZbJE9KdEtiOF1DSy9fVCJCKV5JRWInTlMtR1kpMHBtX14xamZnUDdiPl8lK3FeQGRUWjppdWlgZkIjOzU7KSpIa0BwPjZTXkddOF1uWzhNX0FiPWQvVSxDUSg9JlFMcW00MmRScUgmVShnVXNbNlE3IzlrLyVLRWtUJmpEZiVZb11qRU4oVVNzPS1uQl5CLEdcdG80RE1yIWUsciF1c184OEE9cmJ1MilbKm51KDdeZVFcQ2w+QjZuQjNTWFxVIVZLN0hLT0xoYmxVMmJCYHBRKTA5PjBHVC1wVWhlYS5eakFyXCtKVC1JLEsnMlMpUEZRWTVEXDZqX280JHNIZCFAN2ByLEo9ZUlGOkReKE02VUVqLS81K0lyS047VVlpM1lWZjZeKksrZ0RVImdVTCtFSWZzI0MzQ11BMUYudGBLdE1IRlgvWidcKGw9dSc8PE5icVxMZidvZ3EncyY9M0VlT2xEcjpKXFo5PyhBOlpXRDtNaUN0VWBOXCw2QENvdV5MY2ZQZj9nXSMubDw4X0B1T0lDK2ArPFpWYmosblYuV1o3S3NxOksySipOJ3BZVlxSaUhRbGs+OC9ncSw+QzhPS0UhV0dyW0MyPjBEIyZrUzBGPCZRb2AhcjwzdT82IyQ1STdEcC1OKSVqY2phVV1+PmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDEwCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA2MSAwMDAwMCBuIAowMDAwMDAwMTEyIDAwMDAwIG4gCjAwMDAwMDAyMTkgMDAwMDAgbiAKMDAwMDAwMDMzMSAwMDAwMCBuIAowMDAwMDAwNDE0IDAwMDAwIG4gCjAwMDAwMDA2MTcgMDAwMDAgbiAKMDAwMDAwMDY4NSAwMDAwMCBuIAowMDAwMDAwOTQ2IDAwMDAwIG4gCjAwMDAwMDEwMDUgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8YzQ4NGM5NjNkNWRmZThkNDI2YTk3OTBjNDNlYmM5MWM+PGM0ODRjOTYzZDVkZmU4ZDQyNmE5NzkwYzQzZWJjOTFjPl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyA3IDAgUgovUm9vdCA2IDAgUgovU2l6ZSAxMAo+PgpzdGFydHhyZWYKMzI0MAolJUVPRgo=',
+  'bluesign_noritake': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMjA0Cj4+CnN0cmVhbQpHYXRtPD8hSCgnJyMrK0RRcU5TSURtWi5qbTJbJSEsWWJNJDdHSDozL3FnbEYqVkE7X0VZSjw4NDFoZTApPTZCLzpRLUEoTWchc0ZmcFInQEtnTDtzZToxODdKRmEnJ11WUmsyNy8mcU0mSjBBREVBWUhXcjJMZUJLbiEmPzhRW0FVQkwuTCs3UkxiR3JxLkI2VTRRMkwlUmBwJDZ1UGBkRStmNGhSYWpmKUQ7NVo7OUxvai4yLyExXC1tR0dvJlk7OGlQJlszIlBQPysiVz9kVWpDOidcQ248QFldaTkiKlJJNSpfRmErMTJqUGE5N3ReWj5DR085R2JBJHVqS18mL2tpdV0jVE1mPk0kSE9BQUFtLGUwcyR0TVFhaVg5QU4yRkwmOEc9OFZuLVQ2ImBidFFqTnJgaSYxdGJUXnVtKGo5KyU6ZlNMcXBAPFxYMU8tJ0k/JF1nRUlVPVJBQGxaQFI3Lz5Scj5iYiRZdDIlZXFoMSleKlNHbTJVcStGOl9NaFY0MSwqOnVFRitkJ3VPJDBCYDEyI2RIPjhfI1ViQl0rTWtyamhQNicxdEJDSCYzW1o7MixzOV91cklZZ3VVNW1hc3E4Zjdna0lYZFxOOmI7K1hPQUBsI0xFcmtHaDdIV0twJ19Hc2o6VEFzQGMtcjQ5WT1JJGVFZU0uX0djYnVXPisoTENhJVlJJCRhKitLPmM0QkcjMChzMnAxKkRNW0NjQ01KQ2g7cilUdG0lWjc4W1tZNlleQnJdMCdJRydMVzBXZ2w7KjdDbW1kdGMwTTZhbGU2cmIjQmgmRyNPNkwsS0BMIyFvWip0KFBKczU0TDFvX1hvY3AjVTo3SGBMUSxVYD9SdTBPWSpgQioiVGNPaWNXMENjcDhbN21oLjZaLCM8X1tuNC0/M1BpZT9TUmVDXkFkKjo4Iy1fQy50Kj9CUGZdZ1krL3FvVDM0I00iT2peQ2tcPkpTcWs4aCNwM2g/TF5sblxVb1hAU2chMjhtTTFjN2dZT3MuQD9WUk1sLWx0QWtNLSUmMUxnNyZcTk0sTXViSmhiK18/W1Iha1RYamQwYnJwKlQ5QGdnVkQ1YCgrNWxyTidPLUEvYTpyUGs1a0trYjIzJG9OR00jXy84ZyIiJ3BvYFo4UTNSZChBL0oiKDE2ZEIuM2k1Zm5zQl1OPFdKQ1dbUz02W1ZzSlluKThldXI7bjtQKVcqWHJiXEQ8IzVZX05iMEBuRzVdUmpfLC5bVlgqP0loTmg5QWZJO1hkWXMrOUYrL2FjOGJZX1Zeazw/czFJRTxhQlw8WWpVW1kmKlpuQT0xcVpSNkI2N1luXSp1cyJULURnckZXa046ZVhoQDI7KVxsM1JERC88TERvXCtxJjlSIlsqOmRmUl8mIzQwZUJmUDB1JG0lTm1yRWQvRFBMamVnSjInYUloPW4tSFckcSNiUk4xNDEwJ208RjA/dEZTSFQrUyE8W0FELCdNZWJzaWgzVitfKEM/W0M+RzNxNCRDJVQnP0MnLD0xX15CPj4uNDo1V2gsa2lRO3JqTzlpU2MxYGcrZFNGPGlub19IYzRXTk44cDlTaUBfSipERSJiRF0uLVRPIldLSCRZT2NLXFtXTUcwYCQjUFMsTWluJFtORHVJaDAiOWJHcSk5UCVJdSdvK1ZTOV8qXWxFMzpaQjo1R2xFZS8lQi49NTBmJiZJWSVLUzVHWWpePi4/O0RHWjdUaF1Ya000LEJYQSMqJycwci1GT0IoOzxBLk5eMkJkdDZYYUI+aEdaNlY2M2svOVdFXCc2aVAnMmgvJ0o+MEA7PzE7IzNXKU9pR0RWNz9mdEdgPDlKTz5rc111SFYzcGRgTU0naktmbE87JiczdEBRMGJTZClZUyclIU91T3EyXyk1RTQ2IllkKExRa25qNTJkczw6cjJhITBBOEwuQiwoO0NASGNqWFQuNj0rZUdTTDUjP1pLQ10vUjAmMEBkZC8oUi0pTjQuMiVlWC42UEBJZkItTmNJNmZPczguRiosSCNjPlRydUhrI1U8TWljcVBcWDNoSGpHOVNZMCwmcDUvTDheU1NAPCIkUVJsYDZMYF1pUiRbPFVmbi9VSDcyc1NQZSZSMCRzXyprXVNmOihDZ05HclUyXj1rSEhGdC0nLmlFIjJZTGMtU3FZR2kwXFVjJUgkMW0uUVUlJTQrXyooZSo1cFNIQEwmRChSKjdrVnQhY29MUj1bKGJMWz9UIy1MbHRNImckYGhfQjtrNGtPaDcnQFxwX0tEIkdScy8wY3Q+UDEuMChIMENwYiJFUiJtaT4nNC5AKWtmMFlXLzVaTylNYjVSLCsuaWQoXFleQl0nVD1bZmRBQ1ppTUNDOCdDR1c0XVpob2JCWE5SUXBIKFpvPDdJT2EpUklFSmFscF9OOU4sMigpLldELShRcidtZmZoSj1UMmtcKmhrLF9CPE1EXSMrPVkydWdbPVMxSUpjKiJcK2M3VlsqKShAX0wsKDpgbCpYPzgzI1t0Ti9gcVoxVmkuJCZnYCxuJDQoMktkYT44RGoqNmEsLkYmNGxJOXQzSUozNDs2LSVzVT11cF9dPyo8a19ILiNoNTdgXW0uV0RnIjwzPmgnS21MOEdFbTBrUWw4O1QsJGFWRzdnUVVzbmckJTZAYl5PdCEzZWNnL01XNmdVJGIzTWtcUTVZcT5XKDlWRWVtPkhUVE0xQUddT3UsRm1NXnBmdCVHbSwtcz9uTDojSyc4QDNnPztVRG9YYz5CbTlrO0UsJidIZkZZVVtDWm9sZyE0S3BUOGZbaGtJW1w/X0lkOilJbW0hUyY0bD5ITzs/T242c1teaVNDSm5OVGxEZl1sdTJBOWdRPiVNa042ZWImZyMsYD1GYi9yTElESlFoZkghUzA9Ni1cQDojTjkkWzJcTjg+JDxobUhuXjA5SlBrZmB+PmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDEwCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA2MSAwMDAwMCBuIAowMDAwMDAwMTEyIDAwMDAwIG4gCjAwMDAwMDAyMTkgMDAwMDAgbiAKMDAwMDAwMDMzMSAwMDAwMCBuIAowMDAwMDAwNDE0IDAwMDAwIG4gCjAwMDAwMDA2MTcgMDAwMDAgbiAKMDAwMDAwMDY4NSAwMDAwMCBuIAowMDAwMDAwOTQ2IDAwMDAwIG4gCjAwMDAwMDEwMDUgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8NzgyZWUwYmE3MjM0YjkzMjBmZDE3ZTIxNTEyZDMyODU+PDc4MmVlMGJhNzIzNGI5MzIwZmQxN2UyMTUxMmQzMjg1Pl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyA3IDAgUgovUm9vdCA2IDAgUgovU2l6ZSAxMAo+PgpzdGFydHhyZWYKMzMwMAolJUVPRgo=',
+  'fsc_campolide': 'data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCA4IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago2IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgOCAwIFIgL1R5cGUgL0NhdGFsb2cKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL0F1dGhvciAoYW5vbnltb3VzKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL0NyZWF0b3IgKGFub255bW91cykgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwMzAxMTEyOTU2KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKHVuc3BlY2lmaWVkKSAvVGl0bGUgKHVudGl0bGVkKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjggMCBvYmoKPDwKL0NvdW50IDEgL0tpZHMgWyA1IDAgUiBdIC9UeXBlIC9QYWdlcwo+PgplbmRvYmoKOSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTgxCj4+CnN0cmVhbQpHYXRtO2dOKSUuJnEvQTVvWkw4cS4yc0c1IlNVKiYwP0s2cHAvcHQ6ZXVcVEhWQkNeN09uPTA3NElORDEidDxFNi9PYDVcWkhBQ1NUTU0+cEVWYjJQS1JeQi1UQjYuQic2bl5lSk1LYy41UXFhXT5ldFxAX0JKaktvMjNuMVBzdUIlOSpKS3FVOiZELCpSKkIjK3M4QG1bR1g8R0E0P3VuajhrJCpZWEdnZEJXPWYlITZpQUxuUTpFVStHOnEqV1lqXDRVYF5PJj10a2cpKGU+czBVZj0pdVs9UDVMTFBiPyNfPjdXSmY4Z01GJkxdNWYkLD5RZ2Y5ZXUwMGFyJEg4LyohTDB0UERaT3JOJExPYFxNVS1lJ1AqUilOLmJdcXAxUkxWZTM0UiYhK1dWUChEb0UxNzFuZ3IkNiFkU11KXkhEb1o4Zzs7RVlkXWkrJjk1UFJiQCg3bk1OIldOaixFQzVRYGBZdEFqVlUzbkJQL08yaVRURyVRXl1wcXIiInQiWDgvazxmcDc5SUFML1tkIlk2azU9QHBnPHJQNTNJKGE6ZU8ydUUwVnAoW1slPXFMOUQ2Um5mPTFIPD9BNm47TFcwWkgjIy5bU2k8Xzc5LTBpK2QjS1tjPVFYbGJXLyhga3A1K0A8JWkkRSJWLENgWFouLSM4WDdzVShfOFk+XDJHcT1XQ1ZGIyJya0hbJGZcMW1QUj5MS0xaWC9oWEM/XTQ1N1I+Yz1fOmhnUypOMi9AQlcvJXBRdShrX1I0NClvIXJpSD0/Y1pXa0dNYSNFJXFQRCk8UnJYPCk3XyNKXjdPSSRRRFkvTWZmJFlcXmkuYWBDTV9tSlBCSmUqZWFuZyUoNTY0ViYhYC4uMFwyN1pcPFcwOVdVa01gcmIyN2llWT1OWF1GI2MiVE5oK1oyXnU1PWpLJ0k1KVVwNkFHJElBZCtEVChjUEgjOjs9UzNmXSM/YT51ZWU8RzBfPilNc0xibldAPzgzUXJwKVZIZiYraFlmKi9yJVRgWkcrO0FFWTtoTy1aKTNTaUkjJUw7biova0g3N04zTUpHIjJmVUtuX2BGN1gzalBfWnBHNkZSTXA6T0wuQylHL1Q/QjNKOD47K3REVWcrS0pvPEQsSW5vZS1jTTQ7R0w4TyEwY0w5cVgha0IlI25gNjNGJ0gxYWJxPSssTT1mR09gNE0tLz5MZSdjZlUtKGw0UCFkaj1sKkE0YSI9LlQ/KTVAKTIiNSVicT49S2NTKjM0VFVfTFNTQiFSdGs6YiM6XiwvMyVxZ3QwXCVlaGhJNEAkRWJGbFZqJWRaPlk3VC5lQ0NIKXReLlltZ1RkKDBRTzBlTVZmKFstPUtpUik/I3RuQ2NiciNGTDtyXXRtaTRNZko+clFhUURnLUs7QTQhKSVgQFFNJVNqcllXbysuZ1EwYkMkTV51b1UyYU44RGNXQWlRLTdyO1tpRFFvUmVpazUlX09RZjRCSj5JcXRRTVJnUTFYJlVnK1VhIitaQCNSUFdATzBuJU0hYjpQWVFfRDNeS1JKRVxjXURXRkkyNzsxX3RhcUJYb2lBZ25FOEMzKWFyV1htY05rYlNBPXBiRj5FW1ZbNmswMnEiUEZCTmgxVllELFE8NjFARzpBUjxOQSlkNF03KFtPN3JoUlgnLGtHWUdxZjs3T0FLZldPdTUtYlUuJDlNMG40KUZST2goMz85WytiOmxRMSFSWiFiXSZkdCwpIS1BbCpPLylSPFVFRGBeSyRIJWtSQXVDSFBrUk8pXWtOVGVVQDcrXioudEpOJWk+JlI8cTdlXipNRG1rKTYsaGJJPGM+IT49ZUoiOnIzMi47KjtbZWJ0T0M+PyJtcCslMkVXYGpBJDxeXT83JjglUTcpWU9yaiZyZFg9SSdzKmhrQFs5MzU4RDU0Vm1bVVNyQyRWYHJwOiFXWUJwZGBFOUYoTzxVIylqQUVQKFxuSD5qN2R0PTptcTxcWXJiTEhMYi1nPGlqblcjbWlSMVg+UkxwIyh1Tj9sMEA5cVJBP0ROYmBnR3MuIS4rbmdfXFs0LypaQEJzcjVGSj9UJTNNMF1QP1k9MFNIMS1hOEpJWTZlZkVPOERjTCgwN0U2O2dPWFZkTSRjTSIzUWhFJF0nMm5XcTI0SHFPU1NrOEp0U3RcXGFQXWFaXUVkckZfRi1oOWVeNGBoXm5ib1pTZj8iTUtIQkZiOlVTZnRTWUJMUUhoJClba0cvUlVoUVBgNVMiRFF1UidASm89b0Q6PkZJS104ZFYrXi4vQWU7bSVkTnU+VzRLSDY0cSkqUGlnbjxTXixgO1QpNmQkUiZoR1FxJW82RCc1XDQ5aXJFMFFVXSVyXTJAMEVpNUo+RDUoTiUjZGBpUV9EOGFWQy1AV2ozOlwmUilTMzRENUlaUl0lKF5uNGFgIiFWJ2VgMEIvLm9tWUk9RUxoVjMuN2dZdSVuVmUwXlFASFRyS1NAKz9Zb08jcWMoP2lNMDQ7QT9UQyFxXT5qdDkiRUVhXFxZb1FhVW1iUDtzdU9qMmstVSMsRkZPLE46RCl0dHE5I19mSCE/OVwsVUYsRiRhJl5nJCI/OFRDSEJQRWwhL01nViwlT0Z0I2JjWGJhTnBiMWdgdWc9TW8pIjQ0MSMxWEBAVURuXyQ6QlJdV141X15XbkRlTTpNVFY/NXBQaSduU1Z0PTRFT2wrQ2ZMVFlTW2c9MTZmcl4lUSJ0NyooXGksNF9tdWZhamBJPUs0WltMWUo3UTF1cCRJaz9SZFYjIT9SbXNhQTdMUllbbVNnKD1IQi5lJXVNYFpHZ2tQZm1zJE89RVA6czFLdT5EZyVpNl9GI3RDPnNdOC1AJmA7Ll5zRFhdRTJyLihAIWRNNFMkZkNzKyRPKCV0RkFHNjZHN2ZOXkotXkpUfj5lbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCAxMAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDExMiAwMDAwMCBuIAowMDAwMDAwMjE5IDAwMDAwIG4gCjAwMDAwMDAzMzEgMDAwMDAgbiAKMDAwMDAwMDQxNCAwMDAwMCBuIAowMDAwMDAwNjE3IDAwMDAwIG4gCjAwMDAwMDA2ODUgMDAwMDAgbiAKMDAwMDAwMDk0NiAwMDAwMCBuIAowMDAwMDAxMDA1IDAwMDAwIG4gCnRyYWlsZXIKPDwKL0lEIApbPDg1NzM4Njk1YzM3MWRiMzAzOWNiYzBkM2RhNjFkMjRmPjw4NTczODY5NWMzNzFkYjMwMzljYmMwZDNkYTYxZDI0Zj5dCiUgUmVwb3J0TGFiIGdlbmVyYXRlZCBQREYgZG9jdW1lbnQgLS0gZGlnZXN0IChvcGVuc291cmNlKQoKL0luZm8gNyAwIFIKL1Jvb3QgNiAwIFIKL1NpemUgMTAKPj4Kc3RhcnR4cmVmCjMyNzcKJSVFT0YK',
+};
+
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const SUPPLIERS = [
+  { id:1, emoji:'🧵', color:'#4A90D9',
+    name:'Yongli Textiles', location:'Guangzhou, China', country:'China', region:'Asia', flag:'🇨🇳',
+    segments:['Mid-Market','Mass Market'], cats:['Textiles'], moq:200, capacity:800000, esg:62, trace:2,
+    certs:['GOTS'], tags:['Woven Fabrics','Knitwear'], sustainable:true, verified:true, years:18, rating:4.8,
+    founded:2006, employees:'1,200–2,500', area:'42,000 m²', sites:['Factory A — Guangzhou, China','Factory B — Foshan, China'],
+    capabilities:['Weaving','Knitting','Dyeing','Finishing','QC Lab'],
+    moqPolicy:'200m per colorway, 2,000m per design', leadTime:'45–60 days', incoterms:'FOB / CIF',
+    oem:'OEM & ODM', privateLabel:'Yes', paymentTerms:'30% deposit, 70% BL',
+    revenue:'€15M–€30M', exportPct:'85%',
+    auditStatus:'Third-party audited', auditDate:'March 2025', recycled:15, traceLevel:2,
+    carbon:'2.4 kg CO₂/m', sustainability:['Water recycling','Solar panels','Zero discharge'],
+    activeClients:42, clientTypes:['Mass Market Brands','Private Label','Retailers'],
+    exportRegions:'Europe, N. America, Japan, Australia',
+    products:[
+      { name:'EcoBlend Ponte Jersey', sku:'YGL-TXT-001', cat:'Textiles', moq:'500m', price:'€4.20–5.80/m', emoji:'🧶', comp:'68% Recycled Polyester · 28% Viscose · 4% Elastane', weight:'280 gsm', construction:'Double knit / Ponte', size:'Open width 150cm', dims:'—', certsProd:['GRS','OEKO-TEX'], recycledPct:68, carbon:'1.8 kg CO₂/m', traceLevel:2, testType:'Colorfastness / Pilling', testResult:'Grade 4–5', monthlyCapacity:'200,000m', incoterm:'FOB', exportMkts:'EU / USA / Japan' },
+      { name:'Indigo Selvedge Denim', sku:'YGL-DNM-002', cat:'Textiles', moq:'1,000m', price:'€6.50–8.20/m', emoji:'👖', comp:'100% Cotton', weight:'12.5 oz / 420 gsm', construction:'3×1 twill selvedge', size:'Open width 82cm', dims:'—', certsProd:['BCI','OEKO-TEX'], recycledPct:0, carbon:'3.1 kg CO₂/m', traceLevel:2, testType:'Tensile / Tear strength', testResult:'Pass ISO 13934', monthlyCapacity:'80,000m', incoterm:'FOB', exportMkts:'EU / USA' },
+    ]
+  },
+  { id:2, emoji:'🌿', color:'#66BB6A',
+    name:'Atelier Tessile', location:'Como, Italy', country:'Italy', region:'Europe', flag:'🇮🇹',
+    segments:['Luxury','Premium'], cats:['Textiles'], moq:50, capacity:80000, esg:89, trace:4,
+    certs:['OEKO-TEX','Bluesign','B Corp'], tags:['Silk','Luxury Fabrics'], sustainable:true, verified:true, years:35, rating:4.9,
+    founded:1989, employees:'180–250', area:'8,500 m²', sites:['Atelier Principal — Como, Italy'],
+    capabilities:['Jacquard Weaving','Hand Finishing','Embroidery','Custom Dyeing','Lab Testing'],
+    moqPolicy:'50m per design, no minimum for repeat orders', leadTime:'6–10 weeks', incoterms:'EXW / DDP',
+    oem:'OEM', privateLabel:'No', paymentTerms:'50% deposit, 50% before shipment',
+    revenue:'€5M–€12M', exportPct:'70%',
+    auditStatus:'Third-party audited', auditDate:'January 2025', recycled:22, traceLevel:4,
+    carbon:'0.9 kg CO₂/m', sustainability:['100% renewable energy','Zero waste dyeing','ZDHC signatory'],
+    activeClients:28, clientTypes:['Luxury Houses','Haute Couture','Premium RTW'],
+    exportRegions:'France, UK, USA, Japan, UAE',
+    products:[
+      { name:'Soie Jacquard Florale', sku:'AT-SLK-001', cat:'Luxury Textiles', moq:'50m', price:'€48–72/m', emoji:'🌸', comp:'100% Mulberry Silk', weight:'95 gsm', construction:'Jacquard / 8-shaft', size:'Open width 114cm', dims:'—', certsProd:['OEKO-TEX'], recycledPct:0, carbon:'0.8 kg CO₂/m', traceLevel:4, testType:'Tensile / Slippage / Colorfastness', testResult:'Pass EN ISO standards', monthlyCapacity:'8,000m', incoterm:'EXW', exportMkts:'FR / IT / UK / US / JP' },
+      { name:'Velours Devore Stretch', sku:'AT-VLV-002', cat:'Luxury Textiles', moq:'80m', price:'€62–89/m', emoji:'✨', comp:'72% Silk · 22% Viscose · 6% Elastane', weight:'240 gsm', construction:'Devore / Burnout velvet', size:'Open width 130cm', dims:'—', certsProd:['OEKO-TEX','Bluesign'], recycledPct:0, carbon:'1.1 kg CO₂/m', traceLevel:4, testType:'Burnout quality / Stretch recovery', testResult:'Pass', monthlyCapacity:'4,000m', incoterm:'EXW', exportMkts:'FR / IT / UK' },
+    ]
+  },
+  { id:3, emoji:'🏆', color:'#B8860B',
+    name:'Conceria Walpier', location:'Santa Croce, Italy', country:'Italy', region:'Europe', flag:'🇮🇹',
+    segments:['Luxury'], cats:['Leather'], moq:200, capacity:30000, esg:92, trace:4,
+    certs:['LWG','REACH','Fair Trade'], tags:['Full Grain','Vegetable Tanned'], sustainable:true, verified:true, years:42, rating:4.95,
+    founded:1982, employees:'120–160', area:'6,200 m²', sites:['Tannery — Santa Croce sull\'Arno, Italy'],
+    capabilities:['Full Grain Tanning','Vegetable Tanning','Aniline Dyeing','Hand Finishing','Custom Embossing'],
+    moqPolicy:'200m per hide type, 50m for repeat customers', leadTime:'8–14 weeks', incoterms:'EXW / FCA',
+    oem:'OEM', privateLabel:'No', paymentTerms:'Letter of Credit or 30% deposit',
+    revenue:'€8M–€18M', exportPct:'92%',
+    auditStatus:'Brand-audited', auditDate:'October 2024', recycled:0, traceLevel:4,
+    carbon:'4.2 kg CO₂/m²', sustainability:['Vegetable tanning (zero chrome)','Closed-loop water','ZDHC Gold level'],
+    activeClients:18, clientTypes:['Luxury Houses','Haute Maroquinerie','Watch & Jewelry'],
+    exportRegions:'France, UK, USA, Japan, UAE, Switzerland',
+    products:[
+      { name:'Buttero Full Grain Vacchetta', sku:'WP-BTT-001', cat:'Leather', moq:'200m', price:'€38–55/m²', emoji:'🐄', comp:'100% Full Grain Bovine', weight:'1.2–1.4 mm', construction:'Vegetable tanned / Chrome-free', size:'Average hide 4.5–5.5 m²', dims:'Variable per hide', certsProd:['LWG Gold','REACH'], recycledPct:0, carbon:'4.0 kg CO₂/m²', traceLevel:4, testType:'Tensile / Tear / Adhesion / Migration', testResult:'Pass EN ISO 13935 / REACH SVHC', monthlyCapacity:'5,000m²', incoterm:'EXW', exportMkts:'FR / IT / UK / US / JP / CH' },
+      { name:'Minerva Box Calf', sku:'WP-MBX-002', cat:'Leather', moq:'100m²', price:'€62–88/m²', emoji:'✨', comp:'100% Calf — Semi-Aniline finish', weight:'0.7–0.9 mm', construction:'Box grain / High gloss', size:'Average hide 1.8–2.2 m²', dims:'Variable', certsProd:['LWG Gold'], recycledPct:0, carbon:'3.8 kg CO₂/m²', traceLevel:4, testType:'Light fastness / Flex / Rub fastness', testResult:'Pass — Grade 5', monthlyCapacity:'2,000m²', incoterm:'EXW', exportMkts:'FR / IT / CH / UK / JP' },
+    ]
+  },
+  { id:4, emoji:'🇫🇷', color:'#1565C0',
+    name:'Lenfert Tanneries', location:'Annonay, France', country:'France', region:'Europe', flag:'🇫🇷',
+    segments:['Luxury'], cats:['Leather'], moq:100, capacity:15000, esg:87, trace:4,
+    certs:['LWG','REACH','Fair Trade'], tags:['Full Grain','Calf','Aniline'], sustainable:true, verified:true, years:180, rating:4.9,
+    founded:1844, employees:'85–120', area:'4,800 m²', sites:['Tannerie principale — Annonay, Ardèche, France'],
+    capabilities:['Calf Tanning','Aniline Finishing','Chrome-Free Processing','Custom Colours','Archive Collection'],
+    moqPolicy:'100m² minimum, negotiable for Maisons', leadTime:'10–18 weeks', incoterms:'EXW / DDP',
+    oem:'OEM', privateLabel:'No', paymentTerms:'Letter of Credit',
+    revenue:'€4M–€9M', exportPct:'88%',
+    auditStatus:'Brand-audited', auditDate:'September 2024', recycled:0, traceLevel:4,
+    carbon:'3.6 kg CO₂/m²', sustainability:['Geothermal energy','Zero discharge to river','Heritage savoir-faire'],
+    activeClients:12, clientTypes:['Luxury Houses','Haute Couture','Premium Accessories'],
+    exportRegions:'Italy, UK, Switzerland, Japan, USA',
+    products:[
+      { name:'Veau Satiné Aniline', sku:'LNF-VSA-001', cat:'Leather', moq:'100m²', price:'€55–78/m²', emoji:'🌟', comp:'100% French Calf — Full Aniline', weight:'0.6–0.8 mm', construction:'Full aniline / Satin finish', size:'Avg hide 1.5–2.0 m²', dims:'Variable', certsProd:['LWG Platinum','REACH'], recycledPct:0, carbon:'3.4 kg CO₂/m²', traceLevel:4, testType:'Abrasion / Light fastness / Flex', testResult:'Pass — Grade 4–5', monthlyCapacity:'1,500m²', incoterm:'EXW', exportMkts:'IT / UK / CH / JP / US' },
+    ]
+  },
+  { id:5, emoji:'🎨', color:'#FF7043',
+    name:'Malaika Crafts', location:'Casablanca, Morocco', country:'Morocco', region:'Africa', flag:'🇲🇦',
+    segments:['Premium','Mid-Market'], cats:['Textiles'], moq:30, capacity:50000, esg:76, trace:3,
+    certs:['Fair Trade'], tags:['Embroidery','Handcraft'], sustainable:true, verified:false, years:8, rating:4.7,
+    founded:2016, employees:'240–320', area:'3,200 m²', sites:['Workshop — Casablanca, Morocco'],
+    capabilities:['Hand Embroidery','Beading','Macramé','Natural Dyeing','Custom Artisan'],
+    moqPolicy:'30 pieces per design', leadTime:'8–12 weeks', incoterms:'FOB / CIF',
+    oem:'OEM & ODM', privateLabel:'Yes', paymentTerms:'40% deposit, 60% BL',
+    revenue:'€1M–€3M', exportPct:'72%',
+    auditStatus:'Self-declared', auditDate:'—', recycled:8, traceLevel:3,
+    carbon:'0.6 kg CO₂/piece', sustainability:['Fair wages programme','Local artisan community','Natural dyes'],
+    activeClients:35, clientTypes:['Premium Brands','Boutiques','Interior Design'],
+    exportRegions:'France, Spain, UK, UAE',
+    products:[
+      { name:'Broderie Main Floral', sku:'ML-EMB-001', cat:'Handcraft Textile', moq:'30 pcs', price:'€12–28/m', emoji:'🌺', comp:'100% Cotton base · Silk thread embroidery', weight:'180 gsm base', construction:'Hand embroidery on woven base', size:'Variable panel sizes', dims:'Custom on request', certsProd:['Fair Trade'], recycledPct:0, carbon:'0.5 kg CO₂/m', traceLevel:3, testType:'Wash fastness / Embroidery adhesion', testResult:'Pass', monthlyCapacity:'12,000m', incoterm:'FOB', exportMkts:'FR / ES / UK / AE' },
+    ]
+  },
+  { id:6, emoji:'⚡', color:'#E53935',
+    name:'Noritake Textile', location:'Osaka, Japan', country:'Japan', region:'Asia', flag:'🇯🇵',
+    segments:['Luxury','Premium'], cats:['Technical'], moq:800, capacity:90000, esg:83, trace:4,
+    certs:['OEKO-TEX','Bluesign'], tags:['Smart Fabric','Water Resistant'], sustainable:true, verified:true, years:55, rating:4.85,
+    founded:1969, employees:'380–520', area:'18,000 m²', sites:['R&D Centre — Osaka','Production — Kyoto'],
+    capabilities:['Technical Weaving','Membrane Lamination','Water Repellent Finishing','Smart Textiles R&D','Lab Testing'],
+    moqPolicy:'800m per colour per performance spec', leadTime:'12–16 weeks', incoterms:'FOB / CIF',
+    oem:'OEM & ODM', privateLabel:'Yes', paymentTerms:'L/C at sight or TT 30 days',
+    revenue:'€20M–€45M', exportPct:'65%',
+    auditStatus:'Third-party audited', auditDate:'June 2025', recycled:35, traceLevel:4,
+    carbon:'1.6 kg CO₂/m', sustainability:['Waterless dyeing','Bio-based DWR','ISO 14001 certified'],
+    activeClients:22, clientTypes:['Luxury Outdoor','Performance Sports','Technical Workwear'],
+    exportRegions:'Europe, USA, South Korea, Australia',
+    products:[
+      { name:'AeroShield Pro 3-Layer', sku:'NT-ASP-001', cat:'Technical Fabric', moq:'800m', price:'€18–26/m', emoji:'🛡️', comp:'80% Recycled Nylon · 20% Elastane + ePTFE membrane', weight:'210 gsm', construction:'3-layer laminate / DWR coated', size:'Open width 150cm', dims:'—', certsProd:['Bluesign','OEKO-TEX'], recycledPct:80, carbon:'1.4 kg CO₂/m', traceLevel:4, testType:'Waterproofness / Breathability / Windproofness', testResult:'20,000mm H₂O / 15,000 g/m²/24h', monthlyCapacity:'40,000m', incoterm:'FOB', exportMkts:'EU / US / AU / KR' },
+    ]
+  },
+  { id:7, emoji:'🌿', color:'#795548',
+    name:'Campolide Cork', location:'Lisbon, Portugal', country:'Portugal', region:'Europe', flag:'🇵🇹',
+    segments:['Premium','Mid-Market'], cats:['Vegan Leather'], moq:600, capacity:50000, esg:78, trace:3,
+    certs:['FSC','OEKO-TEX','GRS'], tags:['Cork','Bio-Based'], sustainable:true, verified:true, years:12, rating:4.7,
+    founded:2012, employees:'95–140', area:'5,400 m²', sites:['Factory — Lisbon, Portugal'],
+    capabilities:['Cork Harvesting','Agglomeration','Surface Treatment','Embossing','Textile Backing'],
+    moqPolicy:'600m per design', leadTime:'6–10 weeks', incoterms:'FOB / EXW',
+    oem:'OEM & ODM', privateLabel:'Yes', paymentTerms:'30% deposit, 70% before shipping',
+    revenue:'€2M–€6M', exportPct:'80%',
+    auditStatus:'Third-party audited', auditDate:'November 2024', recycled:100, traceLevel:3,
+    carbon:'0.4 kg CO₂/m', sustainability:['100% natural cork','Carbon negative material','Zero deforestation'],
+    activeClients:48, clientTypes:['Sustainable Fashion Brands','Footwear','Accessories'],
+    exportRegions:'Germany, France, UK, USA, Netherlands',
+    products:[
+      { name:'Cortiça Natural Grain', sku:'CP-CNG-001', cat:'Vegan Leather', moq:'600m', price:'€14–22/m', emoji:'🌳', comp:'100% Natural Cork on cotton backing', weight:'380 gsm', construction:'Agglomerated cork / Textile backing', size:'Open width 140cm', dims:'—', certsProd:['FSC','OEKO-TEX','GRS'], recycledPct:100, carbon:'0.3 kg CO₂/m', traceLevel:3, testType:'Tear strength / Flex / Abrasion', testResult:'Pass — 50,000 flex cycles', monthlyCapacity:'20,000m', incoterm:'FOB', exportMkts:'DE / FR / UK / US / NL' },
+    ]
+  },
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+const S = { segments:[], cats:[], certs:[], origins:[], prestige:[], moq:50000, cap:1000 };
+const fmt = n => parseInt(n).toLocaleString('fr-FR');
+
+// ══════════════════════════════════════════
+// DROPDOWN
+// ══════════════════════════════════════════
+let openDD = null;
+function toggleDD(id) {
+  if (openDD && openDD !== id) document.getElementById('fd-'+openDD).classList.remove('open');
+  const el = document.getElementById('fd-'+id);
+  el.classList.toggle('open');
+  openDD = el.classList.contains('open') ? id : null;
+}
+function closeDD() {
+  if (openDD) document.getElementById('fd-'+openDD).classList.remove('open');
+  openDD = null;
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.fbar-item') && openDD) closeDD();
+});
+
+// ══════════════════════════════════════════
+// FILTER TOGGLES
+// ══════════════════════════════════════════
+function toggle(arr, val) { const i=arr.indexOf(val); if(i>-1)arr.splice(i,1); else arr.push(val); }
+function toggleSeg(el,v){ el.classList.toggle('active'); toggle(S.segments,v); updateMOQAdaptive(); pill('fp-seg',S.segments.length); document.getElementById('smart-pre').classList.toggle('show',S.segments.includes('Luxury')); }
+function toggleCat(el,v){ el.classList.toggle('active'); toggle(S.cats,v); pill('fp-cat',S.cats.length); }
+function toggleCert(el,v){ el.classList.toggle('active'); toggle(S.certs,v); pill('fp-cert',S.certs.length); }
+function toggleOrigin(el,v){ el.classList.toggle('active'); toggle(S.origins,v); pill('fp-origin',S.origins.length+S.prestige.length); }
+function togglePrestige(el,c){ el.classList.toggle('active'); toggle(S.prestige,c); pill('fp-origin',S.origins.length+S.prestige.length); }
+function pill(id,n){ document.getElementById(id).classList.toggle('active',n>0); }
+function setOriginMode(m){
+  document.getElementById('ot-reg').classList.toggle('active',m==='region');
+  document.getElementById('ot-cty').classList.toggle('active',m==='country');
+  document.getElementById('region-chips').style.display=m==='region'?'flex':'none';
+  document.getElementById('country-chips').style.display=m==='country'?'flex':'none';
+}
+function updateMOQAdaptive(){
+  const segs=S.segments, mass=segs.includes('Mass Market')||segs.includes('Workwear'), lux=segs.includes('Luxury')||segs.includes('Premium');
+  const msg=document.getElementById('moq-msg');
+  if(mass&&!lux){msg.textContent='⚡ Mass Market — Capacity filter only';msg.style.background='#FFF3E0';msg.style.color='#E65100';document.getElementById('moq-wrap').style.display='none';document.getElementById('cap-wrap').style.display='block';}
+  else if(lux&&!mass){msg.textContent='✦ Luxury mode — MOQ maximum only';msg.style.background='#FFFAED';msg.style.color='#7A5A00';document.getElementById('moq-wrap').style.display='block';document.getElementById('cap-wrap').style.display='none';}
+  else{msg.textContent='⚡ Adaptive — select Market Segment first';msg.style.background='#FFF3E0';msg.style.color='#E65100';document.getElementById('moq-wrap').style.display='block';document.getElementById('cap-wrap').style.display='block';}
+}
+
+function applyLuxuryPreset(){
+  resetAll(true);
+  S.segments=['Luxury'];
+  document.querySelectorAll('#fd-seg .dchip').forEach(c=>c.classList.toggle('active',c.textContent.trim()==='Luxury'));
+  S.prestige=['IT','FR'];
+  document.querySelectorAll('.pchip').forEach(c=>{const code=c.textContent.includes('Italy')?'IT':c.textContent.includes('France')?'FR':'US';c.classList.toggle('active',['IT','FR'].includes(code));});
+  S.moq=500; document.querySelector('#moq-wrap input').value=500; document.getElementById('moq-val').textContent='500 m';
+  updateMOQAdaptive(); pill('fp-seg',1); pill('fp-origin',2); closeDD(); applyFilters();
+}
+
+function resetAll(silent){
+  S.segments=[];S.cats=[];S.certs=[];S.origins=[];S.prestige=[];S.moq=50000;S.cap=1000;
+  document.querySelectorAll('.dchip,.ctag,.pchip').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.fpill').forEach(p=>p.classList.remove('active'));
+  document.getElementById('smart-pre').classList.remove('show');
+  updateMOQAdaptive();
+  if(!silent) applyFilters();
+}
+
+// ══════════════════════════════════════════
+// FILTER & RENDER CARDS
+// ══════════════════════════════════════════
+function applyFilters(){
+  const q=(document.querySelector('.finput').value||'').toLowerCase();
+  const hq=(document.querySelector('.srch input').value||'').toLowerCase();
+  const pm={'IT':'Italy','FR':'France','US':'United States'};
+  let f=SUPPLIERS.filter(s=>{
+    if(S.segments.length&&!s.segments.some(sg=>S.segments.includes(sg)))return false;
+    if(S.cats.length&&!s.cats.some(c=>S.cats.includes(c)))return false;
+    if(S.prestige.length&&!S.prestige.some(p=>s.country===pm[p]))return false;
+    if(S.origins.length&&!S.origins.includes(s.region)&&!S.origins.includes(s.country))return false;
+    if(s.moq>S.moq)return false;
+    if(s.capacity<S.cap)return false;
+    if(S.certs.length&&!S.certs.every(c=>s.certs.includes(c)))return false;
+    const query=q||hq;
+    if(query&&!s.name.toLowerCase().includes(query)&&!s.tags.join(' ').toLowerCase().includes(query))return false;
+    return true;
+  });
+  document.getElementById('res-count').innerHTML=`<span>${f.length} </span>manufacturers found`;
+  renderTags(); renderCards(f);
+}
+
+function renderTags(){
+  const tags=[...S.segments,...S.cats,...S.prestige.map(p=>({IT:'🇮🇹 Italy',FR:'🇫🇷 France',US:'🇺🇸 USA'}[p])),...S.origins,...S.certs];
+  document.getElementById('atags').innerHTML=tags.map(t=>`<div class="atag">${t} <button class="atag-x" onclick="resetAll()">×</button></div>`).join('');
+}
+
+function renderCards(suppliers){
+  const grid=document.getElementById('cards-g'), nores=document.getElementById('nores');
+  if(!suppliers.length){grid.innerHTML='';nores.classList.add('show');return;}
+  nores.classList.remove('show');
+  grid.innerHTML=suppliers.map((s,i)=>{
+    const segB=s.segments[0]==='Luxury'?'bdg-lux':s.segments[0]==='Premium'?'bdg-pre':'bdg-mid';
+    return`<div class="card" style="animation-delay:${i*.05}s" onclick="openSupplier(${s.id})">
+      <div class="card-img" style="background:${s.color}22">
+        <span style="position:relative">${s.emoji}</span>
+        <div class="cbadges">
+          ${s.sustainable?'<span class="bdg bdg-sus">Sustainable</span>':''}
+          ${s.verified?'<span class="bdg bdg-ver">Verified</span>':''}
+        </div>
+        <div class="cflag">${s.flag} ${s.country}</div>
+      </div>
+      <div class="card-body">
+        <div class="cname">${s.name}</div>
+        <div class="cloc">📍 ${s.location}</div>
+        <div class="ctags">
+          <span class="bdg ${segB}" style="font-size:10px;padding:2px 7px;">${s.segments[0]}</span>
+          ${s.tags.map(t=>`<span class="ctg ctg-v">${t}</span>`).join('')}
+          ${s.certs.map(c=>`<span class="ctg ctg-g">${c}</span>`).join('')}
+        </div>
+        <div class="cstats">
+          <div class="cstat"><div class="csv">${s.moq.toLocaleString()}</div><div class="csl">MOQ</div></div>
+          <div class="cstat"><div class="csv">${s.years}</div><div class="csl">Years</div></div>
+          <div class="cstat"><div class="csv g">${s.rating}★</div><div class="csl">Rating</div></div>
+        </div>
+      </div>
+      <div class="card-ft">
+        <div class="esg-w">
+          <span class="esg-l">ESG</span>
+          <div class="esg-tr"><div class="esg-fi" style="width:${s.esg}%"></div></div>
+          <span class="esg-n">${s.esg}</span>
+        </div>
+        <button class="card-btn" onclick="openSupplier(${s.id});event.stopPropagation()">View profile →</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+// ── CERT FILES per supplier ──────────────────────────────────
+function getCertFiles(s) {
+  const map = {
+    1: [ // Yongli
+      { key:'gots_yongli', icon:'📄', icClass:'fic-grn', name:'GOTS Certificate — Yongli Textiles Co., Ltd.', no:'GT-C-109847', valid:'31.12.2025', issuer:'Control Union Certifications' },
+    ],
+    2: [ // Atelier Tessile
+      { key:'oekotex_atelier', icon:'📄', icClass:'fic-grn', name:'OEKO-TEX® Standard 100 — Atelier Tessile S.r.l.', no:'SH022 847291', valid:'30.06.2026', issuer:'TESTEX AG' },
+      { key:'bluesign_noritake', icon:'📄', icClass:'fic-blu', name:'Bluesign® System Partner — Atelier Tessile S.r.l.', no:'BS-IT-2024-00412', valid:'31.12.2025', issuer:'Bluesign Technologies AG' },
+    ],
+    3: [ // Walpier
+      { key:'lwg_walpier', icon:'📄', icClass:'fic-brn', name:'LWG Gold Audit — Conceria Walpier S.p.A.', no:'LWG-IT-2024-00312', valid:'30.09.2025', issuer:'Leather Working Group' },
+    ],
+    4: [ // Lenfert
+      { key:'lwg_lenfert', icon:'📄', icClass:'fic-brn', name:'LWG Platinum Audit — Tanneries Lenfert S.A.S.', no:'LWG-FR-2024-00089', valid:'30.06.2026', issuer:'Leather Working Group' },
+    ],
+    5: [ // Malaika
+      { key:'fairtrade_malaika', icon:'📄', icClass:'fic-grn2', name:'Fair Trade Certified™ — Malaika Crafts SARL', no:'FTC-MA-2024-00774', valid:'31.12.2025', issuer:'Fair Trade USA' },
+    ],
+    6: [ // Noritake
+      { key:'bluesign_noritake', icon:'📄', icClass:'fic-blu', name:'Bluesign® System Partner — Noritake Textile Co., Ltd.', no:'BS-JP-2025-00156', valid:'31.03.2026', issuer:'Bluesign Technologies AG' },
+      { key:'oekotex_atelier', icon:'📄', icClass:'fic-grn', name:'OEKO-TEX® Standard 100 — Noritake Textile Co., Ltd.', no:'SH019 334872', valid:'31.03.2026', issuer:'TESTEX AG' },
+    ],
+    7: [ // Campolide
+      { key:'fsc_campolide', icon:'📄', icClass:'fic-grn2', name:'FSC® Chain of Custody — Campolide Cork Lda.', no:'FSC-C-PT-2024-00441', valid:'31.10.2025', issuer:'Bureau Veritas' },
+      { key:'oekotex_atelier', icon:'📄', icClass:'fic-grn', name:'OEKO-TEX® Standard 100 — Campolide Cork Lda.', no:'SH018 229043', valid:'30.06.2026', issuer:'TESTEX AG' },
+    ],
+  };
+  return map[s.id] || [];
+}
+
+function openCertPDF(key, name) {
+  const dataUrl = CERT_B64[key];
+  if (!dataUrl) return;
+  // Open in new tab
+  const win = window.open();
+  if (win) {
+    win.document.write(`
+      <html><head><title>${name}</title></head>
+      <body style="margin:0;padding:0;background:#222;">
+        <embed src="${dataUrl}" type="application/pdf" width="100%" height="100%" style="position:fixed;inset:0;width:100%;height:100%;border:none;"/>
+      </body></html>`);
+    win.document.close();
+  }
+}
+
+function downloadCert(key, name) {
+  const a = document.createElement('a');
+  a.href = CERT_B64[key];
+  a.download = name.replace(/[^a-zA-Z0-9]/g,'_') + '.pdf';
+  a.click();
+}
+
+function renderCertFiles(s) {
+  const files = getCertFiles(s);
+  if (!files.length) return '<p style="color:var(--gm);font-size:12px;">No documents uploaded yet.</p>';
+  return `<div class="files-section">
+    <div class="files-lbl">📎 Certification Documents</div>
+    <div class="files-grid">
+      ${files.map(f => `
+        <div class="file-card" onclick="openCertPDF('${f.key}','${f.name}')">
+          <div class="file-ic ${f.icClass}">${f.icon}</div>
+          <div class="file-info">
+            <div class="file-name">${f.name}</div>
+            <div class="file-meta">Certificate ${f.no} &nbsp;·&nbsp; PDF · ~3 KB</div>
+            <div class="file-tags">
+              <span class="ftag ftag-ok">✓ Valid until ${f.valid}</span>
+              <span class="ftag ftag-inf">${f.issuer}</span>
+            </div>
+          </div>
+          <div class="file-btns">
+            <button class="fbtn-view" onclick="event.stopPropagation();openCertPDF('${f.key}','${f.name}')">View PDF</button>
+            <button class="fbtn-dl" title="Download" onclick="event.stopPropagation();downloadCert('${f.key}','${f.name}')">⬇</button>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════
+// SUPPLIER MODAL
+// ══════════════════════════════════════════
+function openSupplier(id){
+  const s=SUPPLIERS.find(x=>x.id===id);
+  if(!s)return;
+
+  // Header
+  document.getElementById('m-avatar').textContent=s.emoji;
+  document.getElementById('m-name').textContent=s.name;
+  document.getElementById('m-sub').textContent=`${s.location} · ${s.cats.join(', ')}`;
+  document.getElementById('m-bdgs').innerHTML=
+    (s.verified?'<span class="m-bdg m-bdg-ver">✓ Verified</span>':'')+
+    (s.sustainable?'<span class="m-bdg m-bdg-sus">🌿 Sustainable</span>':'')+
+    s.segments.map(sg=>`<span class="m-bdg" style="background:rgba(255,255,255,.15);color:#fff">${sg}</span>`).join('');
+
+  // Scores
+  document.getElementById('ms-esg').textContent=s.esg+'/100';
+  document.getElementById('ms-rating').textContent=s.rating+'★';
+  document.getElementById('ms-years').textContent=s.years+' yrs';
+  document.getElementById('ms-clients').textContent=s.activeClients;
+  document.getElementById('ms-moq').textContent=s.moq.toLocaleString()+'m';
+
+  // Overview
+  document.getElementById('m-identity').innerHTML=rows([
+    ['Legal Company Name',s.name,'v'],['Country of Registration',`${s.flag} ${s.country}`],
+    ['Year Founded',s.founded],['Headquarters',s.location],
+    ['Website',s.name.toLowerCase().replace(/\s/g,'')+'.com'],['Supplier Type',s.cats.join(', ')],
+  ]);
+  document.getElementById('m-business').innerHTML=rows([
+    ['Market Segments',s.segments.join(' · '),'v'],['Primary Sectors',s.cats.join(', ')],
+    ['Export Regions',s.exportRegions,'','full'],['Main Products',s.tags.join(', '),'','full'],
+  ]);
+
+  // Production
+  document.getElementById('m-infra').innerHTML=rows([
+    ['Employees',s.employees],['Production Area',s.area],
+    ['Factory Sites',s.sites.join('<br>'),'','full'],
+    ['Monthly Capacity',s.capacity.toLocaleString()+' m/mo','g'],
+    ['MOQ Policy',s.moqPolicy,'','full'],
+    ['Lead Time',s.leadTime,'v'],['Sampling',s.years>10?'Yes — upon NDA':'Yes'],
+    ['OEM / ODM',s.oem,'v'],['Private Label',s.privateLabel],
+  ]);
+  document.getElementById('m-capabilities').innerHTML=s.capabilities.map(c=>`<span class="ctg ctg-v">${c}</span>`).join('');
+
+  // Compliance
+  document.getElementById('m-certs-list').innerHTML=s.certs.map(c=>`<span class="m-cert">${c}</span>`).join('');
+  // Cert files
+  const certFilesEl = document.getElementById('m-cert-files');
+  if(certFilesEl) certFilesEl.innerHTML = renderCertFiles(s);
+  document.getElementById('m-esg-score').textContent=s.esg;
+  document.getElementById('m-esg-bar').style.width=s.esg+'%';
+  document.getElementById('m-esg-rows').innerHTML=rows([
+    ['Recycled Content',s.recycled+'%','g'],['Carbon Footprint',s.carbon],
+    ['Audit Status',s.auditStatus,'v'],['Last Audit',s.auditDate],
+    ['Sustainability',s.sustainability.join(' · '),'','full'],
+  ]);
+  const traceLvls=['Tier 1 known','Tier 1+2','Tier 1+2+3','Raw material origin'];
+  document.getElementById('m-trace').innerHTML=rows([
+    ['Traceability Level',`Level ${s.trace} — ${traceLvls[s.trace-1]||''}`, s.trace>=3?'g':''],
+    ['Stars','★'.repeat(s.trace)+'☆'.repeat(4-s.trace),'v'],
+  ]);
+
+  // Commercial
+  document.getElementById('m-commercial').innerHTML=rows([
+    ['Incoterms',s.incoterms,'v'],['Payment Terms',s.paymentTerms],
+    ['Revenue Band',s.revenue],['Export %',s.exportPct,'g'],
+    ['OEM / ODM',s.oem,'v'],['Private Label',s.privateLabel],
+  ]);
+  document.getElementById('m-clients').innerHTML=rows([
+    ['Active Clients',s.activeClients,'v'],['Client Types',s.clientTypes.join(', ')],
+    ['Export Markets',s.exportRegions,'','full'],
+  ]);
+
+  // Products
+  document.getElementById('m-prod-tbody').innerHTML=s.products.map((p,i)=>`
+    <tr onclick="openProduct(${s.id},${i})">
+      <td><strong>${p.emoji} ${p.name}</strong></td>
+      <td style="font-family:monospace;font-size:11px;color:var(--gm)">${p.sku}</td>
+      <td><span class="ctg ctg-v">${p.cat}</span></td>
+      <td style="color:var(--v);font-weight:600">${p.moq}</td>
+      <td style="color:var(--grn);font-weight:600">${p.price}</td>
+      <td><button class="view-prod-btn" onclick="openProduct(${s.id},${i});event.stopPropagation()">View →</button></td>
+    </tr>`).join('');
+
+  // Reset to first tab
+  showMTab(document.querySelector('.m-tab'),'overview');
+  document.getElementById('sup-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function rows(data){
+  return data.map(([l,v,cls='',span=''])=>`
+    <div class="mrow ${span}">
+      <div class="mrow-l">${l}</div>
+      <div class="mrow-v ${cls}">${v}</div>
+    </div>`).join('');
+}
+
+function showMTab(el,panel){
+  document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.m-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('mp-'+panel).classList.add('active');
+}
+
+function closeSupplier(e){if(e.target===document.getElementById('sup-overlay')){closeSupplierBtn();}}
+function closeSupplierBtn(){document.getElementById('sup-overlay').classList.remove('open');document.body.style.overflow='';}
+
+// ══════════════════════════════════════════
+// PRODUCT MODAL
+// ══════════════════════════════════════════
+function openProduct(supId, prodIdx){
+  const s=SUPPLIERS.find(x=>x.id===supId);
+  const p=s.products[prodIdx];
+  if(!p)return;
+
+  document.getElementById('pm-emoji').textContent=p.emoji;
+  document.getElementById('pm-name').textContent=p.name;
+  document.getElementById('pm-sku').textContent=`${p.sku} · ${s.name}`;
+
+  document.getElementById('pm-identity').innerHTML=pmrows([
+    ['Product Name',p.name,'v'],['Internal Code / SKU',p.sku],
+    ['Category',p.cat,'v'],['Supplier',s.name],
+    ['Country of Origin',`${s.flag} ${s.country}`],['Subcategory',p.cat],
+  ]);
+  document.getElementById('pm-technical').innerHTML=pmrows([
+    ['Main Composition',p.comp,'v'],['Weight / Thickness',p.weight],
+    ['Construction',p.construction],['Size / Width',p.size],
+    ['Dimensions',p.dims||'—'],
+  ]);
+  document.getElementById('pm-materials').innerHTML=(()=>{
+    const parts=p.comp.split('·').map(x=>x.trim());
+    return parts.map((part,i)=>{
+      const match=part.match(/^(\d+)%\s+(.+)$/);
+      const mat=match?match[2]:part, pct=match?match[1]:'—';
+      const certified=p.certsProd&&p.certsProd.length>0;
+      return`<tr>
+        <td>${i===0?'Shell':i===1?'Lining':'Component '+(i+1)}</td>
+        <td><strong>${mat}</strong></td>
+        <td style="text-align:center;font-weight:600">${pct}%</td>
+        <td><span class="cert-dot ${certified?'cert-y':'cert-n'}"></span>${certified?'Yes':'No'}</td>
+      </tr>`;
+    }).join('');
+  })();
+  document.getElementById('pm-compliance').innerHTML=pmrows([
+    ['Certifications',(p.certsProd||[]).join(', '),'g'],
+    ['Recycled Content',p.recycledPct+'%', p.recycledPct>0?'g':''],
+    ['Carbon Footprint',p.carbon||'—'],
+    ['Test Type',p.testType||'—'],['Test Result',p.testResult||'—','g'],
+  ]);
+
+  // Trace visual
+  const lvlNames=['Tier 1','Tier 2','Tier 3','Raw Material'];
+  document.getElementById('pm-trace-visual').innerHTML=`
+    <div class="trace-visual">
+      ${[1,2,3,4].map(l=>`<div class="trace-step ${l<=p.traceLevel?'trace-on':'trace-off'}"></div>`).join('')}
+    </div>
+    <div class="trace-labels">
+      ${lvlNames.map(n=>`<span class="trace-lbl">${n}</span>`).join('')}
+    </div>
+    <div style="margin-top:8px;font-size:13px;font-weight:500;color:var(--v)">Level ${p.traceLevel} — ${['Tier 1 known','Tier 1+2 mapped','Full supply chain mapped','Raw material origin verified'][p.traceLevel-1]}</div>`;
+
+  document.getElementById('pm-commercial').innerHTML=pmrows([
+    ['MOQ',p.moq,'v'],['Price Range',p.price,'g'],
+    ['Lead Time',s.leadTime,'v'],['Monthly Capacity',p.monthlyCapacity],
+    ['Incoterm',p.incoterm],['Export Markets',p.exportMkts,'','full'],
+  ]);
+
+  document.getElementById('prod-overlay').classList.add('open');
+}
+
+function pmrows(data){
+  return`<div class="pm-rows">`+data.map(([l,v,cls='',span=''])=>`
+    <div class="pm-row ${span==='full'?'full':''}">
+      <div class="pm-l">${l}</div>
+      <div class="pm-v ${cls}">${v}</div>
+    </div>`).join('')+`</div>`;
+}
+
+function closeProd(e){if(e.target===document.getElementById('prod-overlay')){closeProdBtn();}}
+function closeProdBtn(){document.getElementById('prod-overlay').classList.remove('open');}
+
+// INIT
+applyFilters();
+</script>
+</body>
+</html>
